@@ -16,6 +16,7 @@ module HighlightCode
   end
 
   def pygments(code, lang)
+    Pygments.start("/home/abe/code/pygments-main")
     if defined?(PYGMENTS_CACHE_DIR)
       path = File.join(PYGMENTS_CACHE_DIR, "#{lang}-#{Digest::MD5.hexdigest(code)}.html")
       if File.exist?(path)
