@@ -6,12 +6,13 @@ comments: true
 categories: 
 ---
 
-{% img left /images/plague_doctor.png 'I always wanted to be a plague doctor!' 'A drawing of a medieval plague doctor' %}
+[{% img left /images/triumpth_of_death.jpg 'Progress at work' 'The Triumpth of Death oil painting' %}](http://en.wikipedia.org/wiki/The_Triumph_of_Death)
 
 I think
 [my opinion](http://www.abevoelker.com/blog/2010/08/21/progress-openedge-abl-language-and-dbms-considered-harmful/)
 on Progress OpenEdge ABL (henceforth known as "the Plague") as a programming
 language / DBMS is well known, but here is a short summary in case you missed it:
+<br /><br />
 
 Progress made a bet a long time ago (back in the 1980s) that the future of
 programming languages were going to be languages with a huge amount of global
@@ -42,10 +43,13 @@ is able to create and bolt on to the language, in an attempt to re-create the
 popular thing from 4+ years ago.  Not to mention the exorbitant licensing
 costs for the pleasure of all of the above...
 
+[{% img left /images/plague_doctor.png 'I always wanted to be a plague doctor!' 'A drawing of a medieval plague doctor' %}](http://en.wikipedia.org/wiki/Plague_doctor)
+
 Some people think that OpenEdge ABL is still worth saving, but not me.  The
 only remedy to this problem, in my opinion, is to migrate completely away from
 the OpenEdge platform.  Read on for the migration plan (henceforth known as
 "the Cure").
+<br /><br /><br />
 
 <!-- more -->
 
