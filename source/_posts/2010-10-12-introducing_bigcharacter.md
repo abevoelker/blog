@@ -23,6 +23,8 @@ DO i=1 TO 1000000:
 END.
 ```
 
+<!-- more -->
+
 On the 4-CPU / 8GiB RAM Unix server I ran it on, it took 3 1/2 hours!  It
 started rather quickly, but once it hit ~ 100K records it started to slow
 down quite a bit.  This issue is documented in ProKB #P101079, and according
