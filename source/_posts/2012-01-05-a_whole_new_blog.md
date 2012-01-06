@@ -21,9 +21,15 @@ load very fast, especially under heavy load.
 
 <!-- more -->
 
-I initially tried [nanoc][], which worked well coding-wise, but since it
-doesn't come with any default styles I was totally stuck as I simply have no
-taste for design and am very bad at doing CSS from a blank slate. From a
+For syntax highlighting they use the excellent [Pygments][] library, which
+unfortunately didn't already have a lexer for OpenEdge ABL / Progress, so I
+had to [write one][ABL Lexer] myself. This is the same library that GitHub
+uses for syntax highlighting, so if Pygments would hurry up and merge my
+old pull request there would be highlighting support on there too.
+
+I initially tried blogging with [nanoc][], which worked well coding-wise, but
+since it doesn't come with any default styles I was totally stuck as I simply
+have no taste for design and am very bad at doing CSS from a blank slate. From a
 functional perspective, I would much rather be using nanoc as the compile/route
 pipeline you are given is very powerful for designing the app. Jekyll
 can't really compare to it; if you have to do anything advanced you have
@@ -55,10 +61,14 @@ being the cheapest for what I need.
 
 The source for this blog will be kept on [GitHub][blog source]. The source for
 my abandoned nanoc migration attempt is also on [GitHub][nanoc blog source].
+The source code for the OpenEdge ABL Pygments lexer is on
+[BitBucket][ABL Lexer].
 
 [Octopress]: http://octopress.org/
 [Octopress git]: https://github.com/imathis/octopress
 [Jekyll]: https://github.com/mojombo/jekyll
+[Pygments]: http://pygments.org/
+[ABL Lexer]: https://bitbucket.org/abevoelker/pygments-main/overview
 [nanoc]: http://nanoc.stoneship.org/
 [blog]: http://blog.abevoelker.com/
 [old_blog]: http://abevoelker.com/blog/
