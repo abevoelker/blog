@@ -3,8 +3,9 @@ layout: post
 title: "GitLaw: GitHub for Laws and Legal Documents - a Tourniquet for American Liberty"
 date: 2012-05-10 04:23
 comments: true
-published: false
 ---
+
+[{% img right /images/house_of_representatives_chamber_octocat_thumb.jpg %}](/images/house_of_representatives_chamber_octocat.jpg)
 
 It's no secret that most Americans hate the members of our legislative branch.
 [Polls show][1] that **79%** of Americans currently disapprove of the job that
@@ -24,6 +25,8 @@ that Congress tends to [rush bills through][2] to a vote shortly after they are
 introduced, without giving an adequate amount of time for the public - or even
 themselves - enough time to digest their contents.  If Congress is unable to
 properly execute their most basic duty on their own, why not crowd source it?
+
+<!-- more -->
 
 ## A GitHub for Laws and Legal Documents
 
