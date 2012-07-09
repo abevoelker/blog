@@ -26,7 +26,7 @@ advantage of the CLR bridge and writing a lot more .NET / C# code.  Of
 course that only works for Windows clients; no Mono support yet.  Others
 are slowly catching onto [AMQP][13], writing STOMP messaging code in ABL
 and interfacing with an external broker like ActiveMQ or RabbitMQ.  Been
-there... done that (you're still writing ABL... eww).  Others that still
+there, done that (you're still writing ABL... eww).  Others that still
 use ABL directly seem to have all these tools that generate ABL code for
 them from model-relationship diagrams (like UML) so they don't have to
 write so much boilerplate code; if that's not a sign of a language smell
@@ -37,7 +37,7 @@ in that old blog post - a Ruby adapter for OpenEdge using the DataMapper
 ORM framework. At the time I wrote that blog post I didn't have enough Ruby
 experience to extend an existing library, especially that does something
 bare-metal like talk to a database.  That has changed, and I am proud to
-present the alpha version of this adapter for immediate testing.
+present the alpha version of this adapter available for immediate testing.
 
 I hope that with some example code I can show how beautiful Ruby is
 compared to OpenEdge. My aspiration is that it causes a revolution where
@@ -120,8 +120,8 @@ subscription center to download non-trial versions of their products.
 
 ### Install needed gems
 
-Make sure you are using the rvm gemset we created, and install the gems in
-the Gemfile using bundler:
+Make sure you are using the rvm gemset we created, and install the gems
+from the Gemfile using bundler:
 
     rvm use jruby-1.6.7@openedge-ruby
     gem install bundler
@@ -174,9 +174,10 @@ definition!
 
 Type `irb` to open up an interactive Ruby shell. To run the example code,
 simply type `require './example'`. If the code loaded successfully, you
-should simple see `=> true` (the `=>` denotes the return value.  The rest
-of the commands will be entered from within this `irb` shell.  If you are
-having issues, just post in the comments and I will try to help.
+should simple see `=> true` (the `=>` denotes the return value).  The rest
+of the commands in the following sections will be entered from within this
+`irb` shell.  If you are having issues, just post in the comments and I will
+try to help.
 
 ### Querying
 
@@ -284,20 +285,21 @@ ol = c.orders.order_lines
 ol.count # => 46
 ```
 
-To calculate the total money this customer has spent on every order, ever
-(uses Ruby's [reduce][12] method, which is a functional programming
-derivitave for reducing a large amount of data down to a single value):
+To calculate the total money this customer has spent on every order
+for all time, we use Ruby's [reduce][12] method, which is a functional
+programming derivitave for reducing a large amount of data down to a
+single value:
 
 ```ruby
 total = c.orders.order_lines.reduce(0){|sum, ol| sum + ol.qty * ol.price}
 # => #<BigDecimal:6f09c9c0,'0.6736944E5',7(8)>
 ```
 
-BigDecimal `to_s` (string format) is yucky but the answer is $67369.44 if you
+BigDecimal's string format is yucky but the answer is $67369.44 if you
 look closely.  If this were a real app I would consider a custom type for
 monetary values.  But anyway, that brevity should bring a tear to your eye
 after picturing the huge nested FOR EACH mess that ABL would make you
-write... *shudder*.
+write to get the same value... *shudder*.
 
 To get all the items this customer ever ordered:
 
@@ -408,6 +410,18 @@ Some other features that would be nice to have, that I would work on:
   people would use as I would think this would be used more for
   legacy support rather than new development. It would probably be a
   lot of work, too.
+* Other DataMapper core support needed to get mainline integration,
+  or other possible features (please request in comments)
+
+## Next posts in series
+
+I hope to write at least two more posts in this series on OpenEdge;
+the first will be expanding on the use of this adapter to write a
+simple RESTful Web service using either Sinatra or Rails that
+exposes `sports2000` tables as resources (including JSON
+representations).  Then, my final post will be some final musings on
+OpenEdge ABL and how to sandbox it; I think I will also give some
+parting advice to Progress Corp. on how they should open up ABL more.
 
 [1]: /cure_for_the_plague_openedge_migration/
 [2]: https://rvm.io/rvm/install/
