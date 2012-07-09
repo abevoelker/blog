@@ -1,26 +1,25 @@
 ---
 layout: post
-title: "Ode to OpenEdge ABL"
+title: "Final Ode to OpenEdge ABL Part 1: a Ruby Adapter is Born"
 date: 2012-07-08 20:37
 comments: true
 categories: 
 ---
 
-Hopefully this will be the last in-depth post I write about OpenEdge ABL.
+I'm planning this post as part of a short series that will finally give me
+some closure on my OpenEdge ABL / Progress past and allow me to move on.
+After I'm finished I hope to be able to completely wipe OpenEdge from my
+mind and not visit the community anymore. I'd like to spend some time
+improving my Ruby and maybe learning some Clojure/Erlang/Haskell.
 
-Almost 1 1/2 years ago, I wrote [a post][1] where I formulated a cure for a
-language that had tortured me at the first full-time programming job that I
-ever had: OpenEdge ABL.  Since that time, I quit my job programming in ABL
-and have been very happy at my new job as a contractor, doing mostly Ruby and
-JavaScript (mostly Rails backends).
-
-However, I never really felt like I got closure with OpenEdge. I wrote some
-pretty advanced ABL code for my employer, but never really realized any of the
-boundary-pushing ideas like I brought up in that blog post. I really suck at
-just "letting things go," so it's always kind of been in the back of my mind
-that I wanted to wrap it up and release it.  Part of it is that I want to
-prove to everyone that I'm not crazy and there really is some merit to what
-I'm talking about.
+It's weird how I have trouble letting go.  Almost 1 1/2 years ago, I wrote
+[a post][1] where I theorized a cure for a language that had tortured me
+at the first full-time programming job that I ever had: OpenEdge ABL. Shortly
+after writing that post, I quit my job and moved to a new city, where I got
+a job contracting as a Ruby developer.  I'm much happier at my new job, but
+I can't seem to let go of the ideas I came up with that could free a person
+that could be in a similar position that I used to be in (programming in
+Progress / OpenEdge ABL).
 
 At the time I wrote that blog post I didn't have enough Ruby experience to
 extend an existing library, especially that does something bare-metal like
@@ -28,12 +27,19 @@ talk to a database. That has changed, and I am now ready to present the
 alpha version of the theorized DataMapper adapter that I wrote about in that
 old blog post!
 
+I hope that with some example code I can show how beautiful Ruby is
+compared to OpenEdge. My aspiration is that it causes a revolution where
+existing Progress developers stop writing ABL code and start using Ruby!
+
+<!-- more -->
+
 ## Preparing a database
 
 The example code will need a copy of the `sports2000` database that is running
 the SQL engine.  Here are some commands to create one with the name `foobar`,
-convert it to UTF-8 (needed by the adapter) and start serving it on port
-`13370`:
+convert it to UTF-8 (expected by the adapter if there are any non-ASCII chars)
+and start serving it on port `13370`. These commands should be ran from a
+`proenv` prompt on a machine that can create / serve up OpenEdge databases:
 
     prodb foobar sports2000
     proutil foobar -C convchar convert utf-8
