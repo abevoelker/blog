@@ -3,33 +3,48 @@ layout: post
 title: "Final Ode to OpenEdge ABL Part 1: a Ruby Adapter is Born"
 date: 2012-07-08 20:37
 comments: true
-categories: 
 ---
 
-I'm planning this post as part of a short series that will finally give me
-some closure on my OpenEdge ABL / Progress past and allow me to move on.
-After I'm finished I hope to be able to completely wipe OpenEdge from my
-mind and not visit the community anymore. I'd like to spend some time
-improving my Ruby and maybe learning some Clojure/Erlang/Haskell.
+It's weird how I have trouble letting go.  Nearly two years ago, I wrote
+[a post][1] where I theorized a cure for a programming language and database
+that had tortured me at the first full-time programming job that I ever had:
+OpenEdge ABL. Shortly after writing that post, I quit my job and moved to a
+new city, where I got a job contracting as a Ruby developer.  I'm much
+happier at my new job, but every once in awhile I would think of the plan
+that I had made and visit the Progress community areas, like stalking an
+ex-lover on Facebook.
 
-It's weird how I have trouble letting go.  Almost 1 1/2 years ago, I wrote
-[a post][1] where I theorized a cure for a language that had tortured me
-at the first full-time programming job that I ever had: OpenEdge ABL. Shortly
-after writing that post, I quit my job and moved to a new city, where I got
-a job contracting as a Ruby developer.  I'm much happier at my new job, but
-I can't seem to let go of the ideas I came up with that could free a person
-that could be in a similar position that I used to be in (programming in
-Progress / OpenEdge ABL).
+Little has changed in Progress-land, it seems.  People are still drinking
+the Kool-Aid, waiting for Progress to keep improving the ABL language.
+I think some are slowly catching on to the insanity... many are taking
+advantage of the CLR bridge and writing a lot more .NET / C# code.  Of
+course that only works for Windows clients; no Mono support yet.  Others
+are slowly catching onto AMQ, writing STOMP messaging code in ABL and
+interfacing with an external broker like ActiveMQ or RabbitMQ.  Been
+there... done that (you're still writing ABL... eww).  Others that still
+use ABL directly seem to have all these tools that generate ABL code for
+them from model-relationship diagrams (like UML) so they don't have to
+write so much boilerplate code; if that's not a sign of a language smell
+I don't know what is.
 
-At the time I wrote that blog post I didn't have enough Ruby experience to
-extend an existing library, especially that does something bare-metal like
-talk to a database. That has changed, and I am now ready to present the
-alpha version of the theorized DataMapper adapter that I wrote about in that
-old blog post!
+I'm hoping to change all that, now, with the tool that I theorized
+in that old blog post - a Ruby adapter for OpenEdge using the DataMapper
+ORM framework. At the time I wrote that blog post I didn't have enough Ruby
+experience to extend an existing library, especially that does something
+bare-metal like talk to a database.  That has changed, and I am proud to
+present the alpha version of this adapter for immediate testing.
 
 I hope that with some example code I can show how beautiful Ruby is
 compared to OpenEdge. My aspiration is that it causes a revolution where
 existing Progress developers stop writing ABL code and start using Ruby!
+Yeah, I like to set the bar high.
+
+I'm planning this post as part of a short series that will finally give me
+some closure on my OpenEdge ABL / Progress past and allow me to move on.
+After I'm finished I hope to be able to completely wipe OpenEdge from my
+mind and not visit the community anymore (I'm sure they'll appreciate it).
+I'd like to spend some time improving my Ruby and maybe learning some
+/Clojure|Erlang|Haskell/.
 
 <!-- more -->
 
@@ -41,10 +56,10 @@ convert it to UTF-8 (expected by the adapter if there are any non-ASCII chars)
 and start serving it on port `13370`. These commands should be ran from a
 `proenv` prompt on a machine that can create / serve up OpenEdge databases:
 
-    prodb foobar sports2000
-    proutil foobar -C convchar convert utf-8
+    prodb foo sports2000
+    proutil foo -C convchar convert utf-8
     sql_env
-    proserve foobar -S 13370 -cpinternal utf-8 -cpstream utf-8
+    proserve foo -S 13370 -cpinternal utf-8 -cpstream utf-8
 
 Note that I don't think the `-cpinternal` or `-cpstream` stuff is necessary for
 the SQL engine but I left it there anyway as I'm paranoid.
@@ -123,7 +138,7 @@ Customer.all(:country.not => "USA").count
 
 If we often need to look up the Americans, we can create a scope for this
 particular query by re-opening the Customer class (Ruby has an open object
-model which lets you re-open classes at runtime!) and adding it:
+model which lets you re-open class definitions at runtime!) and adding it:
 
 ```ruby
 class Customer
@@ -146,7 +161,8 @@ Customer.american.first(:state => "WI")
 
 DataMapper also supports relations between tables, something that OpenEdge
 doesn't really natively do.  For this to work you have to define some
-[associations][5] in your model definitions.  Here are some examples.
+[associations][5] in your model definitions (you can check out the source
+for the .  Here are some examples.
 
 Let's start off by saving a particular customer to branch off from. We'll
 just use the first customer.
@@ -194,12 +210,12 @@ i.count # => 26
 To go backwards and get every customer that ever ordered an item:
 
 ```ruby
-c = Item.first.order_lines.orders.customer.count
+c = Item.first.order_lines.orders.customer
 c.count # => 49
 ```
 
 Obviously I'm not very good at coming up with examples... play around
-for yourself!
+yourself!
 
 ### Insertion/updates/deletes
 
@@ -256,9 +272,37 @@ Customer.get(2107).destroy # => true
 Customer.get(2107) # => nil
 ```
 
-## Other experiments: failed ØMQ binding
+## Future development
 
-## Advice for Progress Corp.
+As mentioned, this is alpha software.  If you use it and find any bugs,
+I would be grateful if you report them (contact me directly or open a
+GitHub issue on [`dm-openedge-adapter`][7]).  Unfortunately, I don't have
+a lot of time to fix things quickly.  I was hoping that if there was some
+interest in this project I could take some donations (KickStarter or
+something), which would let me take some time off of work and get this
+polished up and ready for [integration][8] into mainline DataMapper (which
+would also make usage for writing apps extremely simple by having clean
+gems; e.g. just `gem install dm-openedge-adapter`).
+
+To get this ready for mainline DataMapper integration, there needs to be
+better tests for `dm-openedge-adapter` as well as a test virtual machine
+image with OpenEdge pre-installed for running all the tests on.
+
+Some other features that would be nice to have, that I would work on:
+
+* Lots more tests!
+* Support more versions of OpenEdge (should just need to add support
+  to [jdbc-openedge][9], unless JDBC driver has bugs to work around)
+* `:sequence` option for fields, like the [Oracle adapter][10] has.
+  Would allow you to not have to manually provide a value for the
+  field on record insertion if there is a sequence that can be used
+  (you can still manually specify it if you want). Very useful for PKs.
+* CentOS virtual machine images with various versions of OpenEdge;
+  useful for testing and necessary for mainline DM integration.
+* Support for [migrations][11]? I'm not really sure if this is something
+  people would use as I would think this would be used more for
+  legacy support rather than new development. It would probably be a
+  lot of work, too.
 
 [1]: /cure_for_the_plague_openedge_migration/
 [2]: https://rvm.io/rvm/install/
@@ -266,3 +310,8 @@ Customer.get(2107) # => nil
 [4]: http://datamapper.org/docs/find.html
 [5]: http://datamapper.org/docs/associations.html
 [6]: http://stackoverflow.com/questions/9753744/properly-implementing-auto-incrementing-primary-keys-in-openedge-10-2b-using-sql
+[7]: https://github.com/abevoelker/dm-openedge-adapter
+[8]: https://github.com/datamapper/do/pull/34
+[9]: https://rubygems.org/gems/jdbc-openedge
+[10]: http://blog.rayapps.com/2009/07/21/initial-version-of-datamapper-oracle-adapter/
+[11]: https://github.com/datamapper/dm-migrations
