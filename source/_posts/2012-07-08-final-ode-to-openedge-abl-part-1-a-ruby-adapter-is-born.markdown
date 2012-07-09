@@ -53,6 +53,13 @@ Clojure|Erlang|Haskell.
 
 <!-- more -->
 
+## Requirements
+
+The example code relies on OpenEdge 10.2B; other versions may or may not
+work.  `git` is also required for downloading the sample code.  I would also
+advise using Linux or Mac for running this code, as it is what Ruby plays
+best with.
+
 ## Preparing a database
 
 The example code will need a copy of the `sports2000` database that is running
@@ -101,6 +108,18 @@ Get the code by cloning the git repo:
     git clone git://gist.github.com/3073736.git dm-example
     cd dm-example
 
+### Change JDBC version
+
+Open the file `Gemfile` and look at the line #4 with `jdbc-openedge` on it.
+Notice that the version is `10.2B`, which is what I have tested everything
+with.  There is also a version for `10.1C`, however I haven't tested it.
+Any other versions of the OpenEdge JDBC driver may not work; contact me or
+leave a comment if you need a different OE version supported.  It might be
+difficult to test some versions as I don't have a subscription to Progress's
+subscription center to download non-trial versions of their products.
+
+### Install needed gems
+
 Make sure you are using the rvm gemset we created, and install the gems in
 the Gemfile using bundler:
 
@@ -110,9 +129,9 @@ the Gemfile using bundler:
 
 ### Set the database parameters for example snippet
 
-Almost ready to run some code... modify the
-`DataMapper.setup` line in `example.rb` to have the parameter values of where
-your database is running.  It should take the form of
+Open the file `example.rb` and modify the line #4 that starts with
+`DataMapper.setup` to have the parameter values that correspond to your
+database.  It should take the form of
 
     openedge://user:password@host:port/databasename
 
@@ -125,11 +144,11 @@ and see what it is doing.  Here is the code:
 
 {% gist 3073736 example.rb %}
 
-You can see that it is very readable.  All that code is really doing is
+You can see that the code is very readable.  All it is really doing is
 specifying the definitions of a few tables of the `sports2000` database in
 Ruby/DataMapper form.  Each Ruby class definition represents a table in the
-database; an instance of the class is a is a row in the table and each
-`property` is a column.
+database; each `property` is a column and an instance of the class
+represents a row in the table.
 
 The `storage_names[:default] =` part is for overriding DataMapper's default
 behavior of trying to pluralize model names when it looks for them in the
@@ -151,12 +170,13 @@ as part of the attributes of the property.  Also note that DataMapper has no
 trouble supporting composite primary keys - check out the `OrderLine` table
 definition!
 
-### Finally, run the code
+### Finally, execute the code
 
 Type `irb` to open up an interactive Ruby shell. To run the example code,
 simply type `require './example'`. If the code loaded successfully, you
-should simple see `=> true`.  The rest of the commands will be entered
-from within this `irb` shell:
+should simple see `=> true` (the `=>` denotes the return value.  The rest
+of the commands will be entered from within this `irb` shell.  If you are
+having issues, just post in the comments and I will try to help.
 
 ### Querying
 
