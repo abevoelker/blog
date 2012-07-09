@@ -1,0 +1,169 @@
+---
+layout: post
+title: "Ode to OpenEdge ABL"
+date: 2012-07-08 20:37
+comments: true
+categories: 
+---
+
+Hopefully this will be the last in-depth post I write about OpenEdge ABL.
+
+Almost 1 1/2 years ago, I wrote [a post][1] where I formulated a cure for a
+language that had tortured me at the first full-time programming job that I
+ever had: OpenEdge ABL.  Since that time, I quit my job programming in ABL
+and have been very happy at my new job as a contractor, doing mostly Ruby and
+JavaScript (mostly Rails backends).
+
+However, I never really felt like I got closure with OpenEdge. I wrote some
+pretty advanced ABL code for my employer, but never really realized any of the
+boundary-pushing ideas like I brought up in that blog post. I really suck at
+just "letting things go," so it's always kind of been in the back of my mind
+that I wanted to wrap it up and release it.  Part of it is that I want to
+prove to everyone that I'm not crazy and there really is some merit to what
+I'm talking about.
+
+At the time I wrote that blog post I didn't have enough Ruby experience to
+extend an existing library, especially that does something bare-metal like
+talk to a database. That has changed, and I am now ready to present the
+alpha version of the theorized DataMapper adapter that I wrote about in that
+old blog post!
+
+## Preparing a database
+
+The example code will need a copy of the `sports2000` database that is running
+the SQL engine.  Here are some commands to create one with the name `foobar`,
+convert it to UTF-8 (needed by the adapter) and start serving it on port
+`13370`:
+
+    prodb foobar sports2000
+    proutil foobar -C convchar convert utf-8
+    sql_env
+    proserve foobar -S 13370 -cpinternal utf-8 -cpstream utf-8
+
+Note that I don't think the `-cpinternal` or `-cpstream` stuff is necessary for
+the SQL engine but I left it there anyway as I'm paranoid.
+
+## Getting teh codez
+
+I'm going to assume Linux (Ubuntu) for this.
+
+1. Install [rvm][2] to manage Ruby interpreters and namespace [gems][3] that we
+   are going to be installing (a gem is basically a way to package up Ruby code
+   for distribution).  Just install rvm as your own user; do NOT use sudo or
+   install as single-user mode as root user... it never seems to work right.
+2. Open a new terminal window and prepare to install a JRuby interpreter. Type
+   `rvm requirements` and find the section "For JRuby, install the following:"
+   and install all packages required.  When that is finished, type
+   `rvm install jruby-1.6.5.1`, which will download and install a JRuby
+   interpreter.  That is a little older version of JRuby, but one that I have
+   been testing with and I know works. I might update this later if a newer
+   version of JRuby also works.
+3. Create a directory for our test
+
+## Running the code
+
+### Querying
+
+The adapter should handle most [queries][4] that DataMapper does.  I will also
+post the SQL that the adapter is generating behind the scenes.
+
+Find the first customer:
+
+    Customer.first
+    # => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" @address="276 North Drive" @address2="" @city="Burlington" @state="MA" @postal_code="01730" @contact="Gloria Shepley" @phone="(617) 450-0086" @sales_rep="HXM" @credit_limit=#<BigDecimal:678c862e,'0.667E5',3(8)> @balance=#<BigDecimal:3abd6b1e,'0.90364E3',5(8)> @terms="Net30" @discount=35 @comments="This customer is on credit hold." @fax="" @email_address="">
+    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum"
+
+Find the last customer:
+
+    Customer.last
+    # => #<Customer @cust_num=2107 @name="foobar" @country="USA" @address="" @address2="" @city="" @state="" @postal_code="" @contact="" @phone="" @sales_rep="" @credit_limit=#<BigDecimal:247aa859,'0.15E4',2(8)> @balance=#<BigDecimal:70c27dc4,'0.0',1(4)> @terms="Net30" @discount=0 @comments="" @fax="" @email_address="">
+    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum" DESC
+
+If you know the ID of your customer, you can look them up directly:
+
+    Customer.get(5)
+    # => #<Customer @cust_num=5 @name="Match Point Tennis" @country="USA" @address="66 Homer Pl" @address2="Address 2" @city="Boston" @state="MA" @postal_code="02134" @contact="Robert Dorr" @phone="(817) 498-2801" @sales_rep="JAL" @credit_limit=#<BigDecimal:3f15676d,'0.11E5',2(8)> @balance=#<BigDecimal:16394576,'0.0',1(4)> @terms="Net30" @discount=50 @comments="" @fax="" @email_address="">
+    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" WHERE "CustNum" = ?
+
+Get the total number of customers:
+
+    Customer.count
+    # => 1118
+    # SELECT COUNT(*) FROM "customer"
+
+Get the number of American customers (country == "USA"):
+
+    Customer.all(:country => "USA").count
+    # => 1060
+    # SELECT COUNT(*) FROM "customer" WHERE "country" = ?
+
+Get the number of non-American customers (country != "USA"):
+
+    Customer.all(:country.not => "USA").count
+    # => 58
+    # SELECT COUNT(*) FROM "customer" WHERE NOT("country" = ?)
+
+If we often need to look up the Americans, we can create a scope for this
+particular query by re-opening the Customer class (Ruby has an open object
+model which lets you re-open classes at runtime!) and adding it:
+
+    class Customer
+      def self.american
+        all(:country => "USA")
+      end
+    end
+
+    Customer.american.count # => 1060
+
+Let's say that I just want the first Wisconsin customer. I can use the `first`
+method and even chain that onto my new `american` scope to make it quicker:
+
+    Customer.american.first(:state => "WI")
+    # => #<Customer @cust_num=1114 @name="Apple River Sports" @country="USA" @address="945 US HWY" @address2="" @city="Amery" @state="WI" @postal_code="54001" @contact="K Conroy" @phone="(715) 268-9766" @sales_rep="JAL" @credit_limit=#<BigDecimal:4bfb1305,'0.498E5',3(8)> @balance=#<BigDecimal:509dd43b,'0.4517465E5',7(8)> @terms="Net30" @discount=25 @comments="" @fax="" @email_address="">
+    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" WHERE ("country" = ? AND "state" = ?) ORDER BY "CustNum"
+
+DataMapper also supports relations between tables, something that OpenEdge
+doesn't really natively do.  For this to work you have to define some
+[associations][5] in your model definitions.  Here are some examples.
+
+Let's start off by saving a particular customer to branch off from. We'll
+just use the first customer.
+
+    c = Customer.first
+    # => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" ...
+
+Let's get all the orders for this customer:
+
+    o = c.orders
+    # => #<Order @order_num=6 @cust_num=1 ... (there's a bunch)
+    o.count # => 19
+
+To get all the order-lines for this customer:
+
+    ol = c.orders.order_lines
+    ol.count # => 46
+
+To calculate the total money this customer has spent on every order, ever:
+
+    total = c.orders.order_lines.inject(0){|sum, ol| sum + ol.qty * ol.price}
+    # => #<BigDecimal:6f09c9c0,'0.6736944E5',7(8)>
+
+BigDecimal `to_s` (string format) is yucky but the answer is $67369.44 if you
+look closely.
+
+To get all the items this customer ever ordered:
+
+    i = c.orders.order_lines.items
+    i.count # => 26
+
+### Insertion
+
+## Other experiments: failed ØMQ binding
+
+## Advice for Progress Corp.
+
+[1]: /cure_for_the_plague_openedge_migration/
+[2]: https://rvm.io/rvm/install/
+[3]: http://docs.rubygems.org/read/chapter/1#page22
+[4]: http://datamapper.org/docs/find.html
+[5]: http://datamapper.org/docs/associations.html
