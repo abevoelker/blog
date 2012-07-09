@@ -13,9 +13,11 @@ It's weird how I have trouble letting go.  Nearly two years ago, I wrote
 that had tortured me at the first full-time programming job that I ever had:
 OpenEdge ABL. Shortly after writing that post, I quit my job and moved to a
 new city, where I got a job contracting as a Ruby developer.  I'm much
-happier at my new job, but every once in awhile I would think of the plan
-that I had made and check up on the Progress community areas, kind of like
-stalking an ex-lover on Facebook.
+happier at my new job, but every once in awhile I would think back on my
+time with OpenEdge and how I never really got to revolutionize it like I
+wanted to (yeah, I like to set the bar high).  I sometimes would find
+myself checking in on the Progress community areas to see if anything's
+changed, kind of like stalking an ex-lover on Facebook.
 
 Little has changed in Progress-land, it seems from my visits.  People
 are still drinking
@@ -38,11 +40,6 @@ ORM framework. At the time I wrote that blog post I didn't have enough Ruby
 experience to extend an existing library, especially that does something
 bare-metal like talk to a database.  That has changed, and I am proud to
 present the alpha version of this adapter available for immediate testing.
-
-I hope that with some example code I can show how beautiful Ruby is
-compared to OpenEdge. My aspiration is that it causes a revolution where
-existing Progress developers stop writing ABL code and start using Ruby!
-Yeah, I like to set the bar high.
 
 I'm planning this post as part of a short series that will finally give me
 some closure on my OpenEdge ABL / Progress past and allow me to move on.
