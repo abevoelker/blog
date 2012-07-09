@@ -71,62 +71,78 @@ I'm going to assume Linux (Ubuntu) for this.
 ### Querying
 
 The adapter should handle most [queries][4] that DataMapper does.  I will also
-post the SQL that the adapter is generating behind the scenes.
+post some SQL that the adapter is generating behind the scenes.
 
 Find the first customer:
 
-    Customer.first
-    # => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" @address="276 North Drive" @address2="" @city="Burlington" @state="MA" @postal_code="01730" @contact="Gloria Shepley" @phone="(617) 450-0086" @sales_rep="HXM" @credit_limit=#<BigDecimal:678c862e,'0.667E5',3(8)> @balance=#<BigDecimal:3abd6b1e,'0.90364E3',5(8)> @terms="Net30" @discount=35 @comments="This customer is on credit hold." @fax="" @email_address="">
-    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum"
+```ruby
+Customer.first
+# => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" @address="276 North Drive" @address2="" @city="Burlington" @state="MA" @postal_code="01730" @contact="Gloria Shepley" @phone="(617) 450-0086" @sales_rep="HXM" @credit_limit=#<BigDecimal:678c862e,'0.667E5',3(8)> @balance=#<BigDecimal:3abd6b1e,'0.90364E3',5(8)> @terms="Net30" @discount=35 @comments="This customer is on credit hold." @fax="" @email_address="">
+# SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum"
+```
 
 Find the last customer:
 
-    Customer.last
-    # => #<Customer @cust_num=2107 @name="foobar" @country="USA" @address="" @address2="" @city="" @state="" @postal_code="" @contact="" @phone="" @sales_rep="" @credit_limit=#<BigDecimal:247aa859,'0.15E4',2(8)> @balance=#<BigDecimal:70c27dc4,'0.0',1(4)> @terms="Net30" @discount=0 @comments="" @fax="" @email_address="">
-    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum" DESC
+```ruby
+Customer.last
+# => #<Customer @cust_num=2107 @name="foobar" @country="USA" @address="" @address2="" @city="" @state="" @postal_code="" @contact="" @phone="" @sales_rep="" @credit_limit=#<BigDecimal:247aa859,'0.15E4',2(8)> @balance=#<BigDecimal:70c27dc4,'0.0',1(4)> @terms="Net30" @discount=0 @comments="" @fax="" @email_address="">
+# SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum" DESC
+```
 
 If you know the ID of your customer, you can look them up directly:
 
-    Customer.get(5)
-    # => #<Customer @cust_num=5 @name="Match Point Tennis" @country="USA" @address="66 Homer Pl" @address2="Address 2" @city="Boston" @state="MA" @postal_code="02134" @contact="Robert Dorr" @phone="(817) 498-2801" @sales_rep="JAL" @credit_limit=#<BigDecimal:3f15676d,'0.11E5',2(8)> @balance=#<BigDecimal:16394576,'0.0',1(4)> @terms="Net30" @discount=50 @comments="" @fax="" @email_address="">
-    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" WHERE "CustNum" = ?
+```ruby
+Customer.get(5)
+# => #<Customer @cust_num=5 @name="Match Point Tennis" @country="USA" @address="66 Homer Pl" @address2="Address 2" @city="Boston" @state="MA" @postal_code="02134" @contact="Robert Dorr" @phone="(817) 498-2801" @sales_rep="JAL" @credit_limit=#<BigDecimal:3f15676d,'0.11E5',2(8)> @balance=#<BigDecimal:16394576,'0.0',1(4)> @terms="Net30" @discount=50 @comments="" @fax="" @email_address="">
+# SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" WHERE "CustNum" = ?
+```
 
 Get the total number of customers:
 
-    Customer.count
-    # => 1118
-    # SELECT COUNT(*) FROM "customer"
+```ruby
+Customer.count
+# => 1118
+# SELECT COUNT(*) FROM "customer"
+```
 
 Get the number of American customers (country == "USA"):
 
-    Customer.all(:country => "USA").count
-    # => 1060
-    # SELECT COUNT(*) FROM "customer" WHERE "country" = ?
+```ruby
+Customer.all(:country => "USA").count
+# => 1060
+# SELECT COUNT(*) FROM "customer" WHERE "country" = ?
+```
 
 Get the number of non-American customers (country != "USA"):
 
-    Customer.all(:country.not => "USA").count
-    # => 58
-    # SELECT COUNT(*) FROM "customer" WHERE NOT("country" = ?)
+```ruby
+Customer.all(:country.not => "USA").count
+# => 58
+# SELECT COUNT(*) FROM "customer" WHERE NOT("country" = ?)
+```
 
 If we often need to look up the Americans, we can create a scope for this
 particular query by re-opening the Customer class (Ruby has an open object
 model which lets you re-open classes at runtime!) and adding it:
 
-    class Customer
-      def self.american
-        all(:country => "USA")
-      end
-    end
+```ruby
+class Customer
+  def self.american
+    all(:country => "USA")
+  end
+end
 
-    Customer.american.count # => 1060
+Customer.american.count # => 1060
+```
 
 Let's say that I just want the first Wisconsin customer. I can use the `first`
 method and even chain that onto my new `american` scope to make it quicker:
 
-    Customer.american.first(:state => "WI")
-    # => #<Customer @cust_num=1114 @name="Apple River Sports" @country="USA" @address="945 US HWY" @address2="" @city="Amery" @state="WI" @postal_code="54001" @contact="K Conroy" @phone="(715) 268-9766" @sales_rep="JAL" @credit_limit=#<BigDecimal:4bfb1305,'0.498E5',3(8)> @balance=#<BigDecimal:509dd43b,'0.4517465E5',7(8)> @terms="Net30" @discount=25 @comments="" @fax="" @email_address="">
-    # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" WHERE ("country" = ? AND "state" = ?) ORDER BY "CustNum"
+```ruby
+Customer.american.first(:state => "WI")
+# => #<Customer @cust_num=1114 @name="Apple River Sports" @country="USA" @address="945 US HWY" @address2="" @city="Amery" @state="WI" @postal_code="54001" @contact="K Conroy" @phone="(715) 268-9766" @sales_rep="JAL" @credit_limit=#<BigDecimal:4bfb1305,'0.498E5',3(8)> @balance=#<BigDecimal:509dd43b,'0.4517465E5',7(8)> @terms="Net30" @discount=25 @comments="" @fax="" @email_address="">
+# SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" WHERE ("country" = ? AND "state" = ?) ORDER BY "CustNum"
+```
 
 DataMapper also supports relations between tables, something that OpenEdge
 doesn't really natively do.  For this to work you have to define some
@@ -135,81 +151,110 @@ doesn't really natively do.  For this to work you have to define some
 Let's start off by saving a particular customer to branch off from. We'll
 just use the first customer.
 
-    c = Customer.first
-    # => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" ...
+```ruby
+c = Customer.first
+# => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" ...
+```
 
 Let's get all the orders for this customer:
 
-    o = c.orders
-    # => #<Order @order_num=6 @cust_num=1 ... (there's a bunch)
-    o.count # => 19
+```ruby
+o = c.orders
+# => #<Order @order_num=6 @cust_num=1 ... (there's a bunch)
+o.count # => 19
+```
 
 To get all the order-lines for this customer:
 
-    ol = c.orders.order_lines
-    ol.count # => 46
+```ruby
+ol = c.orders.order_lines
+ol.count # => 46
+```
 
 To calculate the total money this customer has spent on every order, ever:
 
-    total = c.orders.order_lines.inject(0){|sum, ol| sum + ol.qty * ol.price}
-    # => #<BigDecimal:6f09c9c0,'0.6736944E5',7(8)>
+```ruby
+total = c.orders.order_lines.inject(0){|sum, ol| sum + ol.qty * ol.price}
+# => #<BigDecimal:6f09c9c0,'0.6736944E5',7(8)>
+```
 
 BigDecimal `to_s` (string format) is yucky but the answer is $67369.44 if you
 look closely.  If this were a real app I would consider a custom type for
-monetary values.
+monetary values.  But anyway, that brevity should bring a tear to your eye
+after picturing the huge nested FOR EACH mess that ABL would make you
+write... *shudder*.
 
 To get all the items this customer ever ordered:
 
-    i = c.orders.order_lines.items
-    i.count # => 26
+```ruby
+i = c.orders.order_lines.items
+i.count # => 26
+```
 
 To go backwards and get every customer that ever ordered an item:
 
-    c = Item.first.order_lines.orders.customer.count
-    c.count # => 49
+```ruby
+c = Item.first.order_lines.orders.customer.count
+c.count # => 49
+```
+
+Obviously I'm not very good at coming up with examples... play around
+for yourself!
 
 ### Insertion/updates/deletes
 
-Inserting new records was a secondary feature for me when writing this adapter,
+Record mutation was a secondary feature for me when writing this adapter,
 but it seems to work just fine.  One big stumbling block was the lack of
 [autogenerated primary key][6] support in the database. This means that
 creating new records requires explicitly setting the primary key values on
-insertion:
+insertion (however coming from the ABL world one should be used to that
+already):
 
-    next_id = Customer.last.cust_num + 1 # => 2107
-    c = Customer.create(:cust_num => next_id, :name => "foo bar")
-    # => #<Customer @cust_num=2107 @name="foo bar" ...
+```ruby
+next_id = Customer.last.cust_num + 1 # => 2107
+c = Customer.create(:cust_num => next_id, :name => "foo bar")
+# => #<Customer @cust_num=2107 @name="foo bar" ...
+```
 
 DataMapper's `create` method is an atomic thing; it tries to immediately do
 a database insertion.  If you want to build up an object incrementally, you
 can use `new` and then when you are ready to persist it, call `save`:
 
-    c = Customer.new(:name => "baz quux")
-    # => #<Customer @cust_num=nil @name="baz quux" @country=nil
-    c.country = "USA"
-    # If we try saving at this point, we will not be able to because we 
-    # forgot to set a primary key value. The save method returns false:
-    c.save # => false
-    # To see the error for this object, just call the errors method:
-    c.errors
-    # => #<DataMapper::Validations::ValidationErrors:0x3a57aa @resource=#<Customer @cust_num=nil @name="baz quux" @country="USA" @address=nil @address2=nil @city=nil @state=nil @postal_code=nil @contact=nil @phone=nil @sales_rep=nil @credit_limit=nil @balance=nil @terms=nil @discount=nil @comments=nil @fax=nil @email_address=nil>, @errors={:cust_num=>["Cust num must not be blank"]}>
-    # So we will set cust_num to the next PK value and then save it:
-    c.cust_num = 2108
-    c.save # => true
+```ruby
+c = Customer.new(:name => "baz quux")
+# => #<Customer @cust_num=nil @name="baz quux" @country=nil
+c.country = "USA"
+
+# If we try saving at this point, we will not be able to because we 
+# forgot to set a primary key value. The save method returns false:
+c.save # => false
+
+# To see the error for this object, just call the errors method:
+c.errors
+# => #<DataMapper::Validations::ValidationErrors:0x3a57aa @resource=#<Customer @cust_num=nil @name="baz quux" @country="USA" @address=nil @address2=nil @city=nil @state=nil @postal_code=nil @contact=nil @phone=nil @sales_rep=nil @credit_limit=nil @balance=nil @terms=nil @discount=nil @comments=nil @fax=nil @email_address=nil>, @errors={:cust_num=>["Cust num must not be blank"]}>
+
+# To fix the error, we set cust_num to the next PK value:
+c.cust_num = 2108
+c.save # => true
+```
 
 Updating a record is basically the same as how we did the `new`/`save` combo,
-except we will find a record instead of calling `new`:
+except we will find an existing record instead of calling `new`:
 
-    c = Customer.get(2107)
-    c.name # => "foo bar"
-    c.name = "corge grault"
-    c.save # => true
-    Customer.get(2107).name # => "corge grault"
+```ruby
+c = Customer.get(2107)
+c.name # => "foo bar"
+c.name = "corge grault"
+c.save # => true
+Customer.get(2107).name # => "corge grault"
+```
 
 When you get angry and want to delete a model, use the `destroy` method:
 
-    Customer.get(2107).destroy # => true
-    Customer.get(2107) # => nil
+```ruby
+Customer.get(2107).destroy # => true
+Customer.get(2107) # => nil
+```
 
 ## Other experiments: failed ØMQ binding
 
