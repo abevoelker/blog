@@ -57,7 +57,7 @@ work.  `git` is also required for downloading the sample code.  I would also
 advise using Linux or Mac for running this code, as it is what Ruby plays
 best with.
 
-You will need to extract the .jar files that correspond to your
+You will need to extract the JDBC .jar files that correspond to your
 [OpenEdge version][14] and put them somewhere in your Java `CLASSPATH`
 environment variable so that the adapter can find them. They can typically
 be found in an OpenEdge installation directory under `$DLC/java`.
