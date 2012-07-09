@@ -14,16 +14,18 @@ that had tortured me at the first full-time programming job that I ever had:
 OpenEdge ABL. Shortly after writing that post, I quit my job and moved to a
 new city, where I got a job contracting as a Ruby developer.  I'm much
 happier at my new job, but every once in awhile I would think of the plan
-that I had made and visit the Progress community areas, like stalking an
-ex-lover on Facebook.
+that I had made and check up on the Progress community areas, kind of like
+stalking an ex-lover on Facebook.
 
-Little has changed in Progress-land, it seems.  People are still drinking
+Little has changed in Progress-land, it seems from my visits.  People
+are still drinking
 the Kool-Aid, waiting for Progress to keep improving the ABL language.
-I think some are slowly catching on to the insanity... many are taking
+I think some are slowly catching on to the insanity of it... many are
+taking
 advantage of the CLR bridge and writing a lot more .NET / C# code.  Of
 course that only works for Windows clients; no Mono support yet.  Others
-are slowly catching onto AMQ, writing STOMP messaging code in ABL and
-interfacing with an external broker like ActiveMQ or RabbitMQ.  Been
+are slowly catching onto [AMQP][13], writing STOMP messaging code in ABL
+and interfacing with an external broker like ActiveMQ or RabbitMQ.  Been
 there... done that (you're still writing ABL... eww).  Others that still
 use ABL directly seem to have all these tools that generate ABL code for
 them from model-relationship diagrams (like UML) so they don't have to
@@ -47,14 +49,14 @@ some closure on my OpenEdge ABL / Progress past and allow me to move on.
 After I'm finished I hope to be able to completely wipe OpenEdge from my
 mind and not visit the community anymore (I'm sure they'll appreciate it).
 I'd like to spend some time improving my Ruby and maybe learning some
-/Clojure|Erlang|Haskell/.
+Clojure|Erlang|Haskell.
 
 <!-- more -->
 
 ## Preparing a database
 
 The example code will need a copy of the `sports2000` database that is running
-the SQL engine.  Here are some commands to create one with the name `foobar`,
+the SQL engine.  Here are some commands to create one with the name `foo`,
 convert it to UTF-8 (expected by the adapter if there are any non-ASCII chars)
 and start serving it on port `13370`. These commands should be ran from a
 `proenv` prompt on a machine that can create / serve up OpenEdge databases:
@@ -67,25 +69,12 @@ and start serving it on port `13370`. These commands should be ran from a
 Note that I don't think the `-cpinternal` or `-cpstream` stuff is necessary for
 the SQL engine but I left it there anyway as I'm paranoid.
 
-## Getting teh codez
-
-I created a simple little snippet that bootstraps the DataMapper model
-definitions needed for the example queries below.  There's also a Gemfile
-for installing the correct gems to get up and running.
-
-To get the code, clone the repo using git:
-
-    git clone git://gist.github.com/3073736.git dm-example
-
-Change into the new directory (`cd dm-example`) and change the
-`DataMapper.setup` line in `example.rb` to have the parameter values of where
-your database is running.  It should take the form of
-
-    openedge://user:password@host:port/databasename
-
 ## Preparing the Ruby environment
 
-I'm going to assume Linux (Ubuntu) for this.
+We're going to need a JRuby interpreter in order to run the DataMapper code;
+I am assuming you don't have one and am providing installation instructions
+using [rvm][2] (note that these instructions should work for Linux and Mac,
+but Windows users are on their own):
 
 1. Install [rvm][2] to manage Ruby interpreters and namespace [gems][3] that we
    are going to be installing (a gem is basically a way to package up Ruby code
@@ -94,13 +83,42 @@ I'm going to assume Linux (Ubuntu) for this.
 2. Open a new terminal window and prepare to install a JRuby interpreter. Type
    `rvm requirements` and find the section "For JRuby, install the following:"
    and install all packages required.  When that is finished, type
-   `rvm install jruby-1.6.5.1`, which will download and install a JRuby
-   interpreter.  That is a little older version of JRuby, but one that I have
-   been testing with and I know works. I might update this later if a newer
-   version of JRuby also works.
-3. Create a directory for our test
+   `rvm install jruby-1.6.7`, which will download and install a JRuby
+   interpreter.  That isn't the newest version of JRuby, but one that I have
+   been testing with and I know works.
+3. Create a gemset for containing the gems that we are going to install. Type
+   `rvm use --create jruby-1.6.7@openedge-ruby`. This will also switch you
+   into the new interpreter and gemset.
+
+## Getting teh codez
+
+I created a little snippet that bootstraps the DataMapper model
+definitions needed for the example queries below.  There's also a Gemfile
+for installing some gems needed to get up and running.
+
+Get the code by cloning the git repo:
+
+    git clone git://gist.github.com/3073736.git dm-example
+    cd dm-example
+
+Make sure you are using the rvm gemset we created, and install the gems in
+the Gemfile using bundler:
+
+    rvm use jruby-1.6.7@openedge-ruby
+    gem install bundler
+    bundle install   
+
+### Set the database parameters for example snippet
+
+Almost ready to run some code... modify the
+`DataMapper.setup` line in `example.rb` to have the parameter values of where
+your database is running.  It should take the form of
+
+    openedge://user:password@host:port/databasename
 
 ## Running the code
+
+### Read it first
 
 Before running the `example.rb` code, it makes sense to take a look at it first
 and see what it is doing.  Here is the code:
@@ -133,6 +151,13 @@ as part of the attributes of the property.  Also note that DataMapper has no
 trouble supporting composite primary keys - check out the `OrderLine` table
 definition!
 
+### Finally, run the code
+
+Type `irb` to open up an interactive Ruby shell. To run the example code,
+simply type `require './example'`. If the code loaded successfully, you
+should simple see `=> true`.  The rest of the commands will be entered
+from within this `irb` shell:
+
 ### Querying
 
 The adapter should handle most [queries][4] that DataMapper does.  I will also
@@ -141,9 +166,11 @@ post some SQL that the adapter is generating behind the scenes.
 Find the first customer:
 
 ```ruby
-Customer.first
+c = Customer.first
 # => #<Customer @cust_num=1 @name="Lift Tours" @country="USA" @address="276 North Drive" @address2="" @city="Burlington" @state="MA" @postal_code="01730" @contact="Gloria Shepley" @phone="(617) 450-0086" @sales_rep="HXM" @credit_limit=#<BigDecimal:678c862e,'0.667E5',3(8)> @balance=#<BigDecimal:3abd6b1e,'0.90364E3',5(8)> @terms="Net30" @discount=35 @comments="This customer is on credit hold." @fax="" @email_address="">
 # SELECT TOP 1 "CustNum", "name", "country", "address", "address2", "city", "state", "PostalCode", "contact", "phone", "SalesRep", "CreditLimit", "balance", "terms", "discount", "comments", "fax", "EmailAddress" FROM "customer" ORDER BY "CustNum"
+# Get their name:
+c.name # => "Lift Tours"
 ```
 
 Find the last customer:
@@ -329,16 +356,22 @@ Customer.get(2107) # => nil
 As mentioned, this is alpha software.  If you use it and find any bugs,
 I would be grateful if you report them (contact me directly or open a
 GitHub issue on [`dm-openedge-adapter`][7]).  Unfortunately, I don't have
-a lot of time to fix things quickly.  I was hoping that if there was some
-interest in this project I could take some donations (KickStarter or
-something), which would let me take some time off of work and get this
+a lot of time to fix things quickly.
+
+I was hoping that if there was some
+interest in this project I could take some donations, which would let
+me take some time off of work and get this
 polished up and ready for [integration][8] into mainline DataMapper (which
 would also make usage for writing apps extremely simple by having clean
-gems; e.g. just `gem install dm-openedge-adapter`).
+gems; e.g. just `gem install dm-openedge-adapter`).  If you are
+interested in this here is the link:
+
+<a href='http://www.pledgie.com/campaigns/17785'><img alt='Click here to lend your support to: OpenEdge Datamapper adapter and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/17785.png?skin_name=chrome' border='0' /></a>
 
 To get this ready for mainline DataMapper integration, there needs to be
-better tests for `dm-openedge-adapter` as well as a test virtual machine
-image with OpenEdge pre-installed for running all the tests on.
+better tests for `dm-openedge-adapter` as well as creating virtual machine
+images with different OpenEdge versions pre-installed, ready for running
+tests on.
 
 Some other features that would be nice to have, that I would work on:
 
@@ -368,3 +401,4 @@ Some other features that would be nice to have, that I would work on:
 [10]: http://blog.rayapps.com/2009/07/21/initial-version-of-datamapper-oracle-adapter/
 [11]: https://github.com/datamapper/dm-migrations
 [12]: http://ruby-doc.org/core-1.8.7/Enumerable.html#method-i-reduce
+[13]: http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
