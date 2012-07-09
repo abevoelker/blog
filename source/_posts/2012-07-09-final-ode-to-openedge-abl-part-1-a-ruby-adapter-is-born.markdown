@@ -57,6 +57,11 @@ work.  `git` is also required for downloading the sample code.  I would also
 advise using Linux or Mac for running this code, as it is what Ruby plays
 best with.
 
+You will need to extract the .jar files that correspond to your
+[OpenEdge version][14] and put them somewhere in your Java `CLASSPATH`
+environment variable so that the adapter can find them. They can typically
+be found in an OpenEdge installation directory under `$DLC/java`.
+
 ## Preparing a database
 
 The example code will need a copy of the `sports2000` database that is running
@@ -432,3 +437,4 @@ parting advice to Progress Corp. on how they should open up ABL more.
 [11]: https://github.com/datamapper/dm-migrations
 [12]: http://ruby-doc.org/core-1.8.7/Enumerable.html#method-i-reduce
 [13]: http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
+[14]: https://github.com/abevoelker/jdbc-openedge#openedge-versions-supported
