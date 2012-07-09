@@ -1,9 +1,12 @@
 ---
 layout: post
 title: "Final Ode to OpenEdge ABL Part 1: a Ruby Adapter is Born"
-date: 2012-07-08 20:37
+date: 2012-07-09 12:00
 comments: true
+categories: 
 ---
+
+{% img center /images/mass_extinction_event.jpg Foreground: ABL developers at work. Background: arrival of Ruby adapter %}
 
 It's weird how I have trouble letting go.  Nearly two years ago, I wrote
 [a post][1] where I theorized a cure for a programming language and database
@@ -66,6 +69,22 @@ the SQL engine but I left it there anyway as I'm paranoid.
 
 ## Getting teh codez
 
+I created a simple little snippet that bootstraps the DataMapper model
+definitions needed for the example queries below.  There's also a Gemfile
+for installing the correct gems to get up and running.
+
+To get the code, clone the repo using git:
+
+    git clone git://gist.github.com/3073736.git dm-example
+
+Change into the new directory (`cd dm-example`) and change the
+`DataMapper.setup` line in `example.rb` to have the parameter values of where
+your database is running.  It should take the form of
+
+    openedge://user:password@host:port/databasename
+
+## Preparing the Ruby environment
+
 I'm going to assume Linux (Ubuntu) for this.
 
 1. Install [rvm][2] to manage Ruby interpreters and namespace [gems][3] that we
@@ -82,6 +101,37 @@ I'm going to assume Linux (Ubuntu) for this.
 3. Create a directory for our test
 
 ## Running the code
+
+Before running the `example.rb` code, it makes sense to take a look at it first
+and see what it is doing.  Here is the code:
+
+{% gist 3073736 example.rb %}
+
+You can see that it is very readable.  All that code is really doing is
+specifying the definitions of a few tables of the `sports2000` database in
+Ruby/DataMapper form.  Each Ruby class definition represents a table in the
+database; an instance of the class is a is a row in the table and each
+`property` is a column.
+
+The `storage_names[:default] =` part is for overriding DataMapper's default
+behavior of trying to pluralize model names when it looks for them in the
+database; e.g. for the model `Customer` the default behavior is to look for
+table `Customers` in the database.  A similar behavior is going on with the
+`:field` attribute on some properties of the models; DataMapper looks for
+an inflected form of the actual property name in the database so we must
+override it.  Both of these issues can be solved by writing a custom method
+that tells DataMapper how to transform these names properly; it's just
+outside the scope of this simple example, but would greatly DRY up the code
+and make it much more readable.
+
+Another thing you may notice is the `belongs_to` and `has n` attributes.  These
+are for setting up [associations][5] or relationships between tables.  Examples
+will follow later.
+
+Finally, notice how primary keys are specified - simply pass a `:key => true`
+as part of the attributes of the property.  Also note that DataMapper has no
+trouble supporting composite primary keys - check out the `OrderLine` table
+definition!
 
 ### Querying
 
@@ -187,10 +237,12 @@ ol = c.orders.order_lines
 ol.count # => 46
 ```
 
-To calculate the total money this customer has spent on every order, ever:
+To calculate the total money this customer has spent on every order, ever
+(uses Ruby's [reduce][12] method, which is a functional programming
+derivitave for reducing a large amount of data down to a single value):
 
 ```ruby
-total = c.orders.order_lines.inject(0){|sum, ol| sum + ol.qty * ol.price}
+total = c.orders.order_lines.reduce(0){|sum, ol| sum + ol.qty * ol.price}
 # => #<BigDecimal:6f09c9c0,'0.6736944E5',7(8)>
 ```
 
@@ -315,3 +367,4 @@ Some other features that would be nice to have, that I would work on:
 [9]: https://rubygems.org/gems/jdbc-openedge
 [10]: http://blog.rayapps.com/2009/07/21/initial-version-of-datamapper-oracle-adapter/
 [11]: https://github.com/datamapper/dm-migrations
+[12]: http://ruby-doc.org/core-1.8.7/Enumerable.html#method-i-reduce
