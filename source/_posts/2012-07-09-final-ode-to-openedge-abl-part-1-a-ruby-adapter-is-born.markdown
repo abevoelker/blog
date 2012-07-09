@@ -256,11 +256,10 @@ Customer.american.first(:state => "WI")
 
 DataMapper also supports relations between tables, something that OpenEdge
 doesn't really natively do.  For this to work you have to define some
-[associations][5] in your model definitions (you can check out the source
-for the .  Here are some examples.
+[associations][5] in your model definitions, which we have already done.
 
-Let's start off by saving a particular customer to branch off from. We'll
-just use the first customer.
+Let's start exploring associations by starting with a particular customer
+to branch off from. We'll just use the first customer.
 
 ```ruby
 c = Customer.first
