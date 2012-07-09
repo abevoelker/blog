@@ -108,7 +108,7 @@ Get the code by cloning the git repo:
     git clone git://gist.github.com/3073736.git dm-example
     cd dm-example
 
-### Change JDBC version
+### Note JDBC version
 
 Open the file `Gemfile` and look at the line #4 with `jdbc-openedge` on it.
 Notice that the version is `10.2B`, which is what I have tested everything
