@@ -35,7 +35,7 @@ write so much boilerplate code; if that's not a sign of a language smell
 I don't know what is.
 
 I'm hoping to change all that, now, with the tool that I theorized
-in that old blog post - a Ruby adapter for OpenEdge using the DataMapper
+in that [old blog post][1] - a Ruby adapter for OpenEdge using the DataMapper
 ORM framework. At the time I wrote that blog post I didn't have enough Ruby
 experience to extend an existing library, especially that does something
 bare-metal like talk to a database.  That has changed, and I am proud to
