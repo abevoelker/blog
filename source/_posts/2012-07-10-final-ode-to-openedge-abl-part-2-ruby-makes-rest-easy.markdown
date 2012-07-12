@@ -142,8 +142,8 @@ complexity we need for a single element is to handle the ID of the element that
 the user is requesting.  Sinatra makes this very easy by providing support for
 this in its route matchers.  Add this to your `sinatra.rb` file:
 
-    get '/customer/:cust_num' do
-      @customer = Customer.get(params[:cust_num])
+    get '/customer/:cust_num' do |cust_num|
+      @customer = Customer.get(cust_num)
       if @customer
         @customer.to_json
       else
@@ -151,12 +151,10 @@ this in its route matchers.  Add this to your `sinatra.rb` file:
       end
     end
 
-A few things to note here.  First, any named parameters get put into a
-[hash][12] called `params` that we can access using a [symbol][13]ized key.
-Symbols are generally used in Ruby any place you would use a static string in
-other languages as they
-are more readable and slightly more performant (as they are constants that can
-simply be compared by memory address).
+A few things to note here.  First, that similar to methods, blocks can take
+parameters, which is what is between the vertical bars (`do |cust_num|`).
+The parameter in this case is obviously the customer number being passed in
+in the URL.
 
 Second, note that Ruby conditionals use "truthy" evaluation - everything in
 Ruby evaluates to true except `false` and `nil`.  Therefore, it is very common
@@ -169,7 +167,7 @@ and the lack of parentheses around the call to the `not_found` method.
 
 ### POST (create)
 
-Next up, let's support creating a new resource using the HTTP POST method.  Add
+Next, let's support creating a new resource using the HTTP POST method.  Add
 this code to `server.rb`:
 
     post '/customer' do
@@ -177,23 +175,84 @@ this code to `server.rb`:
       Customer.create(params.merge(:cust_num => next_id))
     end
 
-This one is pretty easy as DataMapper's `create` method accepts a hash of
-attributes, which is exactly what we're passing in.  The only tricky part is
-getting the next customer number to use for insertion, as we don't have a
-sequence.
+This one is pretty easy as DataMapper's `create` method accepts a [hash][12] of
+attributes, which is what we're passing in (Sinatra stores our parameters in a
+hash called `params`).  The only tricky part is getting the next customer
+number to use for insertion, as we don't have a sequence.
 
 To test this method, let's use curl to perform the POST:
 
-    curl -X POST -d "name=foo&country=USA" http://localhost:4567/customer
+    curl -X POST -d "name=foo&country=Mexico" http://localhost:4567/customer
 
 Now open an `irb` session, type `require './example'` to load our DataMapper
-code, and type `Customer.last` to retrieve the last Customer, which should
+code, and type `Customer.last` to retrieve the last customer, which should
 look something like this, with the `name` set to `foo`:
 
-    #<Customer @cust_num=2107 @name="foo" ...
+    #<Customer @cust_num=2107 @name="foo" @country="Mexico" ...
 
-### 
+### PUT and PATCH (update)
 
+To update an existing customer, we will use the HTTP methods PUT and PATCH.
+The difference is that PUT is for completely replacing the entire customer
+object, while PATCH is for retaining the existing customer but only replacing
+*some* of its attributes (like a merge).  [PATCH][13] is relatively recent,
+having only been proposed in 2010.
+
+    put '/customer/:cust_num' do |cust_num|
+      @customer = Customer.get(cust_num)
+      if @customer
+        @customer.destroy && Customer.create(params.merge({:cust_num => cust_num}))
+      else
+        not_found 'unknown customer'
+      end
+    end
+
+    patch '/customer/:cust_num' do |cust_num|
+      @customer = Customer.get(cust_num)
+      if @customer
+        @customer.attributes = params.reject{|k,v| k == :cust_num}
+        @customer.save
+      else
+        not_found 'unknown customer'
+      end
+    end
+
+Not much special going on here... we use reject in the `patch` method to
+prevent users from changing the `cust_num` PK.  Other than that, pretty
+simple.  Let's test PUT with curl:
+
+    curl -X PUT -d "name=bar" http://localhost:4567/customer/2107
+
+Verify with `irb`:
+
+    Customer.get(2107)
+    # => 
+
+
+Now let's test PATCH:
+
+    curl -X PATCH 
+
+### DELETE
+
+Finally, to delete a customer, we simply add a method like this:
+
+    delete '/customer/:cust_num' do |cust_num|
+      @customer = Customer.get(cust_num)
+      if @customer
+        @customer.destroy
+      else
+        not_found 'unknown customer'
+      end
+    end
+
+Once again we test with curl:
+
+    curl -X DELETE http://localhost:4567/customer/2107
+
+and then verify that the customer is gone from `irb`:
+
+    Customer.find(2107) # => nil
 
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: http://datamapper.org
@@ -207,3 +266,4 @@ look something like this, with the `name` set to `foo`:
 [10]: http://localhost:4567/customers
 [11]: https://chrome.google.com/webstore/detail/chklaanhfefbnpoihckbnefhakgolnmc
 [12]: http://www.ruby-doc.org/core-1.9.3/Hash.html
+[13]: http://tools.ietf.org/html/rfc5789
