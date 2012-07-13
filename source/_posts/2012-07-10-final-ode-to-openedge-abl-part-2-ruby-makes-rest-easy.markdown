@@ -11,12 +11,13 @@ In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using an adapter for the [DataMapper][2] ORM framework.
 
 Now, we are going to use that ability and harness the power of Ruby to
-rapidly prototype RESTful Web services. REST is a pretty big topic and if you
+rapidly prototype a RESTful Web service. REST is a pretty big topic and if you
 are unfamiliar with it you should probably invest some effort into
 learning about it.  However, the simplified version is that it is a way to
 describe resources and actions involving said resources.  The HTTP protocol
 that powers the Web was basically built specifically to implement REST
-principles.
+principles.  Therefore, if your resources can respond properly to all the HTTP
+methods than you are probably pretty RESTful.
 
 In researching this article I tried to find some existing examples of REST
 in use in the OpenEdge community to compare to.  All I found were some murmurs
@@ -36,8 +37,9 @@ we are going to use [Sinatra][6].
 ## Setup
 
 I am going to assume that you are following along from [part 1][1] and have
-already installed JRuby using rvm.  If so, let's install a newer version of
-JRuby and create a new gemset for this demo:
+already installed JRuby using rvm (if not, go back and do so).  Let's proceed
+by installing a newer version of JRuby and creating a fresh gemset to namespace
+our gems for this demo:
 
     rvm install jruby-1.7.0.preview1
     rvm use --create jruby-1.7.0.preview1@openedge-sinatra
@@ -58,19 +60,23 @@ this line at the bottom:
 
     gem "sinatra", "~> 1.3.2"
 
-Now we are ready to install all our gems using bundler. Type
+Now we are ready to install the gems using bundler by typing
 
     bundle install
 
-to install them.
-
 ## Sinatra
 
-Sinatra is essentially a very simple DSL for specifying how to respond to
-HTTP requests.  It comes bundled with a simple Web server called WEBrick.
+Sinatra is essentially a very simple [Domain-specific language][8] (DSL) for
+specifying how to respond to
+HTTP requests.  It isn't a Web server in itself, so it will delegate to
+[WEBrick][15] (a Web server that comes built-in to Ruby's stdlib) if you don't
+have one.  WEBrick is fine for development, but should never be ran in a
+production environment as it is not optimized for that (obviously we won't be
+worrying about that here).
 
-Let's create a simple server to respond to the root url (`/`) with
-"hello world".  Create a file called `server.rb` and put this content in it:
+Let's create a simple server using Sinatra to respond to the root url (`/`)
+with `hello world`.  Create a file called `server.rb` and put this content in
+it:
 
 ```ruby
 require 'sinatra'
@@ -85,43 +91,55 @@ At this point we can start our Web server by running our Ruby code:
     ruby server.rb
 
 Now browse to [http://localhost:4567][7] in your browser. You should see
-the text `hello world` in the body of your browser. Does it shock you how
-simple that is?  Can you imagine how much work that would be in ABL?
+the text `hello world` in the body of your browser. If you're an ABL
+programmer, I hope you're shocked by how simple that is.
 
 Without waxing poetically too much, I'd like to point out some things about
 Ruby here that might look a bit like magic.
 
-First, it's that the `get` block that we are using
-almost reads like it is part of a language specific to Sinatra; however, it
-is just plain Ruby.  The flexibility of the Ruby language allows you to make
-[domain-specific languages][8] very easily; this `get` method is simply a
-method that has been moved into the global scope and accepts two arguments
-as parameters - the first being the path to match requests against and the
-second being a block.
+First, lines 3-5 probably don't look much like code.  That's because Sinatra
+is taking advantage of some features of Ruby to essentially make its own
+[DSL][8].  The first is that `get` is just a Ruby method that Sinatra has
+defined but moved into the global object scope so that it looks like a
+Ruby language keyword.  `get` takes two parameters - the first is a string
+that matches a path, in this case the root path `/`, while the second
+parameter is a block, which is the part between the `do ... end` (in this
+case it's just `'hello world'`.  Blocks can also be passed using curly
+braces (`{ }`); standard practice is to use braces for one-line blocks and
+`do ... end` for multi-line blocks.
 
 In Ruby, blocks are very important.  They are a [lexical closure][9], or a
 chunk of code that is bound to the lexical scope they are defined in (i.e.
 they can see variables defined outside of the block).  They are powerful
 because they let you pass around a block of code as an object.  The way that
 we are using them in our `get` method is to evaluate the first argument -
-the route, in this case the `'/'`, and if it matches to execute the code in the
-block.
+the route, in this case the `'/'` - and if it matches to execute the code in
+the second argument, i.e. the block.
 
-Secondly, putting parentheses around arguments is *optional* in Ruby, which
-is a boon to writing these DSLs as it makes the code look more like natural
-language than method calls.  In addition, another way to specify
-a block is with curly braces; therefore we could have written our Sinatra
-method like this, and it would still be valid (but not look much like a
-DSL):
+Secondly, you might note that the first argument to the `get` method - `'/'`
+doesn't look much like an argument because it doesn't have parentheses around
+it.  That's because in Ruby, parentheses are **optional** (well, as long as its
+not ambiguous to the interpreter that you are passing method arguments,
+anyway).
 
-    get('/'){ 'hello world' }
+Finally, in Ruby the final statement of a method/block is the return value;
+you don't need an explicit `return` statement.  You *can* use one, but
+it's not idiomatic Ruby and looks ugly; it's typically only used to
+short-circuit evaluation near the beginning of a method due to a problem with
+some state that should prevent execution from continuing.  Therefore, you can
+see that the return value of our `do ... end` block is simply and
+unconditionally the string `'hello world'`.
 
-Finally, note that our return value of `'hello world'` doesn't need an explicit
-return statement next to it - in Ruby, the return value of a method is simply
-the last line executed in the method. You *can* do explicit `return`s but it's
-not idiomatic Ruby and looks ugly; it's typically only used to short-circuit
-evaluation near the beginning of a method due to a problem with some state that
-should prevent execution from continuing.
+Taking all of the above into effect, it would also be valid to write our
+method as
+
+```ruby
+Sinatra::Base.get('/'){ return 'hello world' }
+```
+
+However, notice the difference in readability.  Ruby encourages the Sinatra
+method of creating mini-DSLs over making everything look like general, terse
+code, for good reason.
 
 ## Hooking into our models
 
@@ -129,21 +147,25 @@ Now that we have a running Web server, let's make it do something useful.
 Let's load our DataMapper code from part 1 and add a route to display all
 customers.  Edit your `server.rb` to look like this:
 
-    require 'sinatra'
-    require './example'
+```ruby
+require 'sinatra'
+require './example'
 
-    get '/customers' do
-      Customer.all.to_json
-    end
+get '/customers' do
+  Customer.all.to_json
+end
+```
 
 Restart the server and visit [http://localhost:4567/customers][10] in your
-browser, and voila - you should see a big JSON array of Customers!  If you're
-using Chrome I recommend the [JSONView][11] extension for improved readability.
+browser, and voila - you should see a big JSON array that contains every
+customer in our database!  If you're using Chrome I recommend the
+[JSONView][11] extension for improved readability.
 
 The URI that we just created is referred to as a "collection URI" as it returns
 a collection of resources rather than a single element.  Let's go ahead and add
-support for individual elements, and hit all the HTTP methods that correspond to
-the CRUD actions - GET (read), POST (create), PUT/PATCH (update), DELETE.
+support for individual elements, and implement all the HTTP methods that
+correspond to the CRUD actions - GET (read), POST (create), PUT/PATCH (update),
+DELETE.
 
 
 ### GET (read)
@@ -164,15 +186,18 @@ get '/customer/:cust_num' do |cust_num|
 end
 ```
 
-A few things to note here about Ruby.  First, that similar to methods, blocks
-can take parameters, which is what is between the vertical bars
-(`do |cust_num|`). The parameter in this case is obviously the customer number
-being passed in in the URL.
+A few more things to note here about Ruby.  First, that similar to methods,
+blocks can take parameters (`|cust_num|`). The block value for `cust_num`
+will be anything after `/customer/`, according to our route matcher.  If there
+was another `:param` in our routing string then we could have our block accept
+multiple arguments.
 
 Second, note that Ruby conditionals use "truthy" evaluation - everything in
 Ruby evaluates to true except `false` and `nil`.  Therefore, it is very common
-to just see the object used in a conditional rather than an explicit nil check
-such as `if @customer.nil?` (which is a code smell and less readable to boot).
+to just use the actual object in a conditional rather than adding an explicit
+check to see if it is not nil, because an initialized object will have a
+non-nil value anyway.  You *can* explicitly check for nil using
+`@customer.nil?`, but it is almost always unnecessary and is a code smell.
 
 Finally, note that again we are taking advantage of Ruby's DSL-supporting
 features of the return value of a method being the last statement it evaluates
@@ -180,7 +205,7 @@ and the lack of parentheses around the call to the `not_found` method.
 
 ### POST (create)
 
-Next, let's support creating a new resource using the HTTP POST method.  Add
+Next, let's support creating a new customer using the HTTP POST method.  Add
 this code to `server.rb`:
 
 ```ruby
@@ -237,9 +262,15 @@ patch '/customer/:cust_num' do |cust_num|
 end
 ```
 
-Not much special going on here... we use reject in the `patch` method to
-prevent users from changing the `cust_num` PK.  Other than that, pretty
-simple.  Let's test PUT with curl:
+There's not a whole lot going on here, besides the `&&` which is just for
+chaining method calls together, as long as the previous one in the chain
+returned true (you've probably seen it in bash scripts or many other
+languages).  Also, we use [`merge`][17] in the `put` method to force
+`cust_num` to be the value passed in from the URL, and not a value that the
+user provides.  For the same reason, we use [reject][16] in the `patch` method
+to pull out the any user-provided value for `cust_num`.
+
+Let's test PUT with curl:
 
     curl -X PUT -d "name=bar" http://localhost:4567/customer/2107
 
@@ -279,27 +310,30 @@ The output from curl verifies that it works:
 
 ### DELETE
 
-Finally, to delete a customer, we simply add a method like this:
+Finally, to delete a customer, we simply define a method like this:
 
-    delete '/customer/:cust_num' do |cust_num|
-      @customer = Customer.get(cust_num)
-      if @customer
-        @customer.destroy
-      else
-        not_found 'unknown customer'
-      end
-    end
+```ruby
+delete '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.destroy
+  else
+    not_found 'unknown customer'
+  end
+end
+```
 
 Once again we test with curl, this time adding the `-I` option, which displays
 the HTTP headers of the response.  Alternatively, we could change the response
 object in our server code to return some type of `{status: "success"}` JSON
 but then it would probably make sense to change the rest of our methods too,
-so we will take the simple way out:
+so we will take the simple way out and just pay attention to the HTTP response
+code:
 
     curl -IX DELETE http://localhost:4567/customer/2107
 
-You should see an HTTP 200 code on the first line of the response, which means
-that the request was successful.  Something like this:
+You should see an `200 OK` HTTP header on the first line of the response, which
+means that the request was successful.  It should look something like this:
 
     HTTP/1.1 200 OK 
     X-Frame-Options: sameorigin
@@ -311,9 +345,16 @@ that the request was successful.  Something like this:
     Connection: Keep-Alive
 
 To verify that the customer really is deleted, you can either repeat the same
-command we just did, or more properly do a GET request and you should see a
-response header of 404 Not Found with a body of `unknown customer`.
+command we just did, or just a simple GET request and you should see a response
+header of `404 Not Found` with a body of `unknown customer`.
 
+### Putting it all together
+
+If you've been following along, your `server.rb` should look like this:
+
+{% gist 3102551 server.rb %}
+
+That's a RESTful API for customers in 50 lines of code!
 
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: http://datamapper.org
@@ -329,3 +370,7 @@ response header of 404 Not Found with a body of `unknown customer`.
 [12]: http://www.ruby-doc.org/core-1.9.3/Hash.html
 [13]: http://tools.ietf.org/html/rfc5789
 [14]: http://en.wikipedia.org/wiki/CURL
+[15]: http://en.wikipedia.org/wiki/WEBrick
+[16]: http://www.ruby-doc.org/core-1.9.3/Hash.html#method-i-reject
+[17]: http://www.ruby-doc.org/core-1.9.3/Hash.html#method-i-merge
+
