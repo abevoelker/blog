@@ -11,19 +11,19 @@ In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using an adapter for the [DataMapper][2] ORM framework.
 
 Now, we are going to use that ability and harness the power of Ruby to
-rapidly prototype a RESTful Web service. REST is a pretty big topic and if you
-are unfamiliar with it you should probably invest some effort into
+rapidly prototype a RESTful Web service. [REST][18] is a pretty big topic and
+if you are unfamiliar with it you should probably invest some effort into
 learning about it.  However, the simplified version is that it is a way to
 describe resources and actions involving said resources.  The HTTP protocol
 that powers the Web was basically built specifically to implement REST
 principles.  Therefore, if your resources can respond properly to all the HTTP
-methods than you are probably pretty RESTful.
+methods than your service is probably pretty RESTful.
 
 In researching this article I tried to find some existing examples of REST
 in use in the OpenEdge community to compare to.  All I found were some murmurs
 about a [REST adapter][5] that Progress Corp. was supposedly going to provide
 for AppServers / WebSpeed as part of OpenEdge 11 which apparently hasn't
-materialized, and a "Web 2.0" "RIA" [product][3] sold by BravePoint which
+materialized, and a "Web 2.0 RIA" [product][3] sold by BravePoint which
 doesn't use REST at all but uses some proprietary "[RPC Engine][4]" to
 communicate between client (JavaScript) and server (WebSpeed broker).
 
@@ -71,8 +71,8 @@ specifying how to respond to
 HTTP requests.  It isn't a Web server in itself, so it will delegate to
 [WEBrick][15] (a Web server that comes built-in to Ruby's stdlib) if you don't
 have one.  WEBrick is fine for development, but should never be ran in a
-production environment as it is not optimized for that (obviously we won't be
-worrying about that here).
+production environment as it is not optimized for that. Obviously we won't be
+worrying about that here, but keep it in mind if you continue using Ruby.
 
 Let's create a simple server using Sinatra to respond to the root url (`/`)
 with `hello world`.  Create a file called `server.rb` and put this content in
@@ -116,13 +116,13 @@ we are using them in our `get` method is to evaluate the first argument -
 the route, in this case the `'/'` - and if it matches to execute the code in
 the second argument, i.e. the block.
 
-Secondly, you might note that the first argument to the `get` method - `'/'`
+Secondly, you might note that the first argument to the `get` method - `'/'` -
 doesn't look much like an argument because it doesn't have parentheses around
 it.  That's because in Ruby, parentheses are **optional** (well, as long as its
 not ambiguous to the interpreter that you are passing method arguments,
 anyway).
 
-Finally, in Ruby the final statement of a method/block is the return value;
+Finally, in Ruby the last statement of a method/block is the return value;
 you don't need an explicit `return` statement.  You *can* use one, but
 it's not idiomatic Ruby and looks ugly; it's typically only used to
 short-circuit evaluation near the beginning of a method due to a problem with
@@ -130,7 +130,7 @@ some state that should prevent execution from continuing.  Therefore, you can
 see that the return value of our `do ... end` block is simply and
 unconditionally the string `'hello world'`.
 
-Taking all of the above into effect, it would also be valid to write our
+Taking all of the above into consideration, it would also be valid to write our
 method as
 
 ```ruby
@@ -161,7 +161,7 @@ browser, and voila - you should see a big JSON array that contains every
 customer in our database!  If you're using Chrome I recommend the
 [JSONView][11] extension for improved readability.
 
-The URI that we just created is referred to as a "collection URI" as it returns
+The URI that we just created is referred to as a *collection URI* as it returns
 a collection of resources rather than a single element.  Let's go ahead and add
 support for individual elements, and implement all the HTTP methods that
 correspond to the CRUD actions - GET (read), POST (create), PUT/PATCH (update),
@@ -171,9 +171,9 @@ DELETE.
 ### GET (read)
 
 We already implemented this HTTP type for our collection URI.  The only added
-complexity we need for a single element is to handle the ID of the element that
-the user is requesting.  Sinatra makes this very easy by providing support for
-this in its route matchers.  Add this to your `sinatra.rb` file:
+complexity we need for a single element is to accept the primary key of the
+element that the user is requesting.  Sinatra makes this very easy by providing
+support for this in its route matcher.  Add this to your `sinatra.rb` file:
 
 ```ruby
 get '/customer/:cust_num' do |cust_num|
@@ -188,12 +188,13 @@ end
 
 A few more things to note here about Ruby.  First, that similar to methods,
 blocks can take parameters (`|cust_num|`). The block value for `cust_num`
-will be anything after `/customer/`, according to our route matcher.  If there
-was another `:param` in our routing string then we could have our block accept
-multiple arguments.
+will be anything after `/customer/` in the request URL, according to our route
+matcher.  If there was another `:param` in our routing string then we could
+have our block accept multiple arguments.
 
-Second, note that Ruby conditionals use "truthy" evaluation - everything in
-Ruby evaluates to true except `false` and `nil`.  Therefore, it is very common
+Second, note the conditional on line 3; Ruby conditionals evaluate anything
+other than `false` and `nil` as true (this is known as "truthy" evaluation).
+Therefore, it is very common
 to just use the actual object in a conditional rather than adding an explicit
 check to see if it is not nil, because an initialized object will have a
 non-nil value anyway.  You *can* explicitly check for nil using
@@ -265,10 +266,10 @@ end
 There's not a whole lot going on here, besides the `&&` which is just for
 chaining method calls together, as long as the previous one in the chain
 returned true (you've probably seen it in bash scripts or many other
-languages).  Also, we use [`merge`][17] in the `put` method to force
+languages).  Also, we use [`Hash#merge`][17] in the `put` method to force
 `cust_num` to be the value passed in from the URL, and not a value that the
-user provides.  For the same reason, we use [reject][16] in the `patch` method
-to pull out the any user-provided value for `cust_num`.
+user provides.  For the same reason, we use [`Hash#reject`][16] in the `patch`
+method to pull out any user-provided value for `cust_num`.
 
 Let's test PUT with curl:
 
@@ -324,15 +325,15 @@ end
 ```
 
 Once again we test with curl, this time adding the `-I` option, which displays
-the HTTP headers of the response.  Alternatively, we could change the response
-object in our server code to return some type of `{status: "success"}` JSON
+the HTTP headers of the response.  Alternatively, we could change our server
+code to return some type of `{status: "success"}` JSON in the response body
 but then it would probably make sense to change the rest of our methods too,
 so we will take the simple way out and just pay attention to the HTTP response
 code:
 
     curl -IX DELETE http://localhost:4567/customer/2107
 
-You should see an `200 OK` HTTP header on the first line of the response, which
+You should see a `200 OK` HTTP header on the first line of the response, which
 means that the request was successful.  It should look something like this:
 
     HTTP/1.1 200 OK 
@@ -354,7 +355,28 @@ If you've been following along, your `server.rb` should look like this:
 
 {% gist 3102551 server.rb %}
 
-That's a RESTful API for customers in 50 lines of code!
+That's a RESTful JSON API for customers in 50 lines of code!
+
+### Rails
+
+I was tempted to make this blog post be about creating a [Rails][19] app, but I
+was afraid that I would spend too much time having to explain the way that Rails
+works and hand-waving a lot of things, so I focused instead on Sinatra and just
+making an API rather than a fully featured CRUD Web app (which Rails excels at).
+
+If you found this post enlightening, I highly recommend that you delve further
+into the topic by creating a Rails app; if you are going to be using the OpenEdge
+adapter then you will need the [dm-rails][20] gem, which will replace the
+default ORM in Rails (ActiveRecord) with DataMapper.  The best tutorial on
+Rails is [Michael Hartl's Rails tutorial][21], which is what I learned from.
+
+Some cool things that I could have shown if I went the Rails route are
+
+* Easily adding support for more resources and their relationships, which
+  would have cluttered up the Sinatra code
+* Support HTML representations of resources, including easy generation of
+  HTML forms for creating and editing new resources - very good for CRUD
+  apps!
 
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: http://datamapper.org
@@ -373,4 +395,7 @@ That's a RESTful API for customers in 50 lines of code!
 [15]: http://en.wikipedia.org/wiki/WEBrick
 [16]: http://www.ruby-doc.org/core-1.9.3/Hash.html#method-i-reject
 [17]: http://www.ruby-doc.org/core-1.9.3/Hash.html#method-i-merge
-
+[18]: http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
+[19]: http://guides.rubyonrails.org/
+[20]: https://github.com/datamapper/dm-rails
+[21]: http://ruby.railstutorial.org/
