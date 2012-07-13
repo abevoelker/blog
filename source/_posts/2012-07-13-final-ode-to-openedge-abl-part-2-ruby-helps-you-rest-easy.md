@@ -8,12 +8,12 @@ published: false
 ---
 
 In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
-database by using an adapter for the [DataMapper][2] ORM framework.
+database by using [an adapter][22] for the [DataMapper][2] ORM framework.
 
-Now, we are going to use that ability and harness the power of Ruby to
-rapidly prototype a RESTful Web service. [REST][18] is a pretty big topic and
+Now, we are going to use that ability to demonstrate the power of Ruby by
+rapidly prototyping a RESTful Web service. [REST][18] is a pretty big topic and
 if you are unfamiliar with it you should probably invest some effort into
-learning about it.  However, the simplified version is that it is a way to
+learning about it.  The simplified version is that it is a way to
 describe resources and actions involving said resources.  The HTTP protocol
 that powers the Web was basically built specifically to implement REST
 principles.  Therefore, if your resources can respond properly to all the HTTP
@@ -204,6 +204,18 @@ Finally, note that again we are taking advantage of Ruby's DSL-supporting
 features of the return value of a method being the last statement it evaluates
 and the lack of parentheses around the call to the `not_found` method.
 
+To test our method, let's use a Unix utility called [curl][14] to fetch just
+the first customer (alternatively, you could visit the address in your
+browser):
+
+    curl http://localhost:4567/customer/1
+
+You should see this JSON get output on your console:
+
+```json
+{"cust_num":1,"name":"Lift Tours","country":"USA","address":"276 North Drive","address2":"","city":"Burlington","state":"MA","postal_code":"01730","contact":"Gloria Shepley","phone":"(617) 450-0086","sales_rep":"HXM","credit_limit":"0.667E5","balance":"0.90364E3","terms":"Net30","discount":35,"comments":"This customer is on credit hold.","fax":"","email_address":""}
+```
+
 ### POST (create)
 
 Next, let's support creating a new customer using the HTTP POST method.  Add
@@ -221,7 +233,8 @@ attributes, which is what we're passing in (Sinatra stores our parameters in a
 hash called `params`).  The only tricky part is getting the next customer
 number to use for insertion, as we don't have a sequence.
 
-To test this method, let's use [curl][14] to perform the POST:
+To test this method we can again use curl, specifying the HTTP POST header
+with the `-X` option and parameters with `-d`:
 
     curl -X POST -d "name=foo&country=Mexico" http://localhost:4567/customer
 
@@ -355,22 +368,25 @@ If you've been following along, your `server.rb` should look like this:
 
 {% gist 3102551 server.rb %}
 
-That's a RESTful JSON API for customers in 50 lines of code!
+That's a RESTful JSON API for `sports2000` customers in 50 lines of code! Do
+you think you can do that in ABL?
 
 ### Rails
 
 I was tempted to make this blog post be about creating a [Rails][19] app, but I
 was afraid that I would spend too much time having to explain the way that Rails
 works and hand-waving a lot of things, so I focused instead on Sinatra and just
-making an API rather than a fully featured CRUD Web app (which Rails excels at).
+making a simple API rather than a fully featured CRUD Web app (which Rails
+would excel).
 
 If you found this post enlightening, I highly recommend that you delve further
-into the topic by creating a Rails app; if you are going to be using the OpenEdge
+into the topic by creating a Rails app on your own; if you are going to be
+using the OpenEdge
 adapter then you will need the [dm-rails][20] gem, which will replace the
 default ORM in Rails (ActiveRecord) with DataMapper.  The best tutorial on
 Rails is [Michael Hartl's Rails tutorial][21], which is what I learned from.
 
-Some cool things that I could have shown if I went the Rails route are
+Some cool things that I could have shown if I went the Rails route are:
 
 * Easily adding support for more resources and their relationships, which
   would have cluttered up the Sinatra code
@@ -399,3 +415,4 @@ Some cool things that I could have shown if I went the Rails route are
 [19]: http://guides.rubyonrails.org/
 [20]: https://github.com/datamapper/dm-rails
 [21]: http://ruby.railstutorial.org/
+[22]: https://github.com/abevoelker/dm-openedge-adapter
