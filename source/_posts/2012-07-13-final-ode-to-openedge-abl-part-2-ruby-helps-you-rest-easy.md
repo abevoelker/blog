@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Final Ode to OpenEdge ABL Part 2: Ruby makes REST easy"
-date: 2012-07-10 21:35
+title: "Final Ode to OpenEdge ABL Part 2: Ruby Helps You REST Easy"
+date: 2012-07-13 19:00
 comments: true
 categories: 
 published: false
