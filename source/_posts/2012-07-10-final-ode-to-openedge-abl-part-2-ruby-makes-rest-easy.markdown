@@ -14,25 +14,24 @@ Now, we are going to use that ability and harness the power of Ruby to
 rapidly prototype RESTful Web services. REST is a pretty big topic and if you
 are unfamiliar with it you should probably invest some effort into
 learning about it.  However, the simplified version is that it is a way to
-describe resources and actions involving said resources; the HTTP protocol
+describe resources and actions involving said resources.  The HTTP protocol
 that powers the Web was basically built specifically to implement REST
 principles.
 
 In researching this article I tried to find some existing examples of REST
-in use in the OpenEdge community to compare to.  All I found were some rumblings
+in use in the OpenEdge community to compare to.  All I found were some murmurs
 about a [REST adapter][5] that Progress Corp. was supposedly going to provide
 for AppServers / WebSpeed as part of OpenEdge 11 which apparently hasn't
-materialized, and a "Web 2.0" "RIA" [a product][3] sold by BravePoint which
+materialized, and a "Web 2.0" "RIA" [product][3] sold by BravePoint which
 doesn't use REST at all but uses some proprietary "[RPC Engine][4]" to
-communicate between client (JavaScript) and server (WebSpeed broker); using
-RPC here is Doing It Wrong if you ask me.
+communicate between client (JavaScript) and server (WebSpeed broker).
 
-We have no existing OpenEdge prior art to compare to, so let's break new
-ground.  We are going to start by building a barebones REST API for a single
-resource - customers.  We are going to support all the basic CRUD actions,
-which in HTTP terms are POST for create, GET for read, PUT/PATCH for update,
-and DELETE for delete/destroy.  For this example we are going to use
-[Sinatra][6].
+Knowing that we have no existing prior art in the OpenEdge community to compare
+to, let's break new ground and do it ourselves.  We are going to start by
+building a barebones REST API for a single resource - customers.  We are going
+to support all the basic CRUD actions, which in HTTP terms are POST for create,
+GET for read, PUT/PATCH for update, and DELETE for... delete.  For this example
+we are going to use [Sinatra][6].
 
 ## Setup
 
@@ -51,43 +50,46 @@ defined (if you still have the code just copy it to a new directory):
 
 If this is a fresh clone be sure to change the database parameters on line
 4 of `example.rb` to match yours, and potentially change the version of
-OpenEdge on line 4 of the `Gemfile`.
+OpenEdge on line 4 of the `Gemfile` to use a different JDBC driver loading
+mechanism.
 
-Next, we are going to add the `sinatra` gem to our Gemfile before
-installing our gems.  Open the `Gemfile` and add this line at the bottom:
+Next, we are going to install the `sinatra` gem.  Open the `Gemfile` and add
+this line at the bottom:
 
     gem "sinatra", "~> 1.3.2"
 
-Now we are ready to install our gems using bundler. Type
+Now we are ready to install all our gems using bundler. Type
 
     bundle install
 
-to install the gems.
+to install them.
 
 ## Sinatra
 
-Sinatra is essentially a very simple Web server with a simple DSL for
-specifying which requests to respond to, and the content to respond with.
+Sinatra is essentially a very simple DSL for specifying how to respond to
+HTTP requests.  It comes bundled with a simple Web server called WEBrick.
+
 Let's create a simple server to respond to the root url (`/`) with
 "hello world".  Create a file called `server.rb` and put this content in it:
 
-    require 'sinatra'
+```ruby
+require 'sinatra'
 
-    get '/' do
-      'hello world'
-    end
+get '/' do
+  'hello world'
+end
+```
 
-At this point we can start our Web server by executing the code by
-typing
+At this point we can start our Web server by running our Ruby code:
 
     ruby server.rb
 
-and browsing to [http://localhost:4567][7] in your browser. You should see
+Now browse to [http://localhost:4567][7] in your browser. You should see
 the text `hello world` in the body of your browser. Does it shock you how
 simple that is?  Can you imagine how much work that would be in ABL?
 
-Without waxing poetically about Ruby too much, I'd like to point out a
-couple of things here that might look a bit like magic.
+Without waxing poetically too much, I'd like to point out some things about
+Ruby here that might look a bit like magic.
 
 First, it's that the `get` block that we are using
 almost reads like it is part of a language specific to Sinatra; however, it
@@ -95,17 +97,26 @@ is just plain Ruby.  The flexibility of the Ruby language allows you to make
 [domain-specific languages][8] very easily; this `get` method is simply a
 method that has been moved into the global scope and accepts two arguments
 as parameters - the first being the path to match requests against and the
-second being a block - which in turn is a [lexical closure][9], or a chunk
-of code that is bound to the lexical scope it is defined in - to be evaluated
-on path matches.  In Ruby, putting parentheses around arguments is *optional*,
-which is a boon to writing these DSLs.  In addition, another way to specify
+second being a block.
+
+In Ruby, blocks are very important.  They are a [lexical closure][9], or a
+chunk of code that is bound to the lexical scope they are defined in (i.e.
+they can see variables defined outside of the block).  They are powerful
+because they let you pass around a block of code as an object.  The way that
+we are using them in our `get` method is to evaluate the first argument -
+the route, in this case the `'/'`, and if it matches to execute the code in the
+block.
+
+Secondly, putting parentheses around arguments is *optional* in Ruby, which
+is a boon to writing these DSLs as it makes the code look more like natural
+language than method calls.  In addition, another way to specify
 a block is with curly braces; therefore we could have written our Sinatra
 method like this, and it would still be valid (but not look much like a
 DSL):
 
     get('/'){ 'hello world' }
 
-Secondly, note that our return value of `'hello world'` doesn't need an explicit
+Finally, note that our return value of `'hello world'` doesn't need an explicit
 return statement next to it - in Ruby, the return value of a method is simply
 the last line executed in the method. You *can* do explicit `return`s but it's
 not idiomatic Ruby and looks ugly; it's typically only used to short-circuit
@@ -115,7 +126,7 @@ should prevent execution from continuing.
 ## Hooking into our models
 
 Now that we have a running Web server, let's make it do something useful.
-Let's load our DataMapper code from part 1 and adding a route to display all
+Let's load our DataMapper code from part 1 and add a route to display all
 customers.  Edit your `server.rb` to look like this:
 
     require 'sinatra'
@@ -125,9 +136,9 @@ customers.  Edit your `server.rb` to look like this:
       Customer.all.to_json
     end
 
-Now visit [http://localhost:4567/customers][10] in your browser, and voila -
-you should see a big JSON array of Customers (if you're using Chrome, which you
-should be, I recommend the [JSONView][11] extension for maximum readability)!
+Restart the server and visit [http://localhost:4567/customers][10] in your
+browser, and voila - you should see a big JSON array of Customers!  If you're
+using Chrome I recommend the [JSONView][11] extension for improved readability.
 
 The URI that we just created is referred to as a "collection URI" as it returns
 a collection of resources rather than a single element.  Let's go ahead and add
@@ -142,19 +153,21 @@ complexity we need for a single element is to handle the ID of the element that
 the user is requesting.  Sinatra makes this very easy by providing support for
 this in its route matchers.  Add this to your `sinatra.rb` file:
 
-    get '/customer/:cust_num' do |cust_num|
-      @customer = Customer.get(cust_num)
-      if @customer
-        @customer.to_json
-      else
-        not_found 'unknown customer'
-      end
-    end
+```ruby
+get '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.to_json
+  else
+    not_found 'unknown customer'
+  end
+end
+```
 
-A few things to note here.  First, that similar to methods, blocks can take
-parameters, which is what is between the vertical bars (`do |cust_num|`).
-The parameter in this case is obviously the customer number being passed in
-in the URL.
+A few things to note here about Ruby.  First, that similar to methods, blocks
+can take parameters, which is what is between the vertical bars
+(`do |cust_num|`). The parameter in this case is obviously the customer number
+being passed in in the URL.
 
 Second, note that Ruby conditionals use "truthy" evaluation - everything in
 Ruby evaluates to true except `false` and `nil`.  Therefore, it is very common
@@ -170,52 +183,59 @@ and the lack of parentheses around the call to the `not_found` method.
 Next, let's support creating a new resource using the HTTP POST method.  Add
 this code to `server.rb`:
 
-    post '/customer' do
-      next_id = Customer.last.cust_num + 1
-      Customer.create(params.merge(:cust_num => next_id))
-    end
+```ruby
+post '/customer' do
+  next_id = Customer.last.cust_num + 1
+  Customer.create(params.merge(:cust_num => next_id))
+end
+```
 
 This one is pretty easy as DataMapper's `create` method accepts a [hash][12] of
 attributes, which is what we're passing in (Sinatra stores our parameters in a
 hash called `params`).  The only tricky part is getting the next customer
 number to use for insertion, as we don't have a sequence.
 
-To test this method, let's use curl to perform the POST:
+To test this method, let's use [curl][14] to perform the POST:
 
     curl -X POST -d "name=foo&country=Mexico" http://localhost:4567/customer
 
-Now open an `irb` session, type `require './example'` to load our DataMapper
-code, and type `Customer.last` to retrieve the last customer, which should
-look something like this, with the `name` set to `foo`:
+You should see a response with the JSON data of our new customer appear in the
+console.  It should look something like this:
 
-    #<Customer @cust_num=2107 @name="foo" @country="Mexico" ...
+```json
+{"cust_num":2107,"name":"foo","country":"Mexico","address":null,"address2":null,"city":null,"state":null,"postal_code":null,"contact":null,"phone":null,"sales_rep":null,"credit_limit":null,"balance":null,"terms":null,"discount":null,"comments":null,"fax":null,"email_address":null}
+```
 
 ### PUT and PATCH (update)
 
 To update an existing customer, we will use the HTTP methods PUT and PATCH.
 The difference is that PUT is for completely replacing the entire customer
 object, while PATCH is for retaining the existing customer but only replacing
-*some* of its attributes (like a merge).  [PATCH][13] is relatively recent,
+*some* of its attributes (i.e. a merge).  [PATCH][13] is relatively recent,
 having only been proposed in 2010.
 
-    put '/customer/:cust_num' do |cust_num|
-      @customer = Customer.get(cust_num)
-      if @customer
-        @customer.destroy && Customer.create(params.merge({:cust_num => cust_num}))
-      else
-        not_found 'unknown customer'
-      end
-    end
+```ruby
+put '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.destroy && Customer.create(request.params.merge({'cust_num' => cust_num}))
+    @customer.to_json
+  else
+    not_found 'unknown customer'
+  end
+end
 
-    patch '/customer/:cust_num' do |cust_num|
-      @customer = Customer.get(cust_num)
-      if @customer
-        @customer.attributes = params.reject{|k,v| k == :cust_num}
-        @customer.save
-      else
-        not_found 'unknown customer'
-      end
-    end
+patch '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.attributes = request.params.reject{|k,v| k == 'cust_num'}
+    @customer.save
+    @customer.to_json
+  else
+    not_found 'unknown customer'
+  end
+end
+```
 
 Not much special going on here... we use reject in the `patch` method to
 prevent users from changing the `cust_num` PK.  Other than that, pretty
@@ -223,15 +243,39 @@ simple.  Let's test PUT with curl:
 
     curl -X PUT -d "name=bar" http://localhost:4567/customer/2107
 
-Verify with `irb`:
+You should see a result like this:
 
-    Customer.get(2107)
-    # => 
+```json
+{"cust_num":2107,"name":"bar","country":"USA","address":"","address2":"","city":"","state":"","postal_code":"","contact":"","phone":"","sales_rep":"","credit_limit":"0.15E4","balance":"0.0","terms":"Net30","discount":0,"comments":"","fax":"","email_address":""}
+```
 
+Notice that the customer's name did change to `bar` as expected, however the
+other attributes reverted to new object defaults (note country changed to
+`USA`).
 
 Now let's test PATCH:
 
-    curl -X PATCH 
+    curl -X PATCH -d "country=Mexico" http://localhost:4567/customer/2107
+
+You should see output like this:
+
+```json
+{"cust_num":2107,"name":"bar","country":"Mexico","address":"","address2":"","city":"","state":"","postal_code":"","contact":"","phone":"","sales_rep":"","credit_limit":"0.15E4","balance":"0.0","terms":"Net30","discount":0,"comments":"","fax":"","email_address":""}
+```
+
+Note that country changed to `Mexico` as expected, however the name remained
+`bar` because we are modifying the existing object and not creating a new one.
+
+To test our little security feature of disallowing the `cust_num` field to
+change, we can try passing it in like this:
+
+    curl -X PATCH -d "cust_num=9999" http://localhost:4567/customer/2107
+
+The output from curl verifies that it works:
+
+```json
+{"cust_num":2107,"name":"bar","country":"Mexico","address":"","address2":"","city":"","state":"","postal_code":"","contact":"","phone":"","sales_rep":"","credit_limit":"0.15E4","balance":"0.0","terms":"Net30","discount":0,"comments":"","fax":"","email_address":""}
+```
 
 ### DELETE
 
@@ -246,13 +290,30 @@ Finally, to delete a customer, we simply add a method like this:
       end
     end
 
-Once again we test with curl:
+Once again we test with curl, this time adding the `-I` option, which displays
+the HTTP headers of the response.  Alternatively, we could change the response
+object in our server code to return some type of `{status: "success"}` JSON
+but then it would probably make sense to change the rest of our methods too,
+so we will take the simple way out:
 
-    curl -X DELETE http://localhost:4567/customer/2107
+    curl -IX DELETE http://localhost:4567/customer/2107
 
-and then verify that the customer is gone from `irb`:
+You should see an HTTP 200 code on the first line of the response, which means
+that the request was successful.  Something like this:
 
-    Customer.find(2107) # => nil
+    HTTP/1.1 200 OK 
+    X-Frame-Options: sameorigin
+    X-Xss-Protection: 1; mode=block
+    Content-Type: text/html;charset=utf-8
+    Content-Length: 0
+    Server: WEBrick/1.3.1 (Ruby/1.9.2/2011-12-27)
+    Date: Fri, 13 Jul 2012 03:09:01 GMT
+    Connection: Keep-Alive
+
+To verify that the customer really is deleted, you can either repeat the same
+command we just did, or more properly do a GET request and you should see a
+response header of 404 Not Found with a body of `unknown customer`.
+
 
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: http://datamapper.org
@@ -267,3 +328,4 @@ and then verify that the customer is gone from `irb`:
 [11]: https://chrome.google.com/webstore/detail/chklaanhfefbnpoihckbnefhakgolnmc
 [12]: http://www.ruby-doc.org/core-1.9.3/Hash.html
 [13]: http://tools.ietf.org/html/rfc5789
+[14]: http://en.wikipedia.org/wiki/CURL
