@@ -251,7 +251,7 @@ console.  It should look something like this:
 
 ### PUT and PATCH (update)
 
-To update an existing customer, we will use the HTTP methods PUT and PATCH.
+To update an existing customer, we will support the HTTP methods PUT and PATCH.
 The difference is that PUT is for completely replacing the entire customer
 object, while PATCH is for retaining the existing customer but only replacing
 *some* of its attributes (i.e. a merge).  [PATCH][13] is relatively recent,
@@ -377,7 +377,16 @@ If you've been following along, your `server.rb` should look like this:
 That's a RESTful JSON API for `sports2000` customers in 50 lines of code! Do
 you think you can do that in ABL?
 
-### Ruby on Rails
+## Tests
+
+I agonized over whether to write this app from a test-driven development
+perspective, which would necessitate writing tests before writing the app code.
+I decided in the interest of absolute simplicity I would focus on the actual
+server code, but it would be an excellent learning experience to do this on
+your own.  Sinatra has some [good examples][27] of how to write tests for
+different test frameworks (I personally enjoy [RSpec][28]).
+
+## Ruby on Rails
 
 I was tempted to make this post be about creating a full CRUD app in [Rails][19]
 complete with HTML forms for creating/updating customers, but it would have
@@ -389,7 +398,7 @@ conventions and requires knowledge of that black magic to get up and running.
 The advantages with using Rails would have been that I could have
 had models and relationships for *every single table* in `sports2000`, and had
 complete HTML forms for CRUD actions be generated easily by Rails's
-[generators][23].  But it wasn't worth the added complexity.
+[generators][23].
 
 Although it wasn't worth the added complexity for this tutorial, I do think
 that Rails excels at the typical CRUD app (which is what most applications of
@@ -438,3 +447,5 @@ the comments.
 [24]: http://www.amazon.com/gp/product/0596516177/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0596516177&linkCode=as2&tag=perwebofabevo-20
 [25]: http://datamapper.org/docs/misc.html
 [26]: http://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning
+[27]: http://www.sinatrarb.com/testing.html
+[28]: http://rspec.info/
