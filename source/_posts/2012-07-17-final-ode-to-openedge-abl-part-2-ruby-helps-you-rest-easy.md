@@ -51,7 +51,7 @@ defined (if you still have the code just copy it to a new directory):
     cd openedge-sinatra
 
 If this is a fresh clone be sure to change the database parameters on line
-4 of `example.rb` to match yours, and potentially change the version of
+4 of `models.rb` to match yours, and potentially change the version of
 OpenEdge on line 4 of the `Gemfile` to use a different JDBC driver loading
 mechanism.
 
@@ -149,7 +149,7 @@ customers.  Edit your `server.rb` to look like this:
 
 ```ruby
 require 'sinatra'
-require './example'
+require './models'
 
 get '/customers' do
   Customer.all.to_json

@@ -131,7 +131,7 @@ from the Gemfile using bundler:
 
 ### Set the database parameters for example snippet
 
-Open the file `example.rb` and modify the line #4 that starts with
+Open the file `models.rb` and modify the line #4 that starts with
 `DataMapper.setup` to have the parameter values that correspond to your
 database.  It should take the form of
 
@@ -141,10 +141,10 @@ database.  It should take the form of
 
 ### Read it first
 
-Before running the `example.rb` code, it makes sense to take a look at it first
+Before running the `models.rb` code, it makes sense to take a look at it first
 and see what it is doing.  Here is the code:
 
-{% gist 3073736 example.rb %}
+{% gist 3073736 models.rb %}
 
 You can see that the code is very readable.  All it is really doing is
 specifying the definitions of a few tables of the `sports2000` database in
@@ -175,7 +175,7 @@ definition!
 ### Finally, execute the code
 
 Type `irb` to open up an interactive Ruby shell. To run the example code,
-simply type `require './example'`. If the code loaded successfully, you
+simply type `require './models'`. If the code loaded successfully, you
 should simple see `=> true` (the `=>` denotes the return value).  The rest
 of the commands in the following sections will be entered from within this
 `irb` shell.  If you are having issues, just post in the comments and I will
