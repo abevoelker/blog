@@ -10,7 +10,7 @@ published: false
 In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using [an adapter][22] for the [DataMapper][2] ORM framework.
 
-Now, we are going to use that ability to demonstrate the power of Ruby by
+In this post, I would like to demonstrate both the power and beauty of Ruby by
 rapidly prototyping a RESTful Web service. [REST][18] is a pretty big topic and
 if you are unfamiliar with it you should probably invest some effort into
 learning about it.  The simplified version is that it is a way to
@@ -138,7 +138,7 @@ Sinatra::Base.get('/'){ return 'hello world' }
 ```
 
 However, notice the difference in readability.  Ruby encourages the Sinatra
-method of creating mini-DSLs over making everything look like general, terse
+method of creating mini-DSLs over making everything look like generic, terse
 code, for good reason.
 
 ## Hooking into our models
@@ -157,7 +157,7 @@ end
 ```
 
 Restart the server and visit [http://localhost:4567/customers][10] in your
-browser, and voila - you should see a big JSON array that contains every
+browser, and voilà - you should see a big JSON array that contains every
 customer in our database!  If you're using Chrome I recommend the
 [JSONView][11] extension for improved readability.
 
@@ -198,7 +198,8 @@ Therefore, it is very common
 to just use the actual object in a conditional rather than adding an explicit
 check to see if it is not nil, because an initialized object will have a
 non-nil value anyway.  You *can* explicitly check for nil using
-`@customer.nil?`, but it is almost always unnecessary and is a code smell.
+`@customer.nil?`, but it is almost always unnecessary and is a definite code
+smell.
 
 Finally, note that again we are taking advantage of Ruby's DSL-supporting
 features of the return value of a method being the last statement it evaluates
@@ -231,7 +232,10 @@ end
 This one is pretty easy as DataMapper's `create` method accepts a [hash][12] of
 attributes, which is what we're passing in (Sinatra stores our parameters in a
 hash called `params`).  The only tricky part is getting the next customer
-number to use for insertion, as we don't have a sequence.
+number to use for insertion, as we don't have a sequence.  Also note that we
+are using [`Hash#merge`][17] to override any user-provided value for `cust_num`;
+this may actually not be a valid consideration if you want API users to be able
+to provide a value for this (personally I don't see why you would need this).
 
 To test this method we can again use curl, specifying the HTTP POST header
 with the `-X` option and parameters with `-d`:
@@ -277,9 +281,9 @@ end
 ```
 
 There's not a whole lot going on here, besides the `&&` which is just for
-chaining method calls together, as long as the previous one in the chain
-returned true (you've probably seen it in bash scripts or many other
-languages).  Also, we use [`Hash#merge`][17] in the `put` method to force
+chaining method calls together, continuing as long as every call returns true
+(you've probably seen it in bash scripts or many other
+languages).  Also, we again use [`Hash#merge`][17] in the `put` method to force
 `cust_num` to be the value passed in from the URL, and not a value that the
 user provides.  For the same reason, we use [`Hash#reject`][16] in the `patch`
 method to pull out any user-provided value for `cust_num`.
@@ -296,7 +300,7 @@ You should see a result like this:
 
 Notice that the customer's name did change to `bar` as expected, however the
 other attributes reverted to new object defaults (note country changed to
-`USA`).
+`USA`).  This is because we are creating an entirely new object.
 
 Now let's test PATCH:
 
@@ -359,8 +363,10 @@ means that the request was successful.  It should look something like this:
     Connection: Keep-Alive
 
 To verify that the customer really is deleted, you can either repeat the same
-command we just did, or just a simple GET request and you should see a response
-header of `404 Not Found` with a body of `unknown customer`.
+command we just did (side note: the ability to repeat this action without
+fear of causing side-effects is called [idempotence][26]), or just a simple GET
+request and you should see a response header of `404 Not Found` with a body of
+`unknown customer`.
 
 ### Putting it all together
 
@@ -371,28 +377,40 @@ If you've been following along, your `server.rb` should look like this:
 That's a RESTful JSON API for `sports2000` customers in 50 lines of code! Do
 you think you can do that in ABL?
 
-### Rails
+### Ruby on Rails
 
-I was tempted to make this blog post be about creating a [Rails][19] app, but I
-was afraid that I would spend too much time having to explain the way that Rails
-works and hand-waving a lot of things, so I focused instead on Sinatra and just
-making a simple API rather than a fully featured CRUD Web app (which Rails
-would excel).
+I was tempted to make this post be about creating a full CRUD app in [Rails][19]
+complete with HTML forms for creating/updating customers, but it would have
+required too much hand-waving to be of any use for people new to Ruby (my
+audience being ABL programmers).  Sticking with Sinatra keeps you closer to
+plain Ruby and keeps the code short and understandable; Rails has a lot of
+conventions and requires knowledge of that black magic to get up and running.
 
-If you found this post enlightening, I highly recommend that you delve further
-into the topic by creating a Rails app on your own; if you are going to be
-using the OpenEdge
-adapter then you will need the [dm-rails][20] gem, which will replace the
-default ORM in Rails (ActiveRecord) with DataMapper.  The best tutorial on
-Rails is [Michael Hartl's Rails tutorial][21], which is what I learned from.
+The advantages with using Rails would have been that I could have
+had models and relationships for *every single table* in `sports2000`, and had
+complete HTML forms for CRUD actions be generated easily by Rails's
+[generators][23].  But it wasn't worth the added complexity.
 
-Some cool things that I could have shown if I went the Rails route are:
+Although it wasn't worth the added complexity for this tutorial, I do think
+that Rails excels at the typical CRUD app (which is what most applications of
+ABL are) and would be worth exploring if you found this post enlightening.
+For learning Rails, the best resource I can recommend is
+[Michael Hartl's Rails tutorial][21]. However, I would first recommend getting
+a better foundation in Ruby, for which I recommend the book
+[The Ruby Programming Language][24] both as an overview and as a reference.
 
-* Easily adding support for more resources and their relationships, which
-  would have cluttered up the Sinatra code
-* Support HTML representations of resources, including easy generation of
-  HTML forms for creating and editing new resources - very good for CRUD
-  apps!
+Personally, I only learned Rails to pay the bills... Ruby the language is what
+really captivated me (although at this point the honeymoon is kind of over).
+
+## Next post(s) in series
+
+There doesn't seem to be much interest in this so far, so I may just cut it
+short with the next post with a short summation and some honest advice for
+Progress Software Corporation.  However, I also had an idea of showing how to
+do a simple database migration using DataMapper's ability to connect to
+[multiple databases][25] at the same time (called "contexts" in DataMapper
+lingo).  If you've been following along and that interests you let me know in
+the comments.
 
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: http://datamapper.org
@@ -416,3 +434,7 @@ Some cool things that I could have shown if I went the Rails route are:
 [20]: https://github.com/datamapper/dm-rails
 [21]: http://ruby.railstutorial.org/
 [22]: https://github.com/abevoelker/dm-openedge-adapter
+[23]: http://guides.rubyonrails.org/generators.html
+[24]: http://www.amazon.com/gp/product/0596516177/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0596516177&linkCode=as2&tag=perwebofabevo-20
+[25]: http://datamapper.org/docs/misc.html
+[26]: http://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning
