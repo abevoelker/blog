@@ -11,7 +11,10 @@ In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using [an adapter][22] for the [DataMapper][2] ORM framework.
 
 In this post, I would like to demonstrate both the power and beauty of Ruby by
-rapidly prototyping a RESTful Web service. [REST][18] is a pretty big topic and
+rapidly prototyping a RESTful Web service for `sports2000` **customers** using
+our new OpenEdge database adapter.
+
+[REST][18] is a pretty big topic and
 if you are unfamiliar with it you should probably invest some effort into
 learning about it.  The simplified version is that it is a way to
 describe resources and actions involving said resources.  The HTTP protocol
@@ -25,7 +28,7 @@ about a [REST adapter][5] that Progress Corp. was supposedly going to provide
 for AppServers / WebSpeed as part of OpenEdge 11 which apparently hasn't
 materialized, and a "Web 2.0 RIA" [product][3] sold by BravePoint which
 doesn't use REST at all but uses some proprietary "[RPC Engine][4]" to
-communicate between client (JavaScript) and server (WebSpeed broker).
+communicate between client (JavaScript) and server (WebSpeed).
 
 Knowing that we have no existing prior art in the OpenEdge community to compare
 to, let's break new ground and do it ourselves.  We are going to start by
@@ -33,6 +36,8 @@ building a barebones REST API for a single resource - customers.  We are going
 to support all the basic CRUD actions, which in HTTP terms are POST for create,
 GET for read, PUT/PATCH for update, and DELETE for... delete.  For this example
 we are going to use [Sinatra][6].
+
+<!-- more -->
 
 ## Setup
 
@@ -386,14 +391,18 @@ server code, but it would be an excellent learning experience to do this on
 your own.  Sinatra has some [good examples][27] of how to write tests for
 different test frameworks (I personally enjoy [RSpec][28]).
 
+It's definitely an industry best practice, and in my opinion practically a
+necessity for a language like Ruby that can bend like silly putty at runtime.
+
 ## Ruby on Rails
 
-I was tempted to make this post be about creating a full CRUD app in [Rails][19]
+I was also tempted to make this post be about creating a full CRUD app in
+[Rails][19],
 complete with HTML forms for creating/updating customers, but it would have
 required too much hand-waving to be of any use for people new to Ruby (my
 audience being ABL programmers).  Sticking with Sinatra keeps you closer to
 plain Ruby and keeps the code short and understandable; Rails has a lot of
-conventions and requires knowledge of that black magic to get up and running.
+conventions and requires knowledge of that black magic to do anything useful.
 
 The advantages with using Rails would have been that I could have
 had models and relationships for *every single table* in `sports2000`, and had
