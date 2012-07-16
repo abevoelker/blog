@@ -391,8 +391,9 @@ server code, but it would be an excellent learning experience to do this on
 your own.  Sinatra has some [good examples][27] of how to write tests for
 different test frameworks (I personally enjoy [RSpec][28]).
 
-It's definitely an industry best practice, and in my opinion practically a
-necessity for a language like Ruby that can bend like silly putty at runtime.
+Writing tests is definitely a best practice in the Ruby community, and in my
+opinion practically a necessity for a language such as Ruby that can bend like
+silly putty at runtime.
 
 ## Ruby on Rails
 
