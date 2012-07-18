@@ -27,7 +27,9 @@ In researching this article I tried to find some existing examples of REST
 in use in the OpenEdge community to compare to.  All I found were some murmurs
 about a [REST adapter][5] that Progress Corp. was supposedly going to provide
 for AppServers / WebSpeed as part of OpenEdge 11 which apparently hasn't
-materialized, and a "Web 2.0 RIA" [product][3] sold by BravePoint which
+materialized (update: Phillip Molly Malone, a PSC employee has stated that it
+is coming in OE 11.2.0 in 2013), and a "Web 2.0 RIA" [product][3] sold by
+BravePoint which
 doesn't use REST at all but uses some proprietary "[RPC Engine][4]" to
 communicate between client (JavaScript) and server (WebSpeed).
 
