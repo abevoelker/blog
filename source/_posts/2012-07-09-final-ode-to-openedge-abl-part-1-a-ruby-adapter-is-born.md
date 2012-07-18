@@ -388,7 +388,7 @@ Customer.get(2107) # => nil
 
 ## Future development
 
-As mentioned, this is alpha software.  If you use it and find any bugs,
+This is alpha software.  If you use it and find any bugs,
 I would be grateful if you report them (contact me directly or open a
 GitHub issue on [`dm-openedge-adapter`][7]).  Unfortunately, I don't have
 a lot of time to fix things quickly.
