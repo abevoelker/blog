@@ -4,7 +4,6 @@ title: "Final Ode to OpenEdge ABL Part 2: Ruby Helps You REST Easy"
 date: 2012-07-17 21:05
 comments: true
 categories: 
-published: false
 ---
 
 {% img left /images/openedge_clown_bed.jpg 240 180 Poor results when trying to REST with OpenEdge %}
