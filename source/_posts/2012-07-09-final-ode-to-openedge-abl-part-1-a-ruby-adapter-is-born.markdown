@@ -8,6 +8,14 @@ categories:
 
 {% img center /images/mass_extinction_event.jpg Foreground: ABL developers at work. Background: arrival of Ruby adapter %}
 
+<div class="alert-message error" markdown="1">
+**Update 2012/07/17**: If you installed the sample code before
+today, please try again with a fresh gemset
+(`rvm gemset empty; bundle install`) as the `do_jdbc` version I was providing
+was incorrect and would display error messages when used. Protip: if you're
+building gems from source, always do a `rake clean` before a `rake build`!
+</div>
+
 It's weird how I have trouble letting go.  Nearly two years ago, I wrote
 [a post][1] where I theorized a cure for a programming language and database
 that had tortured me at the first full-time programming job that I ever had:
@@ -428,6 +436,10 @@ representations).  Then, my final post will be some final musings on
 OpenEdge ABL and how to sandbox it; I think I will also give some
 parting advice to Progress Corp. on how they should open up ABL more.
 
+<div class="alert-message success" markdown="1">
+**Update**: [Part 2][15] has now been posted.
+</div>
+
 [1]: /cure_for_the_plague_openedge_migration/
 [2]: https://rvm.io/rvm/install/
 [3]: http://docs.rubygems.org/read/chapter/1#page22
@@ -442,3 +454,4 @@ parting advice to Progress Corp. on how they should open up ABL more.
 [12]: http://ruby-doc.org/core-1.8.7/Enumerable.html#method-i-reduce
 [13]: http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
 [14]: https://github.com/abevoelker/jdbc-openedge#openedge-versions-supported
+[15]: /final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/

@@ -7,12 +7,14 @@ categories:
 published: false
 ---
 
+{% img left /images/openedge_clown_bed.jpg 240 180 Poor results when trying to REST with OpenEdge %}
+
 In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using [an adapter][22] for the [DataMapper][2] ORM framework.
 
 In this post, I would like to demonstrate both the power and beauty of Ruby by
-rapidly prototyping a RESTful Web service for `sports2000` **customers** using
-our new OpenEdge database adapter.
+rapidly prototyping a RESTful Web service (using JSON representation responses)
+for `sports2000` **customers** using our new OpenEdge database adapter.
 
 [REST][18] is a pretty big topic and
 if you are unfamiliar with it you should probably invest some effort into
