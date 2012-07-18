@@ -43,11 +43,11 @@ we are going to use [Sinatra][6].
 
 I am going to assume that you are following along from [part 1][1] and have
 already installed JRuby using rvm (if not, go back and do so).  Let's proceed
-by installing a newer version of JRuby and creating a fresh gemset to namespace
-our gems for this demo:
+by creating a fresh gemset to namespace our gems for this demo and put the
+JRuby interpreter into Ruby 1.9.2-p312 mode (important!):
 
-    rvm install jruby-1.7.0.preview1
-    rvm use --create jruby-1.7.0.preview1@openedge-sinatra
+    rvm use --create jruby-1.6.7@openedge-sinatra
+    export JRUBY_OPTS=--1.9
 
 Let's re-use the same git repo from part 1 that has our DataMapper models
 defined (if you still have the code just copy it to a new directory):
