@@ -127,7 +127,11 @@ from the Gemfile using bundler:
 
     rvm use jruby-1.6.7@openedge-ruby
     gem install bundler
-    bundle install   
+    bundle install
+
+### Put the JRuby interpreter into Ruby 1.9.2-p312 mode
+
+    export JRUBY_OPTS=--1.9
 
 ### Set the database parameters for example snippet
 
