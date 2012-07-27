@@ -59,9 +59,9 @@ defined (if you still have the code just copy it to a new directory):
     cd openedge-sinatra
 
 If this is a fresh clone be sure to change the database parameters on line
-4 of `models.rb` to match yours, and potentially change the version of
-OpenEdge on line 4 of the `Gemfile` to use a different JDBC driver loading
-mechanism.
+4 of `models.rb` to match yours, and potentially change the version of the
+`jdbc-openedge` gem on line 4 of the `Gemfile` to use the version of OpenEdge
+that you're on (if you're not on 11.1).
 
 Next, we are going to install the `sinatra` gem.  Open the `Gemfile` and add
 this line at the bottom:

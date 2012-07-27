@@ -8,14 +8,6 @@ categories:
 
 {% img center /images/mass_extinction_event.jpg Foreground: ABL developers at work. Background: arrival of Ruby adapter %}
 
-<div class="alert-message error" markdown="1">
-**Update 2012/07/17**: If you installed the sample code before
-today, please try again with a fresh gemset
-(`rvm gemset empty; bundle install`) as the `do_jdbc` version I was providing
-was incorrect and would display error messages when used. Protip: if you're
-building gems from source, always do a `rake clean` before a `rake build`!
-</div>
-
 It's weird how I have trouble letting go.  Nearly two years ago, I wrote
 [a post][1] where I theorized a cure for a programming language and database
 that had tortured me at the first full-time programming job that I ever had:
@@ -60,8 +52,9 @@ Clojure|Erlang|Haskell.
 
 ## Requirements
 
-The example code relies on OpenEdge 10.2B; other versions may or may not
-work.  `git` is also required for downloading the sample code.  I would also
+The example code relies on OpenEdge 11.1; other versions may or may not
+work (the only other version I tested is 10.2B, with success).  `git` is
+also required for downloading the sample code.  I would also
 advise using Linux or Mac for running this code, as it is what Ruby plays
 best with.
 
@@ -121,12 +114,10 @@ Get the code by cloning the git repo:
 ### Note JDBC version
 
 Open the file `Gemfile` and look at the line #4 with `jdbc-openedge` on it.
-Notice that the version is `10.2B`, which is what I have tested everything
-with.  There is also a version for `10.1C`, however I haven't tested it.
-Any other versions of the OpenEdge JDBC driver may not work; contact me or
-leave a comment if you need a different OE version supported.  It might be
-difficult to test some versions as I don't have a subscription to Progress's
-subscription center to download non-trial versions of their products.
+Notice that the version is `11.1`, which is what I have tested everything
+with.  There are also [other versions][16] available that you can change this
+to, however I haven't tested all of them as I don't have a subscription to
+Progress's subscription center non-trial versions of their products.
 
 ### Install needed gems
 
@@ -411,8 +402,6 @@ tests on.
 Some other features that would be nice to have, that I would work on:
 
 * Lots more tests!
-* Support more versions of OpenEdge (should just need to add support
-  to [jdbc-openedge][9], unless JDBC driver has bugs to work around)
 * `:sequence` option for fields, like the [Oracle adapter][10] has.
   Would allow you to not have to manually provide a value for the
   field on record insertion if there is a sequence that can be used
@@ -424,7 +413,7 @@ Some other features that would be nice to have, that I would work on:
   legacy support rather than new development. It would probably be a
   lot of work, too.
 * Other DataMapper core support needed to get mainline integration,
-  or other possible features (please request in comments)
+  or other possible features (request as needed in comments)
 
 ## Next posts in series
 
@@ -455,3 +444,4 @@ parting advice to Progress Corp. on how they should open up ABL more.
 [13]: http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol
 [14]: https://github.com/abevoelker/jdbc-openedge#openedge-versions-supported
 [15]: /final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/
+[16]: https://rubygems.org/gems/jdbc-openedge/versions
