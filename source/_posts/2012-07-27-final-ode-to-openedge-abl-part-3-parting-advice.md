@@ -5,18 +5,24 @@ date: 2012-07-27 18:21
 comments: true
 ---
 
-In [part 1][1] I demonstrated how to write Ruby code against an OpenEdge
+{% img right /images/yao_ming_progress_openedge.jpg 281 404 OpenEdge? Fuck that shit %}
+
+In [part 1][1] of this series I demonstrated how to write Ruby code against an
+OpenEdge
 database using the JDBC driver and DataMapper ORM, and in [part 2][2] I
 showed how to take advantage of this to rapidly prototype a RESTful Web
 service / JSON API for the canonical `sports2000` OpenEdge database using
 Ruby and Sinatra.
 
 For the final post in this series, I promised to offer some advice to
-Progress Software Corp. on how to advance the OpenEdge ecosystem.
+Progress Software Corporation (PSC) on how to advance the OpenEdge ecosystem.
 
 In the spirit of the words "let the dead bury the dead" I'm going to keep this
-short as I don't really belong to the community so am probably just wasting my
-breath.
+short as I am pretty sure that my ideas will fall on deaf ears or simply be
+too brash to be considered.
+I will present a quick
+summary of OpenEdge's past/present and then go right into my suggestions for
+future improvements.  Let's get this over with!
 
 <!-- more -->
 
@@ -24,22 +30,33 @@ breath.
 
 Progress the database/language was created twenty-some odd years ago as a
 probably then-revolutionary way to hammer out CRUD apps. The Progress
-language had the neat feature of having the ability to query the database
+language had the neat feature of having the ability to query and
+manipulate the database
 baked into the language.  It also came with built-in display tools to make
 it simple to present GUI interfaces and reports to the user.
 
-They also spend plenty of money on marketing, advertising the language as
+They also spent plenty of money on marketing, advertising the language as
 a "fourth-generation language (4GL)" and as a "business language", whatever
 the hell either of those terms mean.  Their marketing machine also rebranded
 the database to OpenEdge and the programming language to Advanced Business
 Language (ABL) at some point.
 
+Functionally speaking,
 OpenEdge is a locked-in platform.  Until very recently with the CLR bridge
-opening up development with .NET, getting modern updates to the language
-and databases has required appeals to PSC to please add a feature to the
-language / database.  
+integrating .NET development directly into the ABL Virtual Machine (AVM),
+getting the language to do anything modern has required appeals to PSC to beg
+them to add the feature to the language / database, and then having to
+wait for it to be delivered (assuming PSC agrees to implement it). This has
+turned the language from its origins as a simple querying/reporting language
+into a hideous frankenstein, maintaining ancient backwards compatibility
+while including half-baked advanced features like object-orientation.
 
 ## Future (suggested)
+
+### Goals
+
+The primary goal should be to make the OpenEdge platform be a more independent
+system,
 
 ### ABL, the programming language
 
@@ -51,7 +68,8 @@ If I were given the decision of what to do with ABL, I would cut my losses and
 do the following:
 
 *  Support [Mono][1] as a .NET development target, which would allow writing
-   .NET code in the AVM for Unix systems.
+   .NET code in the AVM for Unix systems.  This would allow programmers to
+   use a much stronger language like C# for general purpose development.
 *  Open source the ABL Virtual Machine (AVM). This would give the ultimate in
    extensibility to ABL coders by allowing them to code in any language as
    long as it compiles down to AVM bytecode.
@@ -63,7 +81,7 @@ community effort if the AVM was open source.
 ### OpenEdge, the database
 
 I really don't see what's so great about the database, but I'm going to assume
-that it's the golden goose that must be protected.
+that it's the golden goose that must be spared from the axe.
 
 First, the database is not nearly powerful enough to warrant requiring its
 own grammar.  I would switch to the lingua franca of relational databases,
@@ -80,21 +98,34 @@ NoSQL alternatives out there for most other use cases.
 
 Drop the "business language" bullshit. Such a concept doesn't exist. If it
 did, the end users would be writing the code themselves.  Same goes for the
-arbitrary "4GL" label of false superiority.  Coupling a language to a database
-doesn't make a language look more advanced, it makes it look ridiculous.
+arbitrary "4GL" label of false superiority.  Coupling a programming language
+to a database doesn't make the language look more advanced, it makes it look
+ridiculous.
 
 The big push for marketing for "the cloud" is a joke. If it isn't simple for
 you to write an app as a service / API then it doesn't belong in the cloud.
 And by the way, multi-tenancy isn't a new feature to most databases - I know
 for a fact that Postgres has supported them for many years (they call them
-"schemas").  And, in fact, I've seen some arguments against multi-tenancy
-anyway.
+"schemas").  I've seen some convincing arguments against multi-tenancy for
+"cloud" apps, anyway.  So hold off on the champagne.
 
 ## Conclusion
 
 Now that I look things over, I can see why PSC has chosen the path they have
 of trying to keep OpenEdge a locked-in system.  Any attempt at opening up a
-large part of the system could lead it to collapse like a house of cards.
+large part of the system could lead it to collapse like a house of cards as
+users become able to utilize (and realize that there exist) far superior,
+existing alternatives.  Perhaps it really is best to keep their users under
+lock and key... they certainly seem to enjoy the pain (or at least remain
+ignorant of it)!
+
+In any case, this series has been cathartic.  I feel like I have some closure
+on my past now, and can let go of the mental baggage I've been carrying of my
+depraved dalliance with OpenEdge.
+
+I plan on moving onto more functional pastures, focusing on Clojure. Of course
+Ruby will maintain a soft place in my heart, and continue to pay my bills. Stay
+tuned!
 
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: /final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/
