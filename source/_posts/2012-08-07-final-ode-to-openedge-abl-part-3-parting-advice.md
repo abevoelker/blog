@@ -5,7 +5,7 @@ date: 2012-08-07 20:00
 comments: true
 ---
 
-{% img right /images/yao_ming_progress_openedge.jpg 281 404 OpenEdge? Fuck that shit %}
+{% img right /images/yao_ming_progress_openedge.jpg 281 201 OpenEdge? Fuck that shit %}
 
 In [part 1][1] of this series I demonstrated how to write Ruby code against an
 OpenEdge database using the JDBC driver and DataMapper ORM, and in [part 2][2]
