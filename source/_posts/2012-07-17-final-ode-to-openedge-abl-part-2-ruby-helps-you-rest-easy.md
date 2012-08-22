@@ -434,6 +434,10 @@ do a simple database migration using DataMapper's ability to connect to
 lingo).  If you've been following along and that interests you let me know in
 the comments.
 
+<div class="alert-message success" markdown="1">
+**Update**: [Part 3][29] has now been posted.
+</div>
+
 [1]: /final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 [2]: http://datamapper.org
 [3]: http://www.apevolution.com/
@@ -462,3 +466,4 @@ the comments.
 [26]: http://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning
 [27]: http://www.sinatrarb.com/testing.html
 [28]: http://rspec.info/
+[29]: /final-ode-to-openedge-abl-part-3-parting-advice/
