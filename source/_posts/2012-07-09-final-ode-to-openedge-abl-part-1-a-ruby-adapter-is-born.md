@@ -372,41 +372,35 @@ Customer.get(2107) # => nil
 
 ## Future development
 
-This is alpha software.  If you use it and find any bugs,
+This is beta software.  If you use it and find any bugs,
 I would be grateful if you report them (contact me directly or open a
-GitHub issue on [`dm-openedge-adapter`][7]).  Unfortunately, I don't have
-a lot of time to fix things quickly.
+).
 
-I was hoping that if there was some
-interest in this project I could take some donations, which would let
-me take some time off of work and get this
-polished up and ready for [integration][8] into mainline DataMapper (which
-would also make usage for writing apps extremely simple by having clean
-gems; e.g. just `gem install dm-openedge-adapter`).  If you are
-interested in this here is the link:
+A large amount of the code, which maps OpenEdge logic into DataMapper's
+[DataObjects library][17] has been accepted and integrated into DataObjects.
+However, the front-facing stub which uses the DataObjects code and implements
+a few other bits (`dm-openedge-adapter`) has not received as much attention,
+and is just implemented enough to demo for this blog.  I would label it as beta
+software; contact me or open a [GitHub issue][7] if you find any bugs.
 
-<a href='http://www.pledgie.com/campaigns/17785'><img alt='Click here to lend your support to: OpenEdge Datamapper adapter and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/17785.png?skin_name=chrome' border='0' /></a>
-
-To get this ready for mainline DataMapper integration, there needs to be
+To complete the mainline DataMapper integration, there needs to be
 better tests for `dm-openedge-adapter` as well as creating virtual machine
 images with different OpenEdge versions pre-installed, ready for running
-tests on.
+tests on.  As I don't deal with OpenEdge anymore I would only find the
+time to work on this if my time was subsidized.  Contact me if this interests
+you.
 
-Some other features that would be nice to have, that I would work on:
+Some other features that would be nice to have, that I could work on:
 
-* Lots more tests!
 * `:sequence` option for fields, like the [Oracle adapter][10] has.
   Would allow you to not have to manually provide a value for the
   field on record insertion if there is a sequence that can be used
   (you can still manually specify it if you want). Very useful for PKs.
-* CentOS virtual machine images with various versions of OpenEdge;
-  useful for testing and necessary for mainline DM integration.
 * Support for [migrations][11]? I'm not really sure if this is something
   people would use as I would think this would be used more for
   legacy support rather than new development. It would probably be a
   lot of work, too.
-* Other DataMapper core support needed to get mainline integration,
-  or other possible features (request as needed in comments)
+* More tests!
 
 ## Next posts in series
 
@@ -438,3 +432,4 @@ parting advice to Progress Corp. on how they should open up ABL more.
 [14]: https://github.com/abevoelker/jdbc-openedge#openedge-versions-supported
 [15]: /final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/
 [16]: https://rubygems.org/gems/jdbc-openedge/versions
+[17]: https://github.com/datamapper/do
