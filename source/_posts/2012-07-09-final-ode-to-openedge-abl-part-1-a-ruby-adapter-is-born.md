@@ -93,11 +93,10 @@ but Windows users are on their own):
 2. Open a new terminal window and prepare to install a JRuby interpreter. Type
    `rvm requirements` and find the section "For JRuby, install the following:"
    and install all packages required.  When that is finished, type
-   `rvm install jruby-1.6.7`, which will download and install a JRuby
-   interpreter.  That isn't the newest version of JRuby, but one that I have
-   been testing with and I know works.
+   `rvm install jruby-1.7.0`, which will download and install a JRuby
+   interpreter.
 3. Create a gemset for containing the gems that we are going to install. Type
-   `rvm use --create jruby-1.6.7@openedge-ruby`. This will also switch you
+   `rvm use --create jruby-1.7.0@openedge-ruby`. This will also switch you
    into the new interpreter and gemset.
 
 ## Getting teh codez
@@ -113,28 +112,22 @@ Get the code by cloning the git repo:
 
 ### Note JDBC version
 
-Open the file `Gemfile` and look at the line #4 with `jdbc-openedge` on it.
-Notice that the version is `11.1`, which is what I have tested everything
-with.  There are also [other versions][16] available that you can change this
-to, however I haven't tested all of them as I don't have a subscription to
-Progress's subscription center non-trial versions of their products.
+Open the file `Gemfile` and look at the line with `jdbc-openedge` on it.
+Notice that the version is `11.1`; you should change this to the exact
+[version of OpenEdge][16] that you are on (you still have to have put the
+necessary .jar file(s) into your Java `$CLASSPATH` manually).
 
 ### Install needed gems
 
 Make sure you are using the rvm gemset we created, and install the gems
 from the Gemfile using bundler:
 
-    rvm use jruby-1.6.7@openedge-ruby
     gem install bundler
     bundle install
 
-### Put the JRuby interpreter into Ruby 1.9.2-p312 mode
-
-    export JRUBY_OPTS=--1.9
-
 ### Set the database parameters for example snippet
 
-Open the file `models.rb` and modify the line #4 that starts with
+Open the file `models.rb` and modify the line that starts with
 `DataMapper.setup` to have the parameter values that correspond to your
 database.  It should take the form of
 
@@ -177,8 +170,8 @@ definition!
 
 ### Finally, execute the code
 
-Type `irb` to open up an interactive Ruby shell. To run the example code,
-simply type `require './models'`. If the code loaded successfully, you
+Type `bundle exec irb` to open up an interactive Ruby shell. To run the example
+code, simply type `require './models'`. If the code loaded successfully, you
 should simple see `=> true` (the `=>` denotes the return value).  The rest
 of the commands in the following sections will be entered from within this
 `irb` shell.  If you are having issues, just post in the comments and I will
@@ -291,7 +284,7 @@ ol.count # => 46
 
 To calculate the total money this customer has spent on every order
 for all time, we use Ruby's [reduce][12] method, which is a functional
-programming derivitave for reducing a large amount of data down to a
+programming derivitave for reducing a collection of data down to a
 single value:
 
 ```ruby

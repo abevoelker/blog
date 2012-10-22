@@ -46,11 +46,9 @@ we are going to use [Sinatra][6].
 
 I am going to assume that you are following along from [part 1][1] and have
 already installed JRuby using rvm (if not, go back and do so).  Let's proceed
-by creating a fresh gemset to namespace our gems for this demo and put the
-JRuby interpreter into Ruby 1.9.2-p312 mode (important!):
+by creating a fresh gemset to namespace our gems for this demo:
 
-    rvm use --create jruby-1.6.7@openedge-sinatra
-    export JRUBY_OPTS=--1.9
+    rvm use --create jruby-1.7.0@openedge-sinatra
 
 Let's re-use the same git repo from part 1 that has our DataMapper models
 defined (if you still have the code just copy it to a new directory):
@@ -60,7 +58,7 @@ defined (if you still have the code just copy it to a new directory):
 
 If this is a fresh clone be sure to change the database parameters on line
 4 of `models.rb` to match yours, and potentially change the version of the
-`jdbc-openedge` gem on line 4 of the `Gemfile` to use the version of OpenEdge
+`jdbc-openedge` gem in the `Gemfile` to use the version of OpenEdge
 that you're on (if you're not on 11.1).
 
 Next, we are going to install the `sinatra` gem.  Open the `Gemfile` and add
@@ -96,7 +94,7 @@ end
 
 At this point we can start our Web server by running our Ruby code:
 
-    ruby server.rb
+    bundle exec ruby server.rb
 
 Now browse to [http://localhost:4567][7] in your browser. You should see
 the text `hello world` in the body of your browser. If you're an ABL
