@@ -122,8 +122,22 @@ very knowledgable about legal matters, so I'm sure even a paralegal could
 rip this stuff to shreds.  But it's fun to dream.  Tell me how crazy I am
 in the comments section!
 
+<div class="alert-message success" markdown="1">
+**Update**: This post received a lot of [attention on Hacker News][6]. Please
+also visit there to read many insightful comments!
+</div>
+<div class="alert-message success" markdown="1">
+**Update 2**: Apparently this post also provided [some inspiration][7] for a
+TED Talk entitled "[How the Internet will (one day) transform government][8]" by
+[Clay Shirky][9]. Check it out!
+</div>
+
 [1]: http://www.realclearpolitics.com/epolls/other/congressional_job_approval-903.html
 [2]: http://readthebill.org/rushed/
 [3]: http://www.hypergrove.com/legalrdf.org/LegalMarkup.html
 [4]: http://fountain.io/
 [5]: http://www.amazon.com/Legal-Writing-Plain-English-Publishing/dp/0226284174
+[6]: http://news.ycombinator.com/item?id=3967921
+[7]: http://blog.ted.com/2012/09/25/further-reading-in-github/
+[8]: http://www.ted.com/talks/clay_shirky_how_the_internet_will_one_day_transform_government.html
+[9]: http://www.shirky.com/
