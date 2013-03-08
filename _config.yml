@@ -2,11 +2,11 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://blog.abevoelker.com
+url: https://blog.abevoelker.com
 title: Abe Voelker
 subtitle: Deep thoughts, distilled from an addled μ-brain
 author: Abe Voelker
-simple_search: http://google.com/search
+simple_search: https://google.com/search
 description:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
