@@ -140,7 +140,102 @@ database.  It should take the form of
 Before running the `models.rb` code, it makes sense to take a look at it first
 and see what it is doing.  Here is the code:
 
-{% gist 3073736 models.rb %}
+```ruby
+require 'data_mapper'
+
+DataMapper.setup(:default, 'openedge://Abe@192.168.1.240:13370/dmtest')
+
+class Customer
+  include DataMapper::Resource
+  storage_names[:default] = "Customer"
+
+  property :cust_num,      Integer, :field => "CustNum", :key => true
+  property :name,          String
+  property :country,       String
+  property :address,       String
+  property :address2,      String
+  property :city,          String
+  property :state,         String
+  property :postal_code,   String,  :field => "PostalCode"
+  property :contact,       String
+  property :phone,         String
+  property :sales_rep,     String,  :field => "SalesRep"
+  property :credit_limit,  Decimal, :field => "CreditLimit"
+  property :balance,       Decimal
+  property :terms,         String
+  property :discount,      Integer
+  property :comments,      String
+  property :fax,           String
+  property :email_address, String,  :field => "EmailAddress"
+
+  has n, :orders, :child_key  => [ :cust_num ]
+end
+
+class Item
+  include DataMapper::Resource
+  storage_names[:default] = "Item"
+
+  property :item_num,  Integer, :field => "Itemnum", :key => true
+  property :item_name, String,  :field => "ItemName"
+  property :price,     Decimal
+  property :on_hand,   Integer, :field => "Onhand"
+  property :allocated, Integer
+  property :re_order,  Integer, :field => "ReOrder"
+  property :on_order,  Integer, :field => "OnOrder"
+  property :cat_page,  Integer, :field => "CatPage"
+  property :cat_desc,  String,  :field => "CatDescription"
+  property :category1, String
+  property :category2, String
+  property :special,   String
+  property :weight,    Decimal
+  property :min_qty,   Integer, :field => "Minqty"
+
+  has n, :order_lines, :child_key  => [ :item_num ]
+end
+
+class Order
+  include DataMapper::Resource
+  storage_names[:default] = "Order"
+
+  property :order_num,     Integer, :field => "Ordernum", :key => true
+  property :cust_num,      Integer, :field => "CustNum"
+  property :order_date,    Date,    :field => "OrderDate"
+  property :ship_date,     Date,    :field => "ShipDate"
+  property :promise_date,  Date,    :field => "PromiseDate"
+  property :carrier,       String
+  property :instructions,  String
+  property :po,            String
+  property :terms,         String
+  property :sales_rep,     String,  :field => "SalesRep"
+  property :bill_to_id,    Integer, :field => "BillToID"
+  property :ship_to_id,    Integer, :field => "ShipToID"
+  property :order_status,  String,  :field => "OrderStatus"
+  property :warehouse_num, Integer, :field => "WarehouseNum"
+  property :credit_card,   String,  :field => "Creditcard"
+
+  belongs_to :customer, :child_key  => [ :order_num ]
+  has n, :order_lines, :child_key  => [ :order_num ]
+end
+
+class OrderLine
+  include DataMapper::Resource
+  storage_names[:default] = "OrderLine"
+
+  property :order_num,      Integer, :field => "Ordernum", :key => true
+  property :line_num,       Integer, :field => "Linenum",  :key => true
+  property :item_num,       Integer, :field => "Itemnum"
+  property :price,          Decimal
+  property :qty,            Integer
+  property :discount,       Integer
+  property :extended_price, Decimal, :field => "ExtendedPrice"
+  property :status,         String,  :field => "OrderLineStatus"
+
+  belongs_to :order, :child_key  => [ :order_num, :line_num ]
+  belongs_to :item,  :child_key  => [ :item_num ]
+end
+
+DataMapper.finalize
+```
 
 You can see that the code is very readable.  All it is really doing is
 specifying the definitions of a few tables of the `sports2000` database in

@@ -46,7 +46,60 @@ So, I went ahead and used Perl (the programmer's swiss army knife) and a best
 guess at an algorithmic way to pull this information.  Here is the script I
 came up with:
 
-{% gist 581127 getRcodeParams.pl %}
+```perl
+#!/usr/bin/perl
+#-------------------------------------------------------------------------------
+# File:       getRcodeParams.pl
+# Purpose:    Decodes the main block parameters of compiled OpenEdge ABL r-code.
+# Arguments:  [0] File system location of an r-code file to parse
+# Returns:    List of parameters (newline-separated) from the main execution
+#             block. The parameters are in the form:
+#             [input/output type] [variable name] [datatype]
+# Author(s):  Abe Voelker
+# Created:    2010-09-14
+# Notes:      * This code has only been tested on 10.1C Unix r-code.  It may not
+#               be applicable to other environments, or all that stable even on 
+#               10.1C Unix due to there being no such thing as an OpenEdge ABL
+#               'standard' - the parsing is done based purely upon guesswork.
+#             * It appears that the datatype for temp-tables is TABLE.  Also,
+#               the names of classes are converted to uppercase.
+#             * Future work could easily get more signature information from the
+#               r-code based on my observations.  For example, temp-table and
+#               forward-defined functions have information available in the 
+#               section beginning shortly after this program finishes parsing...
+#-------------------------------------------------------------------------------
+
+#Validate argument
+if (($#ARGV + 1) != 1) { die "You must pass in the location of the .r code to parse!"; }
+
+#Read the entire file into memory
+open FILE, $ARGV[0] or die $!;
+binmode FILE;
+my ($buf, $data, $n);
+while (($n = read FILE, $data, 64) != 0) {
+  $buf .= $data;
+}
+close(FILE);
+
+#Find the magic start token
+$iStart = index($buf, "\0MAIN ");
+if ($iStart == -1) { die "The magic start token was not found!"; }
+$iStart += 6; #We don't want the MAIN piece in our string...
+
+#Find the magic end token
+$iEnd = index($buf, "\0", $iStart);
+if ($iEnd == -1) { die "The magic end token was not found!"; }
+
+#Store the parsed param results in an array
+$parmChunk = substr($buf, $iStart, ($iEnd - $iStart));
+@params = split (/,/, $parmChunk);
+shift(@params); shift(@params); #The top two elements are useless
+
+#Print results to stdout
+foreach $param (@params) {
+    print "$param\n";
+}
+```
 
 As noted in the script's "notes" section, this has only been tested on OpenEdge
 10.1C code compiled on Unix. Also noted are the fact that there appears to be

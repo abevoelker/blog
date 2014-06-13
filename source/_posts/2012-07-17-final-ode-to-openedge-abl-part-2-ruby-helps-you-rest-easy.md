@@ -378,7 +378,59 @@ request and you should see a response header of `404 Not Found` with a body of
 
 If you've been following along, your `server.rb` should look like this:
 
-{% gist 3102551 server.rb %}
+```ruby
+require 'sinatra'
+require './models'
+
+get '/customers' do
+  Customer.all.to_json
+end
+
+get '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.to_json
+  else
+    not_found 'unknown customer'
+  end
+end
+
+post '/customer' do
+  next_id = Customer.last.cust_num + 1
+  @customer = Customer.create(params.merge(:cust_num => next_id))
+  @customer.to_json
+end
+
+put '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.destroy && Customer.create(request.params.merge({'cust_num' => cust_num}))
+    @customer.to_json
+  else
+    not_found 'unknown customer'
+  end
+end
+
+patch '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.attributes = request.params.reject{|k,v| k == 'cust_num'}
+    @customer.save
+    @customer.to_json
+  else
+    not_found 'unknown customer'
+  end
+end
+
+delete '/customer/:cust_num' do |cust_num|
+  @customer = Customer.get(cust_num)
+  if @customer
+    @customer.destroy
+  else
+    not_found 'unknown customer'
+  end
+end
+```
 
 That's a RESTful JSON API for `sports2000` customers in 50 lines of code! Do
 you think you can do that in ABL?
