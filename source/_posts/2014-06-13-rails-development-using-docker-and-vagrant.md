@@ -176,7 +176,7 @@ It is also important to note that the process you start with your Docker contain
 
 Vagrant 1.6 added support for Docker providers and provisioners.  I've seen some people say that this will make it easier for people to learn Docker, but I disagree.  [Vagrant's Docker provider DSL][vagrant-docker-config] is a pretty thin façade over the Docker CLI, so you need to have a good handle on how Docker works before using it - otherwise you're just dealing with another layer of indirection which will make things more confusing!
 
-Anyway, here's the Vagrantfile that I use with the application that corresponds to the Dockerfile from above:
+Anyway, here's a Vagrantfile from a Rails app I'm working on called `gun_crawler_web` that corresponds to the Dockerfile from above:
 
 <div style="display: inline-block;" markdown="1">
 ```
