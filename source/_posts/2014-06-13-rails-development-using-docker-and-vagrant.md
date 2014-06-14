@@ -32,15 +32,15 @@ Docker is especially appealing to me in the context of Rails deployments, since 
 **Terminology note**: I was going to start by including my own simplified definitions of what Docker [images][docker-image] and [containers][docker-container] are, but the Docker website does a great job with these terms so check the links intead.
 </div>
 
-When creating your own Docker images, you will define the build instructions via a Dockerfile.  A Dockerfile is a list of statements, executed imperatively, that follow [a special DSL syntax][dockerfile-syntax].  Each statement in the Dockerfile generates a new image that is a child of the preview statement's image.  You know what that creates?  A [directed acyclic graph (DAG)][dag] of images, not at all unlike a [graph of git commits][git-dag]:
+When creating your own Docker images, you will define the build instructions via a Dockerfile.  A Dockerfile is a list of statements, executed imperatively, that follow [a special DSL syntax][dockerfile-syntax].  Each statement in the Dockerfile generates a new image that is a child of the previous statement's image.  You know what that creates?  A [directed acyclic graph (DAG)][dag] of images, not at all unlike a [graph of git commits][git-dag]:
 
 [{% img center /images/docker-dag.png Graph of docker images on my machine %}](/images/docker-dag.png)
 
 <div class="alert-message" markdown="1">
-**Note**: Each blue node in the graph above has a tag, very similar to a branch or tag in a git commit graph. This graph was generated with `docker images --viz | dot -Tpng -o docker.png`, if you want to look at the graph of Docker images on your machine. You can also see the graph in your console directly with `docker images --tree`
+**Note**: Each blue image node in the graph above has a tag, very similar to a branch or tag in a git commit graph. This graph was generated with `docker images --viz | dot -Tpng -o docker.png`, if you want to look at the graph of Docker images on your machine. You can also see the graph in your console directly with `docker images --tree`
 </div>
 
-When building Docker images, Docker takes advantage of this structure to do caching.  Each statement in a Dockerfile may be cached, and if the cache for that statement is invalidated, all of the child images (the proceeding Dockerfile statements) will need to be rebuilt as well.
+When building Docker images, Docker takes advantage of this graph structure to do caching.  Each statement in a Dockerfile may be cached, and if the cache for that statement is invalidated, all of the child images (the proceeding Dockerfile statements) will need to be rebuilt as well.
 
 As you may notice from the graph, when writing a Dockerfile it's common to descend from an image (using the [`FROM` statement][dockerfile-from]) of a Linux flavor that you are familiar with.  I use `ubuntu:trusty` as it's what I'm familiar with - mainly so that I can use APT and custom PPAs to install packages.  You can think of it in the context of Ruby as a sort of "subclass"-type inheritance.
 
@@ -140,7 +140,7 @@ The full source of the Rails application gets added to `/var/www`.  The reason t
 USER web
 ```
 
-[`USER`][dockerfile-user] sets the user that all proceeding `RUN` statements will execute with, as well as the user that runs the image.
+[`USER`][dockerfile-user] sets the user that all proceeding `RUN` statements will execute with, as well as the user that runs the image.  It's good security to run your Rails app as a non-privileged user.
 
 ### WORKDIR
 
@@ -156,9 +156,9 @@ WORKDIR /var/www
 CMD ["bundle", "exec", "foreman", "start"]
 ```
 
-[`CMD`][dockerfile-cmd] sets the default command that the image will run when started.  You can have multiple `CMD` statements; the last one takes precedence (in this way inheriting images can override their parents).
+[`CMD`][dockerfile-cmd] sets the default command that the image will run when started.  You can have multiple `CMD` statements in a Dockerfile; the last one takes precedence (in this way inheriting images can override their parent's `CMD`).
 
-When running an image, you can override its baked-in `CMD` with your own command. For example, `docker run -i -t ubuntu:trusty /bin/bash`.
+When running an image, you can override its baked-in `CMD` with your own command. For example, `docker run -i -t ubuntu:trusty /bin/bash` (the last argument to `docker run`, in this case `/bin/bash`, is the overridden command).
 
 My example `CMD` statement starts `foreman`, which is adequate for development.  It would probably be better to move each service in the foreman Procfile to their own [supervisord][supervisord] configs, and have this `CMD` statement start up supervisord instead of foreman. Such an approach is common for running multiple processes in a Docker container and is production-safe.
 
@@ -201,7 +201,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     elasticsearch.vm.provider 'docker' do |d|
       d.image  = 'dockerfile/elasticsearch'
       d.name   = 'gun_crawler_web_elasticsearch'
-      d.expose = [9200]
       d.cmd    = ['/elasticsearch/bin/elasticsearch', '-Des.config=/data/elasticsearch.yml']
       d.env    = {
         'ES_USER'      => 'elasticsearch',
@@ -216,7 +215,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     redis.vm.provider 'docker' do |d|
       d.image  = 'dockerfile/redis'
       d.name   = 'gun_crawler_web_redis'
-      d.expose = [6379]
       d.cmd    = ['redis-server', '/data/redis.conf']
     end
 
@@ -330,7 +328,7 @@ d.env    = {
 }
 ```
 
-As you can guess, we set the `$ES_USER` and `$ES_HEAP_SIZE` Unix environment variables to custom values.
+As you may have guessed, this sets the `$ES_USER` and `$ES_HEAP_SIZE` Unix environment variables in the container to values we specify.
 
 #### Equivalent Docker CLI
 
@@ -386,7 +384,7 @@ d.image           = 'abevoelker/gun_crawler_web'
 
 This is not a new option, however I want to point out that I actually prefer to build the image manually rather than let Vagrant do it. Why? Because on my machine I don't see the Docker build output when Vagrant does it - I just get a black screen until it is all finished, which is not very useful when developing.
 
-So before I do `vagrant up`, I build my Rails application Docker image locally with `docker build -t "abevoelker/gun_crawler_web" .`.
+So before I do `vagrant up`, I build my Rails application Docker image locally with `docker build -t abevoelker/gun_crawler_web .`.
 
 ```
 d.create_args     = ['-i', '-t']
@@ -415,10 +413,6 @@ For example, in order to connect to the Postgres database using the above linkin
 postgres_defaults: &postgres_defaults
   adapter:   postgresql
   encoding:  utf8
-  # fixes UTF8 encoding issue when trying to use template1
-  template:  template0
-  ctype:     en_US.utf8
-  collation: en_US.utf8
   port:      5432
   host:      <%= ENV['POSTGRES_PORT_5432_TCP_ADDR'] %>
   username:  <%= ENV['POSTGRES_ENV_USERNAME'] %>
@@ -449,7 +443,7 @@ From here I'm free to run whatever commands one normally runs when in developmen
 ### Equivalent Docker CLI
 
 ```
-docker build -t "abevoelker/gun_crawler_web" .
+docker build -t abevoelker/gun_crawler_web .
 docker run -i -t -v .:/var/www -name gun_crawler_web --link=gun_crawler_web_postgres:postgres --link=gun_crawler_web_elasticsearch:elasticsearch --link=gun_crawler_web_redis:redis /bin/bash -l
 ```
 
@@ -458,7 +452,7 @@ docker run -i -t -v .:/var/www -name gun_crawler_web --link=gun_crawler_web_post
 So basically, from scratch, these are the commands I run from a freshly-checked-out Rails application:
 
 ```
-docker build -t "abevoelker/gun_crawler_web" . # OR docker pull abevoelker/gun_crawler_web
+docker build -t abevoelker/gun_crawler_web . # OR docker pull abevoelker/gun_crawler_web
 vagrant up
 docker attach gun_crawler_web
 ```
@@ -471,7 +465,7 @@ So far, I've only updated my development environment to use Docker.  I have yet 
 
 Therefore my next article will be focused on Rails deployment using Docker.  I plan on primarily using Ansible for this, using [its Docker module][ansible-docker].
 
-Some questions/notes I have to think about:
+Some questions/notes I'm still thinking about:
 
 * How to ensure container volumes persist - use linked persistent containers or expose host filesystem?
 * Is there a good way to handle rollbacks, à la Capistrano's `cap deploy:rollback`?
