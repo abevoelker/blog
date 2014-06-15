@@ -465,6 +465,16 @@ vagrant up
 docker attach gun_crawler_web
 ```
 
+As I'm working, if I detach from the bash shell, the Docker container is halted.  I can bring it back up with either `vagrant up web` or `docker start gun_crawler_web`, and then re-attach with `docker attach gun_crawler_web`.
+
+If I ever have to do a full rebuild of the Docker image, I just do:
+
+```
+vagrant destroy gun_crawler_web
+docker build -t abevoelker/gun_crawler_web .
+vagrant up web --provider=docker
+```
+
 If there is interest, I could make a demo Rails application with a Dockerfile and Vagrantfile in a ready-to-go package for trying this out.  Let me know in the comments if that's something you'd be interested in.
 
 ## Next step: deployment
