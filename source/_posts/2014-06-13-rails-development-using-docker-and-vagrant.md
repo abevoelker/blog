@@ -179,7 +179,7 @@ Vagrant 1.6 added support for Docker providers and provisioners.  I've seen some
 Anyway, here's a Vagrantfile from a Rails app I'm working on called `gun_crawler_web` that corresponds to the Dockerfile from above:
 
 <div style="display: inline-block;" markdown="1">
-```
+```ruby
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
