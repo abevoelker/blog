@@ -228,6 +228,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.create_args     = ['-i', '-t']
       d.cmd             = ['/bin/bash', '-l']
       d.remains_running = false
+      d.ports           = ['3000:3000']
 
       d.link('gun_crawler_web_postgres:postgres')
       d.link('gun_crawler_web_elasticsearch:elasticsearch')
@@ -368,6 +369,7 @@ config.vm.define "web" do |web|
     d.create_args     = ['-i', '-t']
     d.cmd             = ['/bin/bash', '-l']
     d.remains_running = false
+    d.ports           = ['3000:3000']
 
     d.link('gun_crawler_web_postgres:postgres')
     d.link('gun_crawler_web_elasticsearch:elasticsearch')
@@ -397,6 +399,12 @@ d.remains_running = false
 ```
 
 Vagrant apparently errors if the container stops; since we will be occasionally halting the container when we detach from it we don't want Vagrant to throw a fit.
+
+```
+d.ports           = ['3000:3000']
+```
+
+This forwards ports from the container to the host machine.  I forward the common Rails development server port (3000) so that on my host machine browser I can visit `http://localhost:3000`.  Once I harden this image for staging/production, I will probably be `EXPOSE`ing port 80, so I expect this config to change soon.
 
 ```
 d.link('gun_crawler_web_postgres:postgres')
