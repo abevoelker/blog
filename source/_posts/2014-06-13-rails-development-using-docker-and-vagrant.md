@@ -193,7 +193,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     postgres.vm.provider 'docker' do |d|
       d.image  = 'abevoelker/postgres'
       d.name   = 'gun_crawler_web_postgres'
-      d.expose = [5432]
+      d.ports  = ['5432:5432']
     end
   end
 
@@ -252,7 +252,7 @@ config.vm.define "postgres" do |postgres|
   postgres.vm.provider 'docker' do |d|
     d.image  = 'abevoelker/postgres'
     d.name   = 'gun_crawler_web_postgres'
-    d.expose = [5432]
+    d.ports  = ['5432:5432']
   end
 end
 ```
@@ -272,10 +272,10 @@ d.name   = 'gun_crawler_web_postgres'
 This assigns a unique name to the container.  This is a convenience so that when you are using the Docker CLI, you don't have to use the hash ID to reference it.  This will be important later to the Rails application container definition.
 
 ```
-d.expose = [5432]
+d.ports  = ['5432:5432']
 ```
 
-This exposes the container's 5432 port locally.  The **only reason** I do this is so I can use pgAdmin on my host machine to inspect the development database.  I **do not need** to expose the port in order to connect to it from the Rails application (as I'll show later).
+This forwards ports port 5432 from the container to port 5432 on the host machine.  The **only reason** I do this is so I can use pgAdmin on my host machine to inspect the development database.  I **do not need** to expose the port in order to connect to it from the Rails application (as I'll show later).
 
 #### Equivalent Docker CLI
 
@@ -404,7 +404,7 @@ Vagrant apparently errors if the container stops; since we will be occasionally 
 d.ports           = ['3000:3000']
 ```
 
-This forwards ports from the container to the host machine.  I forward the common Rails development server port (3000) so that on my host machine browser I can visit `http://localhost:3000`.  Once I harden this image for staging/production, I will probably be `EXPOSE`ing port 80, so I expect this config to change soon.
+I forward the common Rails development server port so that on my host machine browser I can visit `http://localhost:3000`.  Once I harden this image for staging/production, I will probably be `EXPOSE`ing port 80, so I expect this config to change soon.
 
 ```
 d.link('gun_crawler_web_postgres:postgres')
