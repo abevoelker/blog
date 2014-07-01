@@ -64,7 +64,7 @@ The cleanest Ruby applications I see tend to:
 * use immutabile objects as much as possible (e.g. using thin veneers over primitives or [adamantium][adamantium])
 * separate business logic into collections of functions that act on said objects (service objects)
 * minimize mutation and side effects to as few places as possible
-* thoroughly document how objects fit together with unit tests (mimickry of a static type system)
+* thoroughly document expected type arguments for object instantiation and method invocation with unit tests (mimickry of a static type system)
 
 To me, this code starts displaying aspects of functional programming languages.
 
