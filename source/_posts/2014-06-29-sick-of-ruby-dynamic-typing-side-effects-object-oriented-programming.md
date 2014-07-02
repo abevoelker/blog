@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Sick of Ruby, dynamic typing, side effects, and basically object-orientied programming"
+title: "Sick of Ruby, dynamic typing, side effects, and basically object-oriented programming"
 date: 2014-06-29 15:30
 comments: true
 categories: 
