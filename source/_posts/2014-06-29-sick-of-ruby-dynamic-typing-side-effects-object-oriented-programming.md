@@ -66,7 +66,7 @@ The cleanest Ruby applications I see tend to:
 
 * break functionality into lots of small objects
 * use immutabile objects as much as possible (e.g. using thin veneers over primitives or [adamantium][adamantium])
-* separate business logic into collections of functions that act on said objects (service objects)
+* separate business logic into collections of functions that act on said objects ([service objects][service-objects])
 * minimize mutation and side effects to as few places as possible
 * thoroughly document expected type arguments for object instantiation and method invocation with unit tests (mimickry of a static type system)
 
@@ -111,6 +111,7 @@ But for myself, it's hard to enjoy using Ruby nowadays when I've found something
 [law-of-demeter]:            http://en.wikipedia.org/wiki/Law_of_Demeter
 [better-specs]:              http://betterspecs.org
 [adamantium]:                https://github.com/dkubb/adamantium
+[service-objects]:           http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/
 [code-reuse]:                http://www.haskellforall.com/2011/12/haskell-for-mainstream-programmers-code.html
 [it-compiles-it-works]:      http://www.haskell.org/haskellwiki/Why_Haskell_just_works
 [chris-allen]:               https://twitter.com/bitemyapp
