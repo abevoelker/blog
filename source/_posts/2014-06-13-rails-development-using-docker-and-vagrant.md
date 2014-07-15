@@ -29,7 +29,7 @@ Docker is especially appealing to me in the context of Rails deployments, since 
 ## Creating Docker images: the Dockerfile
 
 <div class="alert-message" markdown="1">
-**Terminology note**: I was going to start by including my own simplified definitions of what Docker [images][docker-image] and [containers][docker-container] are, but the Docker website does a great job with these terms so check the links intead.
+**Terminology note**: I was going to start by including my own simplified definitions of what Docker [images][docker-image] and [containers][docker-container] are, but the Docker website does a great job with these terms so check the links intead.  But the main difference is that a container is an instantiated, running image, which can be be frozen back into an image (which will save all the filesystem modifications that have happened while it was running).
 </div>
 
 When creating your own Docker images, you will define the build instructions via a Dockerfile.  A Dockerfile is a list of statements, executed imperatively, that follow [a special DSL syntax][dockerfile-syntax].  Each statement in the Dockerfile generates a new image that is a child of the previous statement's image.  You know what that creates?  A [directed acyclic graph (DAG)][dag] of images, not at all unlike a [graph of git commits][git-dag]:
