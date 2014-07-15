@@ -6,11 +6,11 @@ comments: true
 categories: 
 ---
 
+This has been a long time coming. I had meant to write this post around the New Year, before the wave of [death of Ruby][avdi-ruby-demise] stuff and before DHH's "[TDD is dead][dhh-tdd-dead]" ruckus:
+
 <blockquote class="twitter-tweet" lang="en"><p>I&#39;m officially fully jaded with Ruby. Amongst other things, sick of side effects and mutable state that force me to write so many unit tests</p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/statuses/416592284298137601">December 27, 2013</a></blockquote>
 
-This has been a long time coming. I had meant to write this post around the New Year, before the wave of [death of Ruby][avdi-ruby-demise] stuff and before DHH's "[TDD is dead][dhh-tdd-dead]" ruckus.
-
-I think subconsciously more and more people are figuring out something is wrong or lacking with Ruby development, but they are lashing out at the wrong things.  Oh, your Ruby app is a steaming pile of shit?  It's because you weren't diligent enough writing tests or you weren't following TDD principles closely enough.  Or you aren't knowledgable enough with design patterns to break it up into the right patterns.  Or you aren't following the [Single Responsibility Principle][SRP], or [Law of Demeter][law-of-demeter], yadda yadda.  Here, read this book on patterns or testing or OO design and get back to me when you reach enlightenment.
+I think subconsciously more and more people are figuring out something is wrong or lacking with Ruby development, but they are lashing out at the wrong things.  Oh, your Ruby app is a steaming pile of shit?  It's because you weren't diligent enough writing tests or you weren't following TDD principles closely enough.  Or you aren't knowledgable enough with design patterns to break it up into the right patterns.  Or you aren't following the [Single Responsibility Principle][SRP], or [SOLID][SOLID], or [Law of Demeter][law-of-demeter], yadda yadda.  Here, read this book on patterns or testing or OO design and get back to me when you reach enlightenment.
 
 <blockquote class="twitter-tweet" lang="en"><p>I literally do not know what OO, or especially OO design, really mean. I wasted so many hours in my best years trying to find out. Damn it.</p>&mdash; Gary Bernhardt (@garybernhardt) <a href="https://twitter.com/garybernhardt/statuses/482297459683495937">June 26, 2014</a></blockquote>
 
@@ -102,6 +102,7 @@ But for myself, it's hard to enjoy using Ruby nowadays when I've found something
 [avdi-ruby-demise]:          http://devblog.avdi.org/2014/02/23/rumors-of-rubys-demise/
 [dhh-tdd-dead]:              http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html
 [SRP]:                       http://en.wikipedia.org/wiki/Single_responsibility_principle
+[SOLID]:                     http://en.wikipedia.org/wiki/SOLID_(object-oriented_design)
 [law-of-demeter]:            http://en.wikipedia.org/wiki/Law_of_Demeter
 [better-specs]:              http://betterspecs.org
 [adamantium]:                https://github.com/dkubb/adamantium
