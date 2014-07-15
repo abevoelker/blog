@@ -44,6 +44,10 @@ It's simply unrealistic to rely on developers to always shoulder the burden of c
 
 ## Tests are necessary, but insufficient
 
+{% blockquote Edsger Dijkstra http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD249.PDF EWD249 "Notes On Structured Programming" %}
+Program testing can be used to show the presence of bugs, but never to show their absence!
+{% endblockquote %}
+
 Sadly, even if you were to attain OO TDD guru status, ascend to your planar form, and achieve perfect code coverage with well-written tests all the time, your knowledge won't save you:
 
 <blockquote class="twitter-tweet" lang="en"><p>Ruby: where requiring a module that ships with the stdlib changes how integer division works everywhere. <a href="http://t.co/pa2rgfNytH">pic.twitter.com/pa2rgfNytH</a></p>&mdash; Tom Dale (@tomdale) <a href="https://twitter.com/tomdale/statuses/457282269342744576">April 18, 2014</a></blockquote>
