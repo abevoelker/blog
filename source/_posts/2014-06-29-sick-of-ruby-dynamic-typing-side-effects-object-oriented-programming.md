@@ -89,6 +89,7 @@ Some things I like about Haskell:
 * Easy concurrency and parallelism thanks to the aforementioned pure functions, lack of side effects, immutability.
 * [Types are documentation][types-are-documentation] that the compiler checks.
 * [If it compiles, it oftentimes just works][it-compiles-it-works]
+* A [high amount of code reuse due to the basis in category theory][code-reuse]. This is a failed promise of OO in my opinion.
 
 I think there is enough learning material out there, and motivated teachers like [Chris Allen (@bitemyapp)][chris-allen], that even an idiot / not-super-mathy person like myself can get into Haskell for serious work.  And Haskell has enough depth that the more time I invest with it and the math theory underpinning it (category theory), I will unlock new, mathematically-sound abstractions that I can use pretty directly (e.g. [lenses][lens], [arrows][arrow]).  Perhaps some day I'll even be like those math warlocks, and able to appreciate languages with even more powerful type systems, e.g. ones with [dependent types][dependent-types] like [Idris][idris], [Agda][agda], or [Coq][coq] (one can dream).  Basically, Haskell's not a language that I anticipate getting bored of very quickly.
 
@@ -110,6 +111,7 @@ But for myself, it's hard to enjoy using Ruby nowadays when I've found something
 [law-of-demeter]:            http://en.wikipedia.org/wiki/Law_of_Demeter
 [better-specs]:              http://betterspecs.org
 [adamantium]:                https://github.com/dkubb/adamantium
+[code-reuse]:                http://www.haskellforall.com/2011/12/haskell-for-mainstream-programmers-code.html
 [it-compiles-it-works]:      http://www.haskell.org/haskellwiki/Why_Haskell_just_works
 [chris-allen]:               https://twitter.com/bitemyapp
 [lens]:                      http://www.haskellforall.com/2012/01/haskell-for-mainstream-programmers_28.html
