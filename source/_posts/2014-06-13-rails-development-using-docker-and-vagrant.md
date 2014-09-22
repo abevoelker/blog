@@ -170,7 +170,7 @@ There is [an image out there by Phusion][phusion-base-image] that aims to replic
 It is also important to note that the process you start with your Docker container must run in the foreground, or Docker will think the container halted.  Thus **do not** try to use /etc/init.d scripts as `CMD` arguments (instead, look at what those scripts are doing and unroll the daemonization).
 </div>
 
-## An example Vagrantfile using the Docker provisioner
+## An example Vagrantfile using the Docker provider
 
 {% img left /images/vagrant-logo.png 250 300 Vagrant logo %}
 
