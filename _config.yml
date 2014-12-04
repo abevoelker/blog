@@ -69,7 +69,7 @@ github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: abevoelker
 twitter_tweet_button: true
 
 # Google +1
@@ -99,3 +99,10 @@ google_analytics_domain_name: abevoelker.com
 
 # Facebook Like
 facebook_like: false
+
+# Facebook Open Graph / Twitter cards adapted from
+# http://www.blackglasses.me/2013/09/19/twitter-cards-facebook-open-graph-and-octopress/
+facebook_app_id: 141498135901508
+facebook_page: https://www.facebook.com/abe.voelker
+og:
+  site_name: "Abe Voelker's blog"

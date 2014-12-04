@@ -4,6 +4,8 @@ title: "OpenEdge ABL syntax highlighting and GitHub support"
 date: 2012-03-19 18:57
 comments: true
 categories: 
+facebook:
+  image: octocat.png
 ---
 
 [{% img left /images/octocat.png GitHub octocat logo %}](https://github.com/languages/OpenEdge ABL)

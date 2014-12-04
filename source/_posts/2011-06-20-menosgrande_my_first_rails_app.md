@@ -4,6 +4,8 @@ title: "menosgrande - My First Ruby on Rails App!"
 date: 2011-06-20
 comments: true
 categories: 
+facebook:
+  image: menosgrande.png
 ---
 
 [Unicode]: http://unicode.org/standard/WhatIsUnicode.html

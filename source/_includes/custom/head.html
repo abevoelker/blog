@@ -2,3 +2,25 @@
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <!-- Twitter bootstrap messages -->
 <link href="/stylesheets/twitterbootstrap.messages.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/table-zebra-striping.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+<!-- Social media content metadata -->
+{% if site.facebook_app_id %}
+<meta property="fb:admins" content="{{ site.facebook_app_id }}" />
+<meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
+<meta property="og:site_name" content="{% if site.og.site_name %}{{ site.og.site_name }}{% else %}{{ site.title }}{% endif %}" />
+<meta property="og:url" content="{% if canonical %}{{ canonical }}{% else %}{{ site.url }}{% endif %}/" />
+<meta property="og:description" content="{{ description | strip_html | condense_spaces | truncate:200 }}" />
+<meta property="og:author" content="{{ site.facebook_page }}" />
+{% if page.facebook.image %}<meta property="og:image" content="{{ site.url }}/images/{{ page.facebook.image }}" />{% endif %}
+{% endif %}
+{% if site.twitter_user %}
+<meta property="twitter:card" content="{% if page.twitter_card.type %}{{ page.twitter_card.type}}{% else %}summary{% endif %}" />
+<meta property="twitter:site" content="{{ site.twitter_user }}" />
+<meta property="twitter:url" content="{% if canonical %}{{ canonical }}{% else %}{{ site.url }}{% endif %}" />
+<meta property="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
+<meta property="twitter:description" content="{{ description | strip_html | condense_spaces | truncate:200 }}" />
+<meta property="twitter:creator" content="{% if page.twitter_card.creator %}{{ page.twitter_card.creator }}{% else %}{{ site.twitter_user }}{% endif %}" />
+{% if page.twitter_card.image %}<meta property="twitter:image:src" content="{{ site.url }}/images/{{ page.twitter_card.image }}" />{% endif %}
+{% endif %}

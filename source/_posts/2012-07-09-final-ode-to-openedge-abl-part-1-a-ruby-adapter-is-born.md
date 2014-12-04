@@ -4,6 +4,8 @@ title: "Final Ode to OpenEdge ABL Part 1: a Ruby Adapter is Born"
 date: 2012-07-09 12:00
 comments: true
 categories: 
+facebook:
+  image: mass_extinction_event.jpg
 ---
 
 {% img center /images/mass_extinction_event.jpg Foreground: ABL developers at work. Background: arrival of Ruby adapter %}

@@ -3,6 +3,8 @@ layout: post
 title: "GitLaw: GitHub for Laws and Legal Documents - a Tourniquet for American Liberty"
 date: 2012-05-10 04:23
 comments: true
+facebook:
+  image: house_of_representatives_chamber_octocat.jpg
 ---
 
 [{% img right /images/house_of_representatives_chamber_octocat_thumb.jpg %}](/images/house_of_representatives_chamber_octocat.jpg)

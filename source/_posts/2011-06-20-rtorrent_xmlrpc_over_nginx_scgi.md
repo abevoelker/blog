@@ -4,6 +4,8 @@ title: rtorrent XMLRPC over nginx SCGI
 date: 2011-06-20
 comments: true
 categories: 
+facebook:
+  image: rtorrent_screenshot.png
 ---
 
 [{% img right /images/rtorrent_screenshot.png 300 'rtorrent' 'screenshot of rtorrent running in a terminal' %}](/images/rtorrent_screenshot.png)

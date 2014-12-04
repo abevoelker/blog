@@ -4,6 +4,8 @@ title: "Cure for the Plague: A Theoretical Progress / OpenEdge ABL Migration Pla
 date: 2010-11-17
 comments: true
 categories: 
+facebook:
+  image: triumpth_of_death.jpg
 ---
 
 [{% img left /images/triumpth_of_death.jpg 'Progress at work' 'The Triumpth of Death oil painting' %}](http://en.wikipedia.org/wiki/The_Triumph_of_Death)

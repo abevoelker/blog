@@ -3,6 +3,8 @@ layout: post
 title: "Final Ode to OpenEdge ABL Part 3: Parting Advice"
 date: 2012-08-07 20:00
 comments: true
+facebook:
+  image: yao_ming_progress_openedge.jpg
 ---
 
 {% img right /images/yao_ming_progress_openedge.jpg 281 201 OpenEdge? Fuck that shit %}

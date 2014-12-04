@@ -4,6 +4,8 @@ title: "Rails Development Using Docker and Vagrant"
 date: 2014-06-13 16:00
 comments: true
 categories:
+facebook:
+  image: docker.png
 ---
 
 [{% img center /images/docker.png Docker containerizing some typical Rails-stack software %}](/images/docker.png)
@@ -478,6 +480,8 @@ vagrant up web --provider=docker
 If there is interest, I could make a demo Rails application with a Dockerfile and Vagrantfile in a ready-to-go package for trying this out.  Let me know in the comments if that's something you'd be interested in.
 
 ## Next step: deployment
+
+[{% img center /images/nowwhat.gif %}](/images/nowwhat.gif)
 
 So far, I've only updated my development environment to use Docker.  I have yet to deploy to a remote staging/production environment.  I have some ideas, but have yet to try them out.
 

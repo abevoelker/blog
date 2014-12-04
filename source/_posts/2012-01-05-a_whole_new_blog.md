@@ -4,6 +4,8 @@ title: A Whole New Blog!
 date: 2012-01-05
 comments: true
 categories: 
+facebook:
+  image: octopress.png
 ---
 
 {% img left /images/octopress.png Octopress logo %}
