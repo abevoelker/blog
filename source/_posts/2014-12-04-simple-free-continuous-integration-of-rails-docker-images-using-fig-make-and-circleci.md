@@ -124,7 +124,7 @@ exec "$@"
 
 ```
 
-In some cases you can get away without doing this (for example Rails)
+In some cases you can get away with handling this interpolation inside of the application code (for example Rails lets you evaluate ERB inside of database.yml), but I find it cleaner to use a wrapper script and not corrode the application logic.
 
 Depending on how your image is structured, this wrapper script approach could also work nicely as an [`ENTRYPOINT`][docker-entrypoint], but in this case it would just clutter up the fig statements.
 
