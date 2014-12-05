@@ -16,7 +16,7 @@ This setup will use CircleCI to remotely do a `docker build`, test the built ima
 
 I created an [example Rails repository on GitHub][example-repo] to illustrate the basic setup, and I will be using the code from there as examples in this post.  Here's the current build status of that example project on CircleCI (hopefully it's green!):
 
-[![Circle CI](https://circleci.com/gh/abevoelker/example_rails_docker_ci.svg?style=svg)](https://circleci.com/gh/abevoelker/example_rails_docker_ci)
+[![Circle CI](https://circleci.com/gh/abevoelker/example_rails_docker_ci.svg?style=shield)](https://circleci.com/gh/abevoelker/example_rails_docker_ci)
 
 ## Prerequisites
 
@@ -195,13 +195,13 @@ deployment:
 
 Overall it's pretty readable; the build machine requires the docker service and build dependencies are fig (I had to put it into a separate install script due to backticks in the circle.yml not working properly).  `make build` is not really necessary to put in the `dependencies` section as the `make test` in the test section will run it, but I just think it looks cleaner to put it there and make it explicit for some reason.
 
-One thing of note is the use of the `override` sections.  This is because CircleCI tries to be smart about your build, and perform automatic actions when it detects certain things (it labels these "inferences" in the build output).  For example, when it sees a Gemfile it tries to do `bundle install`, and when it sees database.yml it tries to be run database migrations.  Obviously we don't want this as it's not smart enough to do these actions with our Docker container properly.  By defining `override` sections in the circle.yml, we disable the use of these inferences.  The weird use of `/bin/true` in the database override section is because empty `override` sections seem to be ignored.
+One thing of note is the use of the `override` sections.  This is because CircleCI tries to be smart about your build, and perform automatic actions when it detects certain things (it labels these "inferences" in the build output).  For example, when it sees a Gemfile it tries to do `bundle install`, and when it sees database.yml it tries to run database migrations.  We don't want this because it's not smart enough to do these actions using our Docker containers.  By defining `override` sections in the circle.yml, we disable the use of these inferences.  The weird use of `/bin/true` in the database override section is because empty `override` sections seem to be ignored.
 
 In the `deployment` section, a couple things are worth noting.  One is the use of `$DOCKER_EMAIL`, `$DOCKER_USER`, and `$DOCKER_PASS` environment variables.  Similar to Heroku, CircleCI has a project configuration section where you can enter sensitive variables to be used during the build.  So we can enter our secret Docker registry authentication details in this section, which are needed to push to the registry.
 
-Another is the use of tags when doing the `docker push`.  The way the above circle.yml is configured, a `latest` tag is pushed as well as a tag consisting of the SHA-1 of the git commit that the image was built from.  This way, you can perform rollbacks of deployments by using the git commit hash as a handy reference to corresponding Docker images.  Note that if you are using your own private registry, you may want to delete or limit this functionality as you could fill up your hard disk as these images will no longer be considered dangling images by the typical docker cleanup commands (e.g. `docker rmi $(docker images --filter dangling=true --quiet)`).
+Another is the use of tags when doing the `docker push`.  The way the above circle.yml is configured, a `latest` tag is pushed as well as a tag consisting of the SHA-1 of the git commit that the image was built from (CircleCI conveniently exposes this as `$CIRCLE_SHA1`).  This way, you can perform rollbacks of deployments by using the git commit hash as a handy reference to corresponding Docker images.  Note that if you are using your own private registry, you may want to delete or limit this functionality as you could fill up your hard disk because these images will no longer be considered dangling images by the typical docker cleanup commands (e.g. `docker rmi $(docker images --filter dangling=true --quiet)`).
 
-## Private images are cheap, by the way
+## Private image builds are cheap, by the way
 
 The cool thing about this approach is that it is pretty cheap for building private images.  [Now that CircleCI is free][circle-ci-free] for private builds, the only thing you have to pay for is private git repos from GitHub (minimum $7/mo for 5 repos for the "micro" plan).  If CircleCI ever adds support for BitBucket, this would be completely free as BitBucket allows unlimited private git repos.
 
