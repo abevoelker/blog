@@ -114,7 +114,7 @@ So even though Docker didn't end up cutting the gordian knot of my deployment is
 
 [{% img center /images/good-luck-docker-chan.png "Good luck Docker-Chan!" %}](/images/good-luck-docker-chan.png)
 
-I have one last Docker blog post in the pipeline, which will deal with how I deploy Rails Docker containers as "kittens" using Ansible.  Including zero-downtime rolling deploys using the awesome HAProxy load balancer + Ansible's .
+I have one last Docker blog post in the pipeline, which will deal with how I deploy Rails Docker containers as "kittens" using Ansible.  Including zero-downtime rolling deploys using the awesome HAProxy load balancer and Ansible's `serial` and `wait_for state=drained` features.
 
 Thanks to [Chris Allen][chris-allen] for reviewing a draft of this post.
 
