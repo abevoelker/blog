@@ -90,7 +90,13 @@ And hell maybe it's really all my fault anyway (my coworker thinks I have some k
 
 But I have to be honest in saying that when I weigh my entire one year experience with Docker, I've found it to be somewhat unreliable.  Six months ago if I were having trouble with something Docker-related I would honestly feel like there was a 50/50 chance between it being my fault or a Docker bug/limitation.
 
-To be fair though, I think that there has been a focus on shoring up stability in recent Docker releases (specifically, the last few months).  1.4 and up definitely feel more solid to me; the majority of my experience with Docker is with 1.3 and earlier.  But even now I still encounter weird issues from time to time (this was a one-off random error on 1.4):
+To be fair though, I think that there has been a focus on shoring up stability in recent Docker releases (specifically, the last few months).  1.4 and up definitely feel more solid to me; the majority of my experience with Docker is with 1.3 and earlier.
+
+But even now I'm running into a really bad issue where my host machines completely lock up due to Docker STDOUT logging causing some kind of memory leak:
+
+<blockquote class="twitter-tweet" lang="en"><p>Apparently Docker containers logging to STDOUT causes memory leak leading to lockups. NEAT! <a href="http://t.co/2xeKeS8ohc">http://t.co/2xeKeS8ohc</a> <a href="http://t.co/YG6XlTt44N">pic.twitter.com/YG6XlTt44N</a></p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/566044376829538304">February 13, 2015</a></blockquote>
+
+I have to go in to my DigitalOcean panel to hard restart the machine because the memory leaks cause SSH to become unresponsive.  And I still encounter weird one-off issues time to time (this was a one-off random error on 1.4):
 
 <blockquote class="twitter-tweet" lang="en"><p>Holy shit Docker wtf r u doing <a href="http://t.co/nkdMBcTPxZ">pic.twitter.com/nkdMBcTPxZ</a></p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/566049442407931904">February 13, 2015</a></blockquote>
 
