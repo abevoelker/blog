@@ -37,7 +37,7 @@ The first is that some services just don't easily lend themselves to Dockerizing
 
 <blockquote class="twitter-tweet" lang="en"><p>And then I spend hours trying to debug cron because silent setgid restrictions in my Docker version mess up Postfix <a href="https://t.co/i3Q7lui2Z5">https://t.co/i3Q7lui2Z5</a></p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/494898158229786624">July 31, 2014</a></blockquote>
 
-And then after getting all that working, in order to provide configurable cron jobs, I'd have to either bind mount a directory from the host into `/etc/cron.d/`, which gets into the [aforementioned bind mount issues][bind-mount-madness] again, or create another container and mount it using `--volumes-from`, which gives me another container I have to manage the lifetime of.
+And then after getting all that working, in order to provide configurable cron jobs, I'd have to either bind mount a directory from the host into `/etc/cron.d/`, which gets into the [aforementioned bind mount issues][bind-mount-madness] again, or create another container and mount it using `--volumes-from`, which gives me another container I have to manage the lifetime of.  To support bind mounts, I had to create an ENTRYPOINT wrapper script which would ensure permissions are set properly on files before running Postgres, which also seems to be the way that official Docker images handle the problem (see [official Postgres][postgres-entrypoint] and [MongoDB][mongodb-entrypoint] images).
 
 Eventually to get around the cron issues, I ended up just using [Phusion's baseimage-docker][baseimage-docker] (disabling SSH though), because they've already spent time working around the Dockerisms that cause these weird problems, and cron and syslog just work out of the box (I cautiously noted that team Docker has some issues with this image ([1][baseimage-docker-wrong1], [2][baseimage-docker-wrong2])).  But then, since I realize that I'm going to give Postgres its own box anyway for proper resource utilization, I realize that I've really gained nothing by Dockerizing it.
 
@@ -164,3 +164,5 @@ Thanks to [Chris Allen][chris-allen] for reviewing a draft of this post.
 [s6]:                       http://blog.tutum.co/2014/12/02/docker-and-s6-my-new-favorite-process-supervisor/
 [cap-theorem]:              http://en.wikipedia.org/wiki/CAP_theorem
 [chris-allen]:              https://twitter.com/bitemyapp
+[postgres-entrypoint]:      https://github.com/docker-library/postgres/blob/94aee2022d2014230fad3d054c048678137281d1/9.3/docker-entrypoint.sh#L5
+[mongodb-entrypoint]:       https://github.com/docker-library/mongo/blob/807078cb7b5f0289f6dabf9f6875d5318122bc30/2.7/docker-entrypoint.sh#L5
