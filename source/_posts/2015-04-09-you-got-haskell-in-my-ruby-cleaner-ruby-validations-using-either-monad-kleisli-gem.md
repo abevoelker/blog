@@ -12,6 +12,10 @@ facebook:
 
 Alternate title: "You could have invented Either!"
 
+<div class="alert-message error" markdown="1">
+  Note: It came to my attention from some Reddit comments that the simple example I use in this article is probably not the best for showing off a good use case of the kleisli gem as the "naive" code can be simplified.  Therefore, I will be updating this post in the future with a more thorough example.  In the meantime, I'd encourage you to read the article ["Cleaner, safer Ruby API clients with Kleisli"][cleaner-safer-kleisli] by the kleisli gem author which has a more comprehensive use case!
+</div>
+
 I'm still a rank beginner at Haskell, but I guess it's already leaving some tracks in my brain as I find myself wanting algebraic data types and pattern matching when I'm writing Ruby.
 
 <blockquote class="twitter-tweet" lang="en"><p>Algebraic Data Types Considered Harmful: once you use them, every language lacking them drives you to madness. <a href="https://twitter.com/hashtag/LangSec?src=hash">#LangSec</a></p>&mdash; Nathan Wilcox (@least_nathan) <a href="https://twitter.com/least_nathan/status/581544451597709312">March 27, 2015</a></blockquote>
