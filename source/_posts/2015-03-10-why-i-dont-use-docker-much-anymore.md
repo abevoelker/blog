@@ -10,6 +10,10 @@ facebook:
 
 [{% img center /images/mv-rena.jpg "The Grounding of MV Rena" %}](/images/mv-rena.jpg)
 
+<div class="alert-message success" markdown="1">
+  Update: The conclusion of this post talks about managing Docker kittens with Ansible; I no longer do that, but instead use Amazon ECS with [Terraform](https://www.terraform.io/). Docker has stabilized a lot since my early experiences as well. However some things like custom kernel parameters (e.g. for Redis) will always be a limitation. I'll write a new blog post on how I use ECS and Terraform soon.
+</div>
+
 When I first started using Docker about a year ago for developing Rails applications, I had dreams of using it across all development environments (development/test through production) and in all related services (linked containers consisting of application servers, databases, in-memory caches, search indexes, etc.).  I mean, why wouldn't you - not only would you get more thorough guarantees of your code and systems matching what production's running, but you are getting the high performance of containers over VMs when developing!  And a year ago it seemed like it wouldn't be long until the problem of easily deploying these linked containers across multiple hosts would be solved.
 
 However, in time, I gave up on both aspects of Docker use. Now I only use Docker to build a sort of "[gold master][gold-master]" Docker image of my Rails application on a CI server, which gets tested in a remote staging environment and deployed to production ([my last blog post][rails-docker-ci] explains the process of how I use CircleCI for this).  I don't use Docker for any of the other services (Postgres, Redis, Elasticsearch, RabbitMQ, etc.).  I also don't use Docker for local development or testing anymore.
@@ -73,6 +77,8 @@ The cattle topology requires that the services being managed are [horizontally s
 The cattle topology is required for services that need to be resistant to downtime, so companies that can't afford such downtime (Google, Amazon, etc.) will spend the effort ensuring their services fit this pattern.  But the problem is that not all services are easily amenable to this; oftentimes [tradeoffs have to be made][cap-theorem] and it may require a lot of programmer effort to put it through a chop shop to enact those choices.
 
 For example, while application servers fit pretty easily into this paradigm as they are (or should be) stateless, relational databases [tend not to][cache-is-the-new-ram].  Postgres specifically is not super easy to configure for this; there are ways to do [high availability (HA)][ha] with Postgres using replication, yielding a master and hot standby slaves, but there's no standard formula for it.  There are also exotic solutions like [Postgres-XC][postgres-xc] which give you multi-master, but with a reduced feature set (so complex in a different way).  Conveniently, the Mesos diagram lists MySQL, which is an exception to this rule as it comes with multi-master baked in.  And other services, like Redis, have only [relatively recently][redis-cluster-launch] gotten horizontally scalable features (Redis Cluster).
+
+Speaking of Redis, Redis needs custom kernel tweaks in production ([namely transparent huge pages disabled](http://redis.io/topics/latency)). The problem with that in terms of Docker usage is that Docker containers share a kernel, so any change in kernel params will affect every Docker container on that system. So if you have conflicting parameters, you now need to manage container allocations on specific VMs.
 
 I can totally understand why Docker would focus on this side of things, and solving it in the big picture will probably lead to solutions that also trickle down to those of us with the smaller use cases (eventually).  But in the here and now, it feels like there is a still a gap for my use case if I don't want to fit all my application services into a Docker cluster.
 
