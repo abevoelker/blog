@@ -36,6 +36,8 @@ So a better solution in terms of UX would be if users could simply **click a
 link in the email footer that would immediately unsubscribe them** from further
 notifications. But how to implement that?
 
+<!-- more -->
+
 ## Existing Rails models / database schema
 
 The existing Rails models follow a simple join table style and look something like this:
