@@ -4,8 +4,7 @@ title: "Simple transactional email links using JSON Web Tokens (JWT)"
 date: 2016-04-25 12:00:00 -0500
 comments: true
 categories:
-draft: true
-published: false
+published: true
 facebook:
   image: jwt.jpg
 ---
@@ -140,8 +139,8 @@ info for the existing subscription is gone.
 Now, I could solve this problem by adding the *[paranoia][]* gem and performing
 *soft deletes* on the *subscriptions* table rather than truly deleting records.
 However, I tend to prefer to truly delete records, and also set up foreign keys
-so that the database also deletes dependent records; I embrace the database
-enforcing referential integrity. I also tend to write real database triggers and
+so that the database also deletes dependent records (I embrace the database
+enforcing referential integrity). I also tend to write real database triggers and
 constraints rather than fully relying on Rails validations, again leaning on the
 database to enforce referential integrity whenever possible. I've seen enough
 surprising or buggy behavior in complex ActiveRecord callbacks and Rails's
@@ -179,9 +178,9 @@ This didn't get any further than a brief thought in my head, because it really
 isn't much (any?) better than just having a column on *subscriptions* with a
 soft delete mechanism. But it did get me to start thinking about reducing the
 dependency on the database, leading me to the idea of possibly hashing some data
-that is private to the user and static (e.g. their join date),
-and using that hash as a secret token to authorize unsubscribe links. That sort
-of lead me to JWT and my final solution.
+that is private to the user and static (e.g. their join date + database PK),
+and using that hash as a secret token to authorize unsubscribe links for that
+user. That sort of lead me to JWT and my final solution.
 
 ## Implemented idea: encode the desired action using JSON Web Tokens (JWT)
 
@@ -192,7 +191,7 @@ tampered with (e.g., users cannot change the `user_id` or `product_id` of an
 unsubscribe target).
 
 For solving these sorts of problems, the database is a tool that a
-lot of web app developers often reach for first out of habit, like I did. It's
+lot of web developers often reach for first out of habit, like I did. It's
 a convenient tool because of our inherent trust in it (only we can write to it -
 nobody can create fraudulent UUIDs in the above ideas) and because we can store
 an arbitrary amount of our dynamically generated objects there. However, it is
@@ -201,20 +200,20 @@ manage the lifetimes of these objects you are creating, which is made harder by
 the fact that they're often attached to lifetimes of other objects, causing
 annoying issues like I had to think about above with my UUIDs.
 
-The database solution I thought out above is also not very
+The database solutions I had thought out are also not very
 expressive or flexible. At the core I have to generate a shared secret
 and infer a lot about what that single value means in my code. If I want to
 add varying behavior to these tokens I'd have to add additional fields to the
-table to configure that, being extremely careful to not mess up existing tokens
-that I've generated.
+table to configure that, while being extremely careful to not mess up existing
+tokens that I've generated.
 
 A better solution to the stated core problem is for the web app to serialize
 allowed actions in a more expressive data structure such as JSON, and use some
 cryptographic math (a digital signature) to ensure that the data was generated
 by us. We can simply hand this data to the client - no need for us to store
-anything! - and later when they hand it back to us, we can cryptographically
-verify the signature to make sure we are the entity that generated it and it
-hasn't been tampered with.
+anything! - and later when they hand it back to us, we can verify the signature
+to make sure we are the entity that generated it and it hasn't been tampered
+with.
 
 Luckily someone has already thought all this out and made it friendly for
 web-specific use cases!
@@ -222,7 +221,8 @@ web-specific use cases!
 ### JSON Web Tokens (JWT)
 
 [JSON Web Tokens (JWT)][jwt] solve this problem using a simple data format
-consisting of three pieces of Base64URL-encoded data:
+consisting of three pieces of Base64URL-encoded data concatenated together with
+periods:
 
 1. A **JSON header**, mainly used for specifying the algorithm used to sign the
    token.
@@ -230,29 +230,31 @@ consisting of three pieces of Base64URL-encoded data:
    can put whatever data you want in here, but there are a short number of
    [reserved names][jwt-reserved-names] that have special meaning to JWT
    processing (e.g. setting a token expiration time using `exp`)
-3. The **binary signature** that signs the header and payload, proving the
-   integrity of your message.
+3. The **binary signature** that cryptographically signs the header and payload,
+   proving the integrity of the message.
 
-There is a handy debugger on the JWT site's main page that shows an example
-JWT and how the different pieces break out:
+There is a handy debugger on the JWT site's main page that shows a nice
+color-coded example token and how the different pieces break out:
 
 [{% img center /images/jwt-debugger.png "JWT debugger" %}](https://jwt.io/)
 
-The nice thing about JWTs that you can see from the example, is that the tokens
+One nice thing about JWTs, that you can see from the example, is that the tokens
 are so short that they can easily fit in URLs (assuming you don't create crazy
 large payloads).
 
-It's worth playing around with the debugger, and then reading the
+It's worth playing around with the debugger and then reading the
 [introduction page][jwt-intro] to get better explanations about JWT than I can
-provide here. The only other thing I should mention is that the header and
-payload **are not encrypted**; they are only Base64URL-encoded. There are ways
-to encrypt JWT (although it'll expand the size), but by default that's not how
-it works by default.
+provide here.
+
+One important thing to note is that the header and payload **are not
+encrypted**; they are only Base64URL-encoded. There are ways to encrypt JWTs -
+although that will expand their size - but by default that's not how they are
+made.
 
 ### Solution code
 
-Here is my coded solution to the problem using JWT using the official
-[JWT Ruby gem][jwt-ruby]. I have a *ProductSubscriptionToken* class, which makes
+Here is my coded solution to the problem using the official
+[JWT Ruby gem][jwt-ruby]. I have a `ProductSubscriptionToken` class, which makes
 it easy to encode a subscription as a JWT as well as decode a JWT back into a
 Ruby data structure:
 
@@ -298,9 +300,9 @@ class ProductSubscriptionToken
 end
 ```
 
-Note that I use an environment variable, *PRODUCT_SUBSCRIPTION_TOKEN_SECRET*, to
+I use an environment variable, `PRODUCT_SUBSCRIPTION_TOKEN_SECRET`, to
 store the secret I use to sign JWTs. I personally generate secret values using
-`SecureRandom.hex(64)`. I don't show it here, but I also use a gem called *[envied][]*
+`SecureRandom.hex(64)`. I don't show it here, but I also use a gem called *[ENVied][]*
 which ensures that this environment variable has been provided before starting
 the Rails application (if not, it fails fast). I think that's a good practice
 to avoid passing `nil` as a secret to your hashing algorithm, which could be
@@ -310,22 +312,21 @@ an empty string secret works fine!)
 
 I use HS256 (HMAC with SHA-256) as the MAC algorithm, because it is a symmettric
 algorithm - the key used to both sign and verify the message are the same (I'm
-both signing and verifying the message myself - the key never needs to leave the
-server, so there are no distribution concerns). If
+both signing and verifying the message myself, and the key never needs to leave
+the server so there are no distribution concerns). If
 I had a use case for verification to be done by another party, there are
 asymmetric (public key) algorithms JWT supports that can be used instead.
 
-Finally, note that I use `Right()` to wrap successful results and `Left()` to
-wrap unsuccessful results. The specific implementation I use is from the
-*kleisli* gem, however the names and idea are from typed functional programming.
-This is just my preferred way to represent success or failure as values.
+Finally, note that it's just my personal Ruby style, but when decoding I use
+`Right()` to wrap successful results and `Left()` to wrap unsuccessful results.
+The specific implementation I use is from the *[kleisli][]* gem, however the
+names and idea are from typed functional programming. This is just my preferred
+way to represent success or failure as values, there's nothing specific to JWT
+here.
 
 The next things implemented are the new route and the controller that parses a
 JWT parameter into either a set of
-successful ActiveRecord objects or a simple error message. Note that the
-block passed to `.fmap` is executed if the given object is a Right (success),
-otherwise it's ignored. Likewise, the block passed to `.or` is executed if the
-given object is a Left (failure), otherwise it's ignored.
+successful ActiveRecord objects or a simple error message:
 
 ```ruby
 # config/routes.rb
@@ -352,10 +353,14 @@ class ProductSubscriptionsController < ApplicationController
 end
 ```
 
-The view is pretty simple and self-descriptive. Since we have full access to the
-user and product, it would be easy to some day add an "undo" single-button form
-to this page, allowing the user to easily re-subscribe if they had clicked the
-unsubscribe link by mistake.
+Note that the
+block passed to `.fmap` is executed if the given object is a `Right` (success),
+otherwise it's ignored. Likewise, the block passed to `.or` is executed if the
+given object is a `Left` (failure), otherwise it's ignored. Again this is just
+my personal style of handling success or failure values and has nothing to do
+with JWT specifically.
+
+The view is pretty simple and self-descriptive:
 
 ```haml
 -# app/views/product_subscriptions/unsubscribe.html.haml
@@ -373,19 +378,24 @@ unsubscribe link by mistake.
       = link_to @product.title, product_path(@product)
 ```
 
+Since we have full access to the
+user and product, it would be easy to some day add an "undo" single-button form
+to this page, allowing the user to easily re-subscribe if they had clicked the
+unsubscribe link by mistake.
+
 ## Conclusion
 
-This is my first time using JWT. I don't see myself reaching for them
+This is my first time using JWTs. I don't see myself reaching for them
 often for the types of web apps I build, but in these kinds of scenarios they
 seem like a great fit.
 
-Let me know what you think! Have you used JWTs before, and if so what was your
-use case? Was it a good or bad experience - any problems you encountered?
+Let me know what you think! Is there a simpler option I'm missing? Have you used
+JWTs before, and if so what was your use case? Was it a good or bad experience -
+any problems you encountered?
 
 ## References
 
-* http://jonatan.nilsson.is/stateless-tokens-with-jwt/#examples
-* https://www.mobomo.com/2013/11/json-web-token-the-useful-little-standard-you-haven-t-heard-about/
+* [Stateless tokens with JWT](http://jonatan.nilsson.is/stateless-tokens-with-jwt/#examples)
 
 [jwt]: https://jwt.io/
 [jwt-intro]: https://jwt.io/introduction/
@@ -394,4 +404,5 @@ use case? Was it a good or bad experience - any problems you encountered?
 [hard-bounce]: http://kb.mailchimp.com/delivery/deliverability-research/soft-vs-hard-bounces
 [paranoia]: https://github.com/rubysherpas/paranoia
 [partial-index]: http://www.postgresql.org/docs/current/static/indexes-partial.html
-[envied]: https://github.com/eval/envied
+[kleisli]: https://github.com/txus/kleisli
+[ENVied]: https://github.com/eval/envied
