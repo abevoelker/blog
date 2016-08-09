@@ -12,7 +12,7 @@
     <div class="wrap">
       <div class="masthead">
         <div class="container">
-          <h3 class="masthead-title">
+          <h3 class="masthead-title no-anchor">
             <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
             <small>{{ site.tagline }}</small>
           </h3>
@@ -49,7 +49,7 @@
         {% if site.enable_anchorjs %}
         anchors.options.visible = 'always';
         anchors.add('h2, h3, h4, h5, h6');
-        anchors.remove('.masthead-title');
+        anchors.remove('.no-anchor');
         {% endif %}
       })(document);
     </script>
