@@ -11,9 +11,9 @@ permalink: why-i-dont-use-docker-much-anymore/
 
 [![The Grounding of MV Rena]({{ site.url }}/images/mv-rena.jpg)]({{ site.url }}/images/mv-rena.jpg)
 
-<div class="alert-message success" markdown="1">
-  Update: The conclusion of this post talks about managing Docker kittens with Ansible; I no longer do that, but instead use Amazon ECS with [Terraform](https://www.terraform.io/). Docker has stabilized a lot since my early experiences as well. However some things like custom kernel parameters (e.g. for Redis) will always be a limitation. I'll write a new blog post on how I use ECS and Terraform soon.
-</div>
+<p class="message" markdown="1">
+  **Update**: The conclusion of this post talks about managing Docker kittens with Ansible; I no longer do that, but instead use Amazon ECS with [Terraform](https://www.terraform.io/). Docker has stabilized a lot since my early experiences as well. However some things like custom kernel parameters (e.g. for Redis) will always be a limitation. I'll write a new blog post on how I use ECS and Terraform soon.
+</p>
 
 When I first started using Docker about a year ago for developing Rails applications, I had dreams of using it across all development environments (development/test through production) and in all related services (linked containers consisting of application servers, databases, in-memory caches, search indexes, etc.).  I mean, why wouldn't you - not only would you get more thorough guarantees of your code and systems matching what production's running, but you are getting the high performance of containers over VMs when developing!  And a year ago it seemed like it wouldn't be long until the problem of easily deploying these linked containers across multiple hosts would be solved.
 

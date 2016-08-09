@@ -130,7 +130,7 @@ enumeration equal to `0xFF0000`; if you define the color `RED` as a public
 constant you can then have other classes refer to it like so: `Color::RED`, and
 they will simply get the value `0xFF0000`.  Pretty slick!
 
-<div class="alert-message block-message warning">
+<p class="message">
   <strong>Update 2010-10-02</strong>: Just wanted to point out that the above
   Enum example can be achieved like so:
 
@@ -146,7 +146,7 @@ END CLASS.
   <a href="http://github.com/abevoelker/OpenEdge-ABL-Stomp-Client">Stomp client
   framework</a>.  I am still hoping for a <code>const</code> keyword for more
   general language use, though.
-</div>
+</p>
 
 ### ABL: Primitive variables are not very <em>primitive</em>.
 
@@ -483,13 +483,13 @@ fi
 
 will output `success` to the shell, even though the output stream is filled with error messages:
 
-<div class="alert-message block-message error">
+<p class="message">
 <code>WARNING: -nb exceeded. Automatically increasing from 90 to 122. (5407)</code><br />
 <code>WARNING: -nb exceeded. Automatically increasing from 122 to 154. (5407)</code><br />
 <code>WARNING: -nb exceeded. Automatically increasing from 154 to 186. (5407)</code><br />
 <code>WARNING: -nb exceeded. Automatically increasing from 186 to 218. (5407)</code><br />
 <code>SYSTEM ERROR: -s exceeded. Raising STOP condition and attempting to write stack trace to file 'procore'. Consider increasing -s startup parameter. (5635)</code>
-</div>
+</p>
 
 The second issue I have is that batch mode ABL programs do not write error
 output to <code>stderr</code>.  Everything goes to <code>stdout</code>.  I had
@@ -544,9 +544,9 @@ for a paragraph of text or less.
 
 ### <del><strong>OOABL: Manual memory management (no garbage collection).</strong></del>
 
-<div class="alert-message success">
+<p class="message" markdown="1">
 <strong>Update</strong>: This was implemented in OpenEdge 10.2A
-</div>
+</p>
 
 This is from the "Getting Started:
 Object-oriented Programming: Getting Started with Classes, Interfaces, and
@@ -586,9 +586,9 @@ allocation methodologies.
 
 ### <del><strong>OOABL: No support for abstract methods or classes.</strong></del>
 
-<div class="alert-message success">
+<p class="message">
 <strong>Update</strong>: This was implemented in OpenEdge 10.2B
-</div>
+</p>
 
 Interfaces are nice, but sometimes I want to implement <em>some</em> behavior
 in the superclass and stub
@@ -600,9 +600,9 @@ make well-structured object-oriented code!
 
 ### OOABL: No interface inheritance support (sub/superinterfaces).
 
-<div class="alert-message warning">
+<p class="message">
 <strong>Update</strong>: Progress claims this is planned for OpenEdge 11.
-</div>
+</p>
 
 There is no doubt that when ABL implemented object orientation it mostly
 copied Java's methodology.  What separates Java from C++ when it comes to
@@ -626,9 +626,9 @@ INTERFACE foo EXTENDS bar.
 Which currently (10.2B) returns a Progress error, stopping you dead in your
 tracks:
 
-<div class="alert-message block-message error">
+<p class="message">
   <code>Inheritance is not supported for interfaces. (13046)</code>
-</div>
+</p>
 
 ### OOABL: Cannot use sockets within a windowed environment.
 
@@ -659,7 +659,7 @@ really needed a <code>TEMP-TABLE</code> that was scoped to each
 class global <code>TEMP-TABLE</code>!  I had to re-do the algorithm iteratively
 just because of this weakness.
 
-<div class="alert-message block-message warning">
+<p class="message">
   <strong>Update 2010-10-02</strong>: Brad Williams pointed out another
   workaround - use a dynamic <code>TEMP-TABLE</code>.
 
@@ -667,7 +667,7 @@ just because of this weakness.
   <code>TEMP-TABLE</code> definition will not be considered until it is needed
   (no pre-compiling), and also the developer must be sure to clean up after
   him/herself or a memory leak will be created.
-</div>
+</p>
 
 ### OOABL: <code>CATCH</code>/<code>THROW</code> is not well-implemented.
 
@@ -702,9 +702,9 @@ END METHOD.
 
 I will get a compiler error:
 
-<div class="alert-message block-message error">
+<p class="message">
   <code>Cannot reference private member "objBaz" off of an object reference.</code>
-</div>
+</p>
 
 The problem seems to be the <code>THIS-OBJECT</code> reference,
 and the (silly) solution is to remove it:
@@ -744,11 +744,10 @@ Another solution for the getter/setter-specific scenario is to use a
 `PROPERTY` instead of a private variable and plain public
 getter/setter methods.
 
-<div class="alert-message block-message warning" markdown="1">
+<div class="message" markdown="1">
   <strong>Update 2010-08-24</strong>: Another example where this could cause
   headaches is with copy constructors.  Consider this example:<br /><br />
-
-```abl
+{% highlight abl %}
 CLASS Foo:
   DEF PRIVATE VAR i AS INT NO-UNDO.
 
@@ -759,17 +758,16 @@ CLASS Foo:
     i = f:i.
   END CONSTRUCTOR.
 END CLASS.
-```
+{% endhighlight %}
 </div>
 
-<div class="alert-message block-message warning" markdown="1">
+<div class="message" markdown="1">
   <strong>Update 2010-10-02</strong>: Brad Williams has provided an example
   using a <code>PROPERTY</code> that provides correct behavior:<br /><br />
-
-```abl
+{% highlight abl %}
 define public property i as integer no-undo get.
   private set.
-```
+{% endhighlight %}
 
   However, I still think an object should be able to self-reference its private
   variables without needing to change methods to use a <code>PROPERTY</code>.

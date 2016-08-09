@@ -510,9 +510,9 @@ representations).  Then, my final post will be some final musings on
 OpenEdge ABL and how to sandbox it; I think I will also give some
 parting advice to Progress Corp. on how they should open up ABL more.
 
-<div class="alert-message success" markdown="1">
+<p class="message" markdown="1">
 **Update**: [Part 2][15] has now been posted.
-</div>
+</p>
 
 [1]: /cure_for_the_plague_openedge_migration/
 [2]: https://rvm.io/rvm/install/

@@ -461,6 +461,6 @@ DataDirect OpenEdge JDBC drivers.  I will update this posting when that step
 has been completed!  It might take me a while, though, as I am new to Ruby.
 Wish me luck!
 
-<div class="alert-message success" markdown="1">
+<p class="message" markdown="1">
 **Update**: The [Ruby adapter](/final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/) has been completed. Enjoy!
-</div>
+</p>

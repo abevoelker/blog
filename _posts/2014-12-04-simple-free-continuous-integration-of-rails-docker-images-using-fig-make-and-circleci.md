@@ -92,9 +92,9 @@ test: build
 
 ```
 
-<div class="alert-message" markdown="1">
+<p class="message" markdown="1">
 Note: [Makefile rules][makefile-rules] require real tab characters, spaces will not parse!
-</div>
+</p>
 
 Note the `test` rule has a dependency on `build`, so `make test` will ensure a fresh Docker image build (i.e. run `make build`) right before testing.  This `Makefile` also supports `REGISTRY` and `TAG` variables, so if you have a private registry to push to or want to a specific tag for a build, you can do e.g. `REGISTRY=tutum.co TAG=master make build`.
 

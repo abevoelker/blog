@@ -11,12 +11,25 @@ permalink: gitlaw-github-for-laws-and-legal-documents-a-tourniquet-for-american-
 
 [![]({{ site.url }}/images/house_of_representatives_chamber_octocat_thumb.jpg)]({{ site.url }}/images/house_of_representatives_chamber_octocat.jpg)
 
+<p class="message" markdown="1">
+**Update**: This post received a lot of [attention on Hacker News][6]. Please
+also visit there to read many insightful comments!
+</p>
+
+<p class="message" markdown="1">
+**Update 2**: Apparently this post also provided [some inspiration][7] for a
+TED Talk entitled "[How the Internet will (one day) transform government][8]" by
+[Clay Shirky][9]. Check it out!
+</p>
+
 It's no secret that most Americans hate the members of our legislative branch.
 [Polls show][1] that **79%** of Americans currently disapprove of the job that
 Congress is doing (only 14% approve).  I can only speak for myself,
 but the disdain I feel for Congress is due to suspicion of a combination of
 malfeasance, misfeasance and nonfeasance.  I simply don't trust them to
 represent me, and I don't think most Americans do, either.
+
+<!--more-->
 
 How can we restore public trust in Congress?  The first solution that comes to
 mind would probably get me arrested or put on some secret government list
@@ -29,8 +42,6 @@ that Congress tends to [rush bills through][2] to a vote shortly after they are
 introduced, without giving an adequate amount of time for the public - or even
 themselves - enough time to digest their contents.  If Congress is unable to
 properly execute their most basic duty on their own, why not crowd source it?
-
-<!--more-->
 
 ## A GitHub for Laws and Legal Documents
 
@@ -125,16 +136,6 @@ providing an actual actionable strategy for improving Congress.  I'm not
 very knowledgable about legal matters, so I'm sure even a paralegal could
 rip this stuff to shreds.  But it's fun to dream.  Tell me how crazy I am
 in the comments section!
-
-<div class="alert-message success" markdown="1">
-**Update**: This post received a lot of [attention on Hacker News][6]. Please
-also visit there to read many insightful comments!
-</div>
-<div class="alert-message success" markdown="1">
-**Update 2**: Apparently this post also provided [some inspiration][7] for a
-TED Talk entitled "[How the Internet will (one day) transform government][8]" by
-[Clay Shirky][9]. Check it out!
-</div>
 
 [1]: http://www.realclearpolitics.com/epolls/other/congressional_job_approval-903.html
 [2]: http://readthebill.org/rushed/

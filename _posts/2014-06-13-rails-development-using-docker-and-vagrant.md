@@ -25,23 +25,23 @@ Docker solves a lot of these problems.  It simplifies development by making it f
 
 Docker is especially appealing to me in the context of Rails deployments, since you have to do other things like compile assets for the asset pipeline or upgrade the Ruby interpreter version - things that are annoying to try and write in Capistrano or Ansible.
 
-<div class="alert-message" markdown="1">
+<p class="message" markdown="1">
 **Note**: You may have heard of the ["vendor everything"][vendor-everything] approach to bundling gems for deployment, which advocates checking gem binaries into your source control.  The benefit to that approach is that you no longer have to worry about RubyGems.org (or other gem sources) being down when you do deploys.  The downside is that you add bloat to your source control by storing big fat binary files in it.  Docker gives you the same benefit without corroding your source control.  Win!
-</div>
+</p>
 
 ## Creating Docker images: the Dockerfile
 
-<div class="alert-message" markdown="1">
+<p class="message" markdown="1">
 **Terminology note**: I was going to start by including my own simplified definitions of what Docker [images][docker-image] and [containers][docker-container] are, but the Docker website does a great job with these terms so check the links intead.  But the main difference is that a container is an instantiated, running image, which can be be frozen back into an image (which will save all the filesystem modifications that have happened while it was running).
-</div>
+</p>
 
 When creating your own Docker images, you will define the build instructions via a Dockerfile.  A Dockerfile is a list of statements, executed imperatively, that follow [a special DSL syntax][dockerfile-syntax].  Each statement in the Dockerfile generates a new image that is a child of the previous statement's image.  You know what that creates?  A [directed acyclic graph (DAG)][dag] of images, not at all unlike a [graph of git commits][git-dag]:
 
 [![Graph of docker images on my machine]({{ site.url }}/images/docker-dag.png)]({{ site.url }}/images/docker-dag.png)
 
-<div class="alert-message" markdown="1">
+<p class="message" markdown="1">
 **Note**: Each blue image node in the graph above has a tag, very similar to a branch or tag in a git commit graph. This graph was generated with `docker images --viz | dot -Tpng -o docker.png`, if you want to look at the graph of Docker images on your machine. You can also see the graph in your console directly with `docker images --tree`
-</div>
+</p>
 
 When building Docker images, Docker takes advantage of this graph structure to do caching.  Each statement in a Dockerfile may be cached, and if the cache for that statement is invalidated, all of the child images (the proceeding Dockerfile statements) will need to be rebuilt as well.
 
@@ -113,9 +113,9 @@ RUN chown -R web:web /var/www &&\
 
 [`RUN`][dockerfile-run] executes commands in a new container.  You will note that I am immediately `chown`ing the files to my `web` user, because `ADD` gives the file root ownership (you will see this pattern a lot in Dockerfiles).
 
-<div class="alert-message" markdown="1">
+<p class="message" markdown="1">
 **ADD gotcha**: One thing that had tripped me up with `ADD` is that you cannot add files that exist above the Dockerfile's directory.  So you cannot do `ADD ../some_file`.  There is a note on the [`ADD` reference page][dockerfile-add] if you want the technical details as to why.
-</div>
+</p>
 
 ### bundle install
 
@@ -165,7 +165,7 @@ When running an image, you can override its baked-in `CMD` with your own command
 
 My example `CMD` statement starts `foreman`, which is adequate for development.  It would probably be better to move each service in the foreman Procfile to their own [supervisord][supervisord] configs, and have this `CMD` statement start up supervisord instead of foreman. Such an approach is common for running multiple processes in a Docker container and is production-safe.
 
-<div class="alert-message" markdown="1">
+<div class="message" markdown="1">
 **Note**: I mentioned that it is common to use supervisord to start up multiple processes in a Docker container.  It is very important to note that Docker is *not like a VM* - the Docker container will only run the exact process that you tell it to run (that process in turn can spawn other processes).  But there is no init process, no cron daemon, no SSH daemon, etc.  It took me a little bit to understand this.
 
 There is [an image out there by Phusion][phusion-base-image] that aims to replicate a basic running Linux system, but it seems to be frowned upon by the Docker devs I've seen in #docker as it goes against the intent of Docker and it can have wonky issues (for example, upstart scripts may behave weirdly due to not getting the correct signals they need to start).
@@ -288,9 +288,9 @@ Remember when I said Vagrant was a thin façade over the Docker CLI?  If you did
 docker run -d -name gun_crawler_web_postgres -p 5432:5432 -t abevoelker/postgres
 ```
 
-<div class="alert-message" markdown="1">
+<p class="message" markdown="1">
 **Note**: To list all containers running on your host machine, use `docker ps`.  To list *all* containers (included stopped ones), use `docker ps -a`.
-</div>
+</p>
 
 ### Elasticsearch container
 
