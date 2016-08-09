@@ -1,108 +1,112 @@
-# ----------------------- #
-#      Main Configs       #
-# ----------------------- #
-
-url: https://blog.abevoelker.com
-title: Abe Voelker
-subtitle: Deep thoughts, distilled from an addled μ-brain
-author: Abe Voelker
-simple_search: https://www.google.com/search
+# Site settings
+title:       Abe Voelker's blog
+email:       abe@abevoelker.com
+author:      Abe Voelker
 description:
+baseurl:     ""
+url:         "https://blog.abevoelker.com"
+date_format: "%b %-d, %Y"
 
-# Default date format is "ordinal" (resulting in "July 22nd 2007")
-# You can customize the format as defined in
-# http://www.ruby-doc.org/core-1.9.2/Time.html#method-i-strftime
-# Additionally, %o will give you the ordinal representation of the day
-date_format: "ordinal"
+# Google services
+google_verification:
+# Use either direct GA implementation or set up GTM account
+# - using both will skew your data (leave blank to not use at all)
+google_analytics: UA-16891019-1
+google_tag_manager:
+# Bing services
+bing_verification:
 
-# RSS / Email (optional) subscription links (change if using something like Feedburner)
-subscribe_rss: /atom.xml
-subscribe_email:
-# RSS feeds can list your email address if you like
-email:
+# Optional features
+animated:             false
+show_related_posts:   false
+show_post_footers:    false
+show_social_icons:    false
+ajaxify_contact_form: false
+enable_mathjax: false
+extended_fonts: false
+enable_anchorjs: false
 
-# ----------------------- #
-#    Jekyll & Plugins     #
-# ----------------------- #
+# Disqus post comments
+# (leave blank to disable Disqus)
+disqus_shortname: abevoelker
 
-# If publishing to a subdirectory as in http://site.com/project set 'root: /project'
-root: /
-permalink: /:title/
-source: source
-destination: public
-plugins: plugins
-code_dir: downloads/code
-category_dir: blog/categories
-markdown: kramdown
-rdiscount:
-  extensions:
-    - autolink
-    - footnotes
-    - smart
-pygments: false # default python pygments have been replaced by pygments.rb
+# Facebook Comments plugin
+# (leave blank to disable Facebook Comments, otherwise set it to true)
+facebook_comments: true
+facebook_appid: 141498135901508
+facebook_comments_number: 10
 
-paginate: 3           # Posts per page on the blog index
-pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
-recent_posts: 5       # Posts in the sidebar Recent Posts section
-excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
+# Social icons
+github_username: abevoelker
+bitbucket_username:
+stackoverflow_id:
+twitter_username: abevoelker
+skype_username:
+steam_nickname:
+google_plus_id: 100837991553182207519
+linkedin_username:
+angellist_username:
+medium_id:
+bitcoin_url:
+paypal_url:
+flattr_button:
 
-titlecase: false       # Converts page and post titles to titlecase
+# Post sharing icons
+show_sharing_icons: false
+# Change to 'true' to enable individual icons
+share_facebook: false
+share_twitter: false
+share_googleplus: false
+share_linkedin: false
+share_digg: false
+share_tumblr: false
+share_reddit: false
+share_stumbleupon: false
+share_hackernews: false
 
-# list each of the sidebar modules you want to include, in the order you want them to appear.
-# To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [asides/recent_posts.html, asides/github.html]
+text:
+  pagination:
+    newer: 'Newer'
+    older: 'Older'
+  share_buttons:
+    text:         'Share this post!'
+    facebook:     'Share on Facebook'
+    twitter:      'Share on Twitter'
+    googleplus:   'Share on Google+'
+    linkedin:     'Share on LinkedIn'
+    digg:         'Share on Digg'
+    tumblr:       'Share on Tumblr'
+    reddit:       'Share on Reddit'
+    stumbleupon:  'Share on StumbleUpon'
+    hackernews:   'Share on Hacker News'
+  post:
+    updated:        'Updated'
+    minute_read:    'minute read'
+    related_posts:  'Related Posts'
+  index:
+    coming_soon: 'Coming soon...'
+  contact:
+    email:    'Email Address'
+    content:  'What would you like to say?'
+    subject:  'New submission!'
+    submit:   'Say Hello'
+    ajax:
+      sending:  'sending..'
+      sent:     'Message sent!'
+      error:    'Error!'
+  thanks: 'Thanks for contacting us. We will reply as soon as possible.'
+  og_locale: 'en_US'
 
-# Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
-# and add an array with the asides you want to use.
-# blog_index_asides:
-# post_asides:
-# page_asides:
-
-# ----------------------- #
-#   3rd Party Settings    #
-# ----------------------- #
-
-# Github repositories
-github_user: abevoelker
-github_repo_count: 5
-github_show_profile_link: true
-github_skip_forks: true
-
-# Twitter
-twitter_user: abevoelker
-twitter_tweet_button: true
-
-# Google +1
-google_plus_one: true
-google_plus_one_size: medium
-
-# Google Plus Profile
-# Hidden: No visible button, just add author information to search results
-googleplus_user: 100837991553182207519
-googleplus_hidden: true
-
-# Pinboard
-pinboard_user:
-pinboard_count: 3
-
-# Delicious
-delicious_user:
-delicious_count: 3
-
-# Disqus Comments
-disqus_short_name: abevoelker
-disqus_show_comment_count: false
-
-# Google Analytics
-google_analytics_tracking_id: UA-16891019-1
-google_analytics_domain_name: abevoelker.com
-
-# Facebook Like
-facebook_like: false
-
-# Facebook Open Graph / Twitter cards adapted from
-# http://www.blackglasses.me/2013/09/19/twitter-cards-facebook-open-graph-and-octopress/
-facebook_app_id: 141498135901508
-facebook_page: https://www.facebook.com/abe.voelker
-og:
-  site_name: "Abe Voelker's blog"
+# Build settings
+markdown:     kramdown
+redcarpet:
+  extensions: ['smart', 'tables', 'with_toc_data']
+permalink:    pretty
+paginate:     4
+sass:
+  compressed: true
+gems:
+  - jekyll-paginate
+  - jekyll-sitemap
+# https://github.com/jekyll/jekyll/issues/2938
+exclude: [vendor]
