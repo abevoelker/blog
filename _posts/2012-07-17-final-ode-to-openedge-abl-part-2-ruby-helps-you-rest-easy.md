@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/
 ---
 
-![Poor results when trying to REST with OpenEdge]({{ site.url }}/images/openedge_clown_bed.jpg)
+![Poor results when trying to REST with OpenEdge](/images/openedge_clown_bed.jpg)
 
 In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using [an adapter][22] for the [DataMapper][2] ORM framework.

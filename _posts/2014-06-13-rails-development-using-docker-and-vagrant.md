@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: rails-development-using-docker-and-vagrant/
 ---
 
-[![Docker containerizing some typical Rails-stack software]({{ site.url }}/images/docker.png)]({{ site.url }}/images/docker.png)
+[![Docker containerizing some typical Rails-stack software](/images/docker.png "Docker containerizing some typical Rails-stack software")](/images/docker.png)
 
 If you're like me, you've probably been hearing a lot about [Docker][docker] over the past year but haven't really gotten past the ["hello world" tutorial][docker-tutorial] because you haven't found a good way to integrate it into your development workflow or staging/production deployment process.  I've spent the last several weeks learning Docker and porting a Rails project's development environment from Ansible provisioning to Docker, so I thought I'd share my experiences so far.
 
@@ -37,7 +37,7 @@ Docker is especially appealing to me in the context of Rails deployments, since 
 
 When creating your own Docker images, you will define the build instructions via a Dockerfile.  A Dockerfile is a list of statements, executed imperatively, that follow [a special DSL syntax][dockerfile-syntax].  Each statement in the Dockerfile generates a new image that is a child of the previous statement's image.  You know what that creates?  A [directed acyclic graph (DAG)][dag] of images, not at all unlike a [graph of git commits][git-dag]:
 
-[![Graph of docker images on my machine]({{ site.url }}/images/docker-dag.png)]({{ site.url }}/images/docker-dag.png)
+[![Graph of docker images on my machine](/images/docker-dag.png "Graph of docker images on my machine")](/images/docker-dag.png)
 
 <p class="message" markdown="1">
 **Note**: Each blue image node in the graph above has a tag, very similar to a branch or tag in a git commit graph. This graph was generated with `docker images --viz | dot -Tpng -o docker.png`, if you want to look at the graph of Docker images on your machine. You can also see the graph in your console directly with `docker images --tree`
@@ -175,7 +175,7 @@ It is also important to note that the process you start with your Docker contain
 
 ## An example Vagrantfile using the Docker provider
 
-![Vagrant logo]({{ site.url }}/images/vagrant-logo.png){:height="300px" width="250px"}
+![Vagrant logo](/images/vagrant-logo.png "Vagrant logo"){:height="300px" width="250px"}
 
 Vagrant 1.6 added support for Docker providers and provisioners.  I've seen some people say that this will make it easier for people to learn Docker, but I disagree.  [Vagrant's Docker provider DSL][vagrant-docker-config] is a pretty thin façade over the Docker CLI, so you need to have a good handle on how Docker works before using it - otherwise you're just dealing with another layer of indirection which will make things more confusing!
 
@@ -482,7 +482,7 @@ If there is interest, I could make a demo Rails application with a Dockerfile an
 
 ## Next step: deployment
 
-[![]({{ site.url }}/images/nowwhat.gif)]({{ site.url }}/images/nowwhat.gif)
+[![](/images/nowwhat.gif)](/images/nowwhat.gif)
 
 So far, I've only updated my development environment to use Docker.  I have yet to deploy to a remote staging/production environment.  I have some ideas, but have yet to try them out.
 

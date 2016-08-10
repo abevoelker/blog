@@ -156,18 +156,18 @@ The other thing that is bothering me about this approach is the use of nested co
 One solution would be to convert the nested conditionals into a bunch of individual conditionals with early `return`s, and `Success` being at the very bottom, like so:
 
 ```ruby
-  def validate
-    @valid ||= begin
-      if @uploaded_file.size > MAX_SIZE
-        return Error.new("Picture size must be no larger than #{MAX_SIZE} bytes")
-      end
-      unless ALLOWED_FORMATS.include?(image.type)
-        return Error.new("Picture must be an image of type #{ALLOWED_FORMATS.join(' or ')}")
-      end
-      # ...
-      Success.new
+def validate
+  @valid ||= begin
+    if @uploaded_file.size > MAX_SIZE
+      return Error.new("Picture size must be no larger than #{MAX_SIZE} bytes")
     end
+    unless ALLOWED_FORMATS.include?(image.type)
+      return Error.new("Picture must be an image of type #{ALLOWED_FORMATS.join(' or ')}")
+    end
+    # ...
+    Success.new
   end
+end
 ```
 
 However that does not look like very idiomatic Ruby, and there is danger in forgetting to use `return` in each conditional, or forgetting to put the `Success` as the last value in the method (which would return one of those pesky `nil`s if we ended on a conditional branch not-taken).

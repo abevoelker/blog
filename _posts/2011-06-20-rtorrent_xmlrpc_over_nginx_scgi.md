@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: rtorrent_xmlrpc_over_nginx_scgi/
 ---
 
-[![Screenshot of rtorrent running in a terminal]({{ site.url }}/images/rtorrent_screenshot.png)]({{ site.url }}/images/rtorrent_screenshot.png)
+[![Screenshot of rtorrent running in a terminal](/images/rtorrent_screenshot.png "rtorrent")](/images/rtorrent_screenshot.png)
 
 So I've just started coding a new Rails project - a frontend for the awesome
 <a href="http://libtorrent.rakshasa.no/">rtorrent</a> BitTorrent client - and

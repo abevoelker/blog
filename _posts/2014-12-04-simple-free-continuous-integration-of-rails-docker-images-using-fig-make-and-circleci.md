@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: simple-free-continuous-integration-of-rails-docker-images-using-fig-make-and-circleci/
 ---
 
-[![docker-fig-make-circleci.png](/images/docker-fig-make-circleci.png "Docker, Fig, Make, and CircleCI logos")](/images/docker-fig-make-circleci.png)
+[![Docker, Fig, Make, and CircleCI logos](/images/docker-fig-make-circleci.png "Docker, Fig, Make, and CircleCI logos")](/images/docker-fig-make-circleci.png)
 
 This is my second post on Docker.  Previously I showed you how I [develop Rails apps locally using Docker and Vagrant][rails-development-docker] on my development machine.  I had planned to cover Rails production deployments using Docker next, but that post is not quite done as it got a lot longer than I originally intended and needs some editing.  So for now, I'm going to show how I do simple and free continuous integration (CI) using Docker, [fig][], [make][], and [CircleCI][circleci].
 

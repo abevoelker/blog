@@ -73,7 +73,7 @@ To me, this code starts displaying aspects of functional programming languages.
 
 ## Drinking that Haskell Kool-Aid
 
-[![I'm drinking it]({{ site.url }}/images/haskell-kool-aid.png)]({{ site.url }}/images/haskell-kool-aid.png)
+[![Haskell-flavored Kool-Aid](/images/haskell-kool-aid.png "I'm drinking it!")](/images/haskell-kool-aid.png)
 
 I've decided to start learning Haskell (using [Chris Allen's guide][bitemyapp-guide]), a language that I feel solves a lot of the problems I have with Ruby.  I say I'm drinking the Kool-Aid because I've just barely scratched the surface of it, and although I really like what I see so far, I haven't used it a lot in practice yet and I don't know enough math / category theory to appreciate it on a theoretical level.  But I've read enough from smart people writing about it that I'm sold. :-)
 
@@ -90,7 +90,7 @@ Some things I like about Haskell:
 
 I think there is enough learning material out there, and motivated teachers like [Chris Allen (@bitemyapp)][chris-allen], that even an idiot / not-super-mathy person like myself can get into Haskell for serious work.  And Haskell has enough depth that the more time I invest with it and the math theory underpinning it (category theory), I will unlock new, mathematically-sound abstractions that I can use pretty directly (e.g. [lenses][lens], [arrows][arrow]).  Perhaps some day I'll even be like those math warlocks, and able to appreciate languages with even more powerful type systems, e.g. ones with [dependent types][dependent-types] like [Idris][idris], [Agda][agda], or [Coq][coq] (one can dream).  Basically, Haskell's not a language that I anticipate getting bored of very quickly.
 
-[![But Abe, you're terrible at math]({{ site.url }}/images/mathematical.gif)]({{ site.url }}/images/mathematical.gif)
+[![Adventure Time "mathematical!"](/images/mathematical.gif "But Abe, you're terrible at math")](/images/mathematical.gif)
 
 ## There is no silver bullet, and Ruby is not a werewolf
 

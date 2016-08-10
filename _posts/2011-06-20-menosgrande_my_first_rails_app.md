@@ -11,7 +11,7 @@ permalink: menosgrande_my_first_rails_app/
 
 [Unicode]: http://unicode.org/standard/WhatIsUnicode.html
 
-[![]({{ site.url }}/images/menosgrande.png)](http://menosgrande.org)
+[![](/images/menosgrande.png)](http://menosgrande.org)
 
 I'm proud to announce the release of my first Ruby on Rails app -
 [menosgrande](http://menosgrande.org)!

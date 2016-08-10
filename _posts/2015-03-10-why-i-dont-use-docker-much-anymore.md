@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: why-i-dont-use-docker-much-anymore/
 ---
 
-[![The Grounding of MV Rena]({{ site.url }}/images/mv-rena.jpg)]({{ site.url }}/images/mv-rena.jpg)
+[![The Grounding of MV Rena](/images/mv-rena.jpg "The Grounding of MV Rena")](/images/mv-rena.jpg)
 
 <p class="message" markdown="1">
   **Update**: The conclusion of this post talks about managing Docker kittens with Ansible; I no longer do that, but instead use Amazon ECS with [Terraform](https://www.terraform.io/). Docker has stabilized a lot since my early experiences as well. However some things like custom kernel parameters (e.g. for Redis) will always be a limitation. I'll write a new blog post on how I use ECS and Terraform soon.
@@ -68,7 +68,7 @@ Another way of saying it is that Docker is more focused on the "cattle" perspect
 
 Cattle topology visualized ([slide][mesos-slides] taken from [an Apache Mesos talk][mesos-talk]):
 
-[![Apache Mesos and a cattle topology]({{ site.url }}/images/mesos.png)]({{ site.url }}/images/mesos-large.png)
+[![Apache Mesos and a cattle topology](/images/mesos.png "Apache Mesos and a cattle topology")](/images/mesos-large.png)
 
 The cattle topology requires that the services being managed are [horizontally scalable][horizontal-scaling] - that is, every colored node in this diagram is equivalent to a node of the same color, and can be easily scaled up or down by adding or removing nodes from the cluster.  And some nodes suddenly disappearing don't drastically impact the overall service - notice you don't see any precious snowflakes in this diagram.
 
@@ -122,7 +122,7 @@ I have no doubt that in time Docker will make my use case more feasible, probabl
 
 So even though Docker didn't end up cutting the gordian knot of my deployment issues like I had hoped, I'm still rooting for it.  I think a lot of us developers are, which is why Docker gets so much love.  We all want to be doing programming, not shaving DevOps yaks all day.  But the current reality for me is that Docker just isn't quite there yet in all the ways I'd hoped.
 
-[![Good luck Docker-Chan!]({{ site.url }}/images/good-luck-docker-chan.png)]({{ site.url }}/images/good-luck-docker-chan.png)
+[![Good luck Docker-Chan!](/images/good-luck-docker-chan.png "Good luck Docker-Chan!")](/images/good-luck-docker-chan.png)
 
 I have one last Docker blog post in the pipeline, which will deal with how I deploy Rails Docker containers as "kittens" using Ansible.  Including zero-downtime rolling deploys using the awesome HAProxy load balancer and Ansible's `serial` and `wait_for state=drained` features.
 

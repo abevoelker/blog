@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: gitlaw-github-for-laws-and-legal-documents-a-tourniquet-for-american-liberty/
 ---
 
-[![]({{ site.url }}/images/house_of_representatives_chamber_octocat_thumb.jpg)]({{ site.url }}/images/house_of_representatives_chamber_octocat.jpg)
+[![GitHub's Octocat in the House of Representatives](/images/house_of_representatives_chamber_octocat_thumb.jpg)](/images/house_of_representatives_chamber_octocat.jpg)
 
 <p class="message" markdown="1">
 **Update**: This post received a lot of [attention on Hacker News][6]. Please

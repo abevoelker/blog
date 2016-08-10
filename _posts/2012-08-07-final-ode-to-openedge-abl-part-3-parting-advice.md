@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: final-ode-to-openedge-abl-part-3-parting-advice/
 ---
 
-![OpenEdge? Fuck that shit]({{ site.url }}/images/yao_ming_progress_openedge.jpg)
+![Yao Ming laughing at OpenEdge](/images/yao_ming_progress_openedge.jpg "OpenEdge? Fuck that shit lol")
 
 In [part 1][1] of this series I demonstrated how to write Ruby code against an
 OpenEdge database using the JDBC driver and DataMapper ORM, and in [part 2][2]

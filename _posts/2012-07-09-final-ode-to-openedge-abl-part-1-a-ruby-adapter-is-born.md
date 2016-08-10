@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
 ---
 
-![Foreground: ABL developers at work. Background: arrival of Ruby adapter]({{ site.url }}/images/mass_extinction_event.jpg)
+![Foreground: ABL developers at work. Background: arrival of Ruby adapter](/images/mass_extinction_event.jpg "Foreground: ABL developers at work. Background: arrival of Ruby adapter")
 
 It's weird how I have trouble letting go.  Nearly two years ago, I wrote
 [a post][1] where I theorized a cure for a programming language and database

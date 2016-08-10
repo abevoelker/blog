@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: openedge-abl-syntax-highlighting-and-github-support/
 ---
 
-[![GitHub octocat logo]({{ site.url }}/images/octocat.png)](https://github.com/languages/OpenEdge ABL)
+[![GitHub Octocat logo](/images/octocat.png "GitHub Octocat logo")](https://github.com/languages/OpenEdge ABL)
 
 As I had written in my last blog post, in order to upgrade my blog
 from Wordpress to a static site like Octopress, I decided that while performing

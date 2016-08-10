@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 permalink: a_whole_new_blog/
 ---
 
-![Octopress logo]({{ site.url }}/images/octopress.png)
+![Octopress logo](/images/octopress.png "Octopress logo")
 
 Welcome to my new blog design! I've migrated my blog posts from Wordpress
 over to [Octopress][], which is a custom version of [Jekyll][] with a sensible
