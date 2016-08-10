@@ -31,11 +31,17 @@
   <meta property="og:locale" content="{{ site.text.og_locale }}">
   <meta property="og:type" content="article">
   <meta property="og:title" content="{% if page.title %}{{ page.title | xml_escape }}{% else %}{{ site.title | xml_escape }}{% endif %}">
+  {% if page.id %}
+  <meta property="og:description" content="{% if page.description %}{{ page.description | xml_escape }}{% else %}{{ page.content | strip_html | condense_spaces | strip | truncate:200 }}{% endif %}">
+  {% else %}
   <meta property="og:description" content="{% if page.description %}{{ page.description | xml_escape }}{% else %}{{ site.description | xml_escape }}{% endif %}">
+  {% endif %}
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:site_name" content="{{ site.title | xml_escape }}">
   {% if page.facebook.image %}
   <meta property="og:image" content="{{ site.url }}/images/{{ page.facebook.image }}" />
+  {% else %}
+  <meta property="og:image" content="{{ site.url }}/default-site-og.png" />
   {% endif %}
 
   <!-- Twitter Card -->
@@ -44,7 +50,11 @@
   <meta name="twitter:site" content="@{{ site.twitter_username }}" />
   {% endif %}
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
-  <meta name="twitter:description" content="{% if page.summary %}{{ page.summary }}{% else %}{{ site.description }}{% endif %}" />
+  {% if page.id %}
+  <meta name="twitter:description" content="{{ page.content | strip_html | condense_spaces | strip | truncate:200 }}" />
+  {% else %}
+  <meta name="twitter:description" content="{{ site.description | strip_html | condense_spaces | strip | truncate:200 }}" />
+  {% endif %}
   <meta name="twitter:url" content="{{ site.url }}{{ page.url }}" />
 
   <!-- Icons -->
