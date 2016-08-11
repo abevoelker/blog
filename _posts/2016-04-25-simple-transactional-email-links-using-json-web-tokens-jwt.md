@@ -158,7 +158,7 @@ the same user-product pair could not coexist given the existing
 definition. One way to fix the index in Postgres would be by using a
 [partial index][partial-index]:
 
-```
+```sql
 CREATE UNIQUE INDEX index_subscriptions_on_user_id_and_product_id ON subscriptions (user_id,product_id)
     WHERE deleted_at IS NULL;
 ```
