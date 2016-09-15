@@ -268,44 +268,6 @@ Also, there's obviously a lot more advanced things you can do with Elm than
 "hello world". You should check out the [Elm Guide](http://guide.elm-lang.org/)
 to get a tour of what's possible!
 
-### Other things to note
-
-One thing you may notice with this approach is that there is a slight render
-delay from when the page loads until you see "Hello from Elm!". Obviously this
-is due to the delay in the JavaScript being loaded, parsed and the output
-injected into the body of the page.
-
-React has a very nice leg up here with it's ["prerender"
-option](https://github.com/reactjs/react-rails/tree/e43aabbfc8e17b1f1ef253b9fad87f9cd1a99b28#server-rendering)
-for both of the most popular React-Rails integration gems, which on the server renders plain
-HTML for the initial page load (using a server-side JS interpreter), with a
-progressive enhancement in the client browser to mount the React components
-in their already-initially-rendered state (so-called "isomorphic" JavaScript).
-I'm probably an old fuddy-duddy, but I'm still a huge sucker for progressive
-enhancement over requiring JavaScript to properly render a web page (and I'm
-still way too stubborn to write a Single Page App).
-
-Of course Elm brings a lot more to the table than React-like virtual DOM
-rendering. It has a powerful type system, somewhat similar to Haskell (although notably
-without typeclasses) but friendlier error messages. In that regard, I ran into
-a bit of a [surprising limitation](https://github.com/elm-lang/elm-compiler/issues/774)
-of Elm when trying to add sorting on a custom data type.
-
-For the above reasons I've actually taken Elm out of the Rails app I was going to
-add it to and am continuing to use vanilla JS and React for now. If my frontend
-was more complicated, it may have been worth the effort to use Elm and lean on
-its powerful type system to prevent runtime errors.
-
-As my frontend needs grow and I become more familiar with Haskell as I work
-through [**the** Haskell Book](http://haskellbook.com/), I plan on also
-evaluating PureScript and/or GHCJS, which bring more strongly Haskell-flavored
-type safety to the frontend.
-
-Although Elm wasn't quite the right fit for the application I was working on,
-I still have a lot of respect for it as a language. It was fun to play around
-with and I'm glad it's bringing more people to typed functional programming by
-helping build much more robust frontends!
-
 ## References
 
 * [Elm homepage](http://elm-lang.org/)
