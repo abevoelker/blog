@@ -4,7 +4,7 @@ title: "Adding Elm to a Rails application"
 date: 2016-09-05 17:00:00 -0500
 comments: true
 facebook:
-  image: elm-logo.png
+  image: elm-rails-og-preview.png
 excerpt_separator: <!--more-->
 ---
 
