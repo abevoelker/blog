@@ -8,7 +8,14 @@ facebook:
 excerpt_separator: <!--more-->
 ---
 
-[![Hashid](/images/hashid-url.png "Elm logo")]({{ page.url }})
+[![Hashid](/images/hashid-url.png "Hashid URL")]({{ page.url }})
+
+<p class="message" markdown="1">
+  **Update**: There is a brand-new [Postgres Hashids extension](http://hashids.org/postgresql/)
+  that you should use if possible instead of this PL/V8 solution! However, this
+  solution may still be valuable if you are using AWS RDS, which doesn't
+  currently support the Hashids extension.
+</p>
 
 Recently on a Rails project, I ran into an issue where I wanted to expose a
 resource (lets say it was a *product*) in a RESTful route, but I also didn't want
