@@ -10,6 +10,14 @@ excerpt_separator: <!--more-->
 
 [![Elm logo](/images/elm-plus-rails.png "Elm logo")]({{ page.url }})
 
+<p class="message" markdown="1">
+  **Update**: This tutorial was written before Rails 5.1 was released with
+  integrated Webpack support, which makes this whole process much simpler. If
+  you're using Rails 5.1+, check out
+  [this tutorial](https://pragmaticstudio.com/blog/2017/5/12/elm-with-rails-5-1)
+  instead.
+</p>
+
 Recently I added Elm to a Rails application using [webpack](https://webpack.github.io/), and it took me a
 while to figure out as I'm new to both so I figured I'd share what I did.
 
