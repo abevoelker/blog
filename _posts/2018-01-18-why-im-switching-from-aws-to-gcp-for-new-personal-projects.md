@@ -108,7 +108,7 @@ Stackdriver Logging comes with a [pretty decent free tier](https://cloud.google.
 
 ### Error notifications
 
-In addition to logging, [Stackdriver also does error reporting](https://cloud.google.com/error-reporting/). It varies by language runtime<a href="#footnote-5"><sup>5</sup></a>, but for Ruby there is a gem which will catch runtime errors and forward them to the error reporting service. You then receive emails when a new error occurs. Here's an example:
+In addition to logging, [Stackdriver also does error reporting](https://cloud.google.com/error-reporting/). Support varies by language,<a href="#footnote-5"><sup>5</sup></a> but for Ruby there is a gem which will catch runtime errors and forward them to the error reporting service. You then receive emails when a new error occurs. Here's an example:
 
 [![Screenshot of an example Stackdriver Error Reporting email notification](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image11.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image11.png)
 
@@ -232,7 +232,7 @@ AWS has a very nice service for managing SSL certificates called [AWS Certificat
 
 GCP meanwhile only offers this kind of managed SSL certificate service [for App Engine apps](https://cloudplatform.googleblog.com/2017/09/introducing-managed-SSL-for-Google-App-Engine.html). You're out of luck if you use GKE or Cloud CDN. Instead, GCP [tutorials punt you over to Let's Encrypt](https://cloud.google.com/community/tutorials/nginx-reverse-proxy-docker). Which, [combined with kube-lego](https://github.com/jetstack/kube-lego) if you're using GKE isn't horrible, but still a far cry from a fully managed service - you still have to keep an eye on kube-lego to ensure that renewals are working.
 
-I've [opened a feature request](https://issuetracker.google.com/issues/70801227) to ask GCP to add managed SSL certificates for general purpose use (☆s appreciated!).
+I've [opened a feature request](https://issuetracker.google.com/issues/70801227) to ask GCP to add managed SSL certificates for general purpose use (⭐️s appreciated!).
 
 ### Cloud SQL Proxy
 
@@ -243,7 +243,7 @@ This proxy sidecar container works fine for normal [Deployment](https://kubernet
 * [https://github.com/kubernetes/kubernetes/issues/25908](https://github.com/kubernetes/kubernetes/issues/25908)
 * [https://github.com/GoogleCloudPlatform/cloudsql-proxy/issues/128](https://github.com/GoogleCloudPlatform/cloudsql-proxy/issues/128)
 
-I filed a [feature request to improve this situation](https://issuetracker.google.com/issues/70746902) (☆s appreciated!).
+I filed a [feature request to improve this situation](https://issuetracker.google.com/issues/70746902) (⭐️s appreciated!).
 
 ### Cloud CDN for GKE
 
