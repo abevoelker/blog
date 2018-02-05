@@ -112,3 +112,4 @@ plugins:
   - jekyll-gist
 # https://github.com/jekyll/jekyll/issues/2938
 exclude: ["vendor", "Gemfile*", "deploy.sh", "_private"]
+include: [".well-known"]
