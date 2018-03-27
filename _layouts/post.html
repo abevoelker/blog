@@ -18,7 +18,7 @@ layout: default
   {{ content }}
 </div>
 
-{% if site.disqus_shortname %}
+{% if site.disqus_shortname and page.comments == true %}
   <div id="disqus_thread"></div>
   <script type="text/javascript">
     var disqus_shortname  = '{{ site.disqus_shortname }}';
