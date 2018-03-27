@@ -40,3 +40,7 @@
     background-color: #d1ecf1;
     border-color: #bee5eb;
 }
+
+.alert p:last-of-type {
+  margin-bottom: 0;
+}
