@@ -3,12 +3,11 @@ layout: post
 title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide"
 date: 2018-03-15
 comments: false
-facebook:
-  image: "gke-example/gke drawing.png"
+og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
 excerpt_separator: <!--more-->
 ---
 
-[![Drawing of Kubernetes application design](/images/gke-example/gke drawing.png)]({{ page.url }})
+[{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
 
 Following up on [my last post](https://blog.abevoelker.com/2018-01-18/why-im-switching-from-aws-to-gcp-for-new-personal-projects/) on why I'm switching personal projects from AWS to Google Cloud (GCP), this post will walk through deploying an example Ruby on Rails application to GCP's Kubernetes Engine (GKE). You should be able to follow this tutorial without experience with Ruby or Rails (let me know if I fail here).
 
@@ -17,7 +16,7 @@ Following up on [my last post](https://blog.abevoelker.com/2018-01-18/why-im-swi
 We will deploy [a simple app](https://github.com/abevoelker/gke-demo) that allows anyone to upload images with captions:
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_4.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_4.png" alt="Screenshot of Captioned Image Uploader demo application" %}
 </div>
 
 Uploaded images will be stored in Cloud Storage and the captions will be stored in Cloud SQL Postgres.
@@ -149,7 +148,7 @@ $ gcloud services enable compute.googleapis.com
 <div class="alert alert-info" markdown="1">
 **Note:** We'll be enabling a lot of little APIs as we work through this tutorial. It can be annoying running into these kinds of errors when certain APIs aren't enabled:
 
-![](/images/gke-example/image_2.png)
+{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_2.png" alt="Screenshot of service not enabled gcloud CLI error" %}
 
 But Google often makes it easy to recover by providing an exact URL to visit to enable the API in the web console.
 
@@ -209,7 +208,7 @@ Now let's create the Postgres SQL database that will store the captions and uplo
 [^7]:
     `--help` can be put at the end of pretty much any command and is very helpful for navigating and discovering gcloud usage
 
-![](/images/gke-example/image_5.png)
+{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_5.png" alt="Screenshot of gcloud CLI sql help" %}
 
 But actually that command is for managing the logical database(s), when first we actually need to create the physical resource that will run the database (an instance). We're going to use the smallest/cheapest instance type since this is a demo app:
 
@@ -349,7 +348,7 @@ So we've got our resources created and sitting idle, and the Docker image of our
 Kubernetes adds some abstractions that are useful for deploying applications. I'll explain just the ones we'll be dealing with now.
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/gke drawing.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}
 </div>
 
 ### [Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)
@@ -590,7 +589,7 @@ Now we can grab a cup of coffee, and in a couple minutes the site should be onli
     Our container is configured to do a `SELECT 1` when the load balancer hits `/pulse`, which ensures that our Rails server can reach our SQL database (i.e. it's ready to serve traffic). If you want to learn more about Kubernetes' probes (`readinessProbe` and `livenessProbe`), [read the documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/).
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_7.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_7.png" alt="Screenshot of Ingress 404 error" %}
 </div>
 
 If you want to keep an eye on things as they progress you can use `kubectl get`:
@@ -632,7 +631,7 @@ $ kubectl describe ing
 But it shouldn't take long for the complete site to become available:
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_8.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_8.png" alt="Screenshot of working demo app" %}
 </div>
 
 Go ahead and try uploading a picture with a caption now - everything should be working as expected!
@@ -646,7 +645,7 @@ In order to accelerate static asset fetching, we should enable Cloud CDN. But we
 To get a feel for how Cloud CDN works, let's first visit the [Cloud CDN web console page](https://console.cloud.google.com/net-services/cdn/list), where we'll be prompted to add an origin:
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_9.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_9.png" alt="Screenshot of Cloud CDN" %}
 </div>
 
 If we click that button and then select one of our Ingresses, we'll see this screen with some opaque choices for selecting "backend services"[^15]:
@@ -659,7 +658,7 @@ If we click that button and then select one of our Ingresses, we'll see this scr
     ```
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_10.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_10.png" alt="Screenshot of adding an origin to Cloud CDN" %}
 </div>
 
 These [backend services](https://cloud.google.com/compute/docs/load-balancing/http/backend-service) are a part of GCP's load balancer, which in the case of GKE seem to be a 1:1 mapping to Services that are added to Ingresses. We can get more details on what each backend service is using `gcloud`:
@@ -688,7 +687,7 @@ No change requested; skipping update for [k8s-be-31477--4f88d9d22add978a].
 If we reload the Cloud CDN web console page we'll see the assets backend service has been CDN-ified across both Ingresses:
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_11.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_11.png" alt="Screenshot of Cloud CDN showing assets backends added" %}
 </div>
 
 We can verify that Cloud CDN is working by making an HTTP request for a static asset and verifying that [`Age:` appears in the response headers](https://cloud.google.com/cdn/docs/support#top_of_page):
@@ -714,7 +713,7 @@ Age: 454
 And now we can use a [tool like this one](https://latency.apex.sh) using our application.css asset URL to verify it loads quickly across the globe:
 
 <div style="display: flex; align-items: center; justify-content: center;">
-  <img src="/images/gke-example/image_12.png" alt="">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_12.png" alt="Chart of asset load latencies from various global locations" %}
 </div>
 
 In my opinion, ideally GKE would support a special annotation on the Ingress manifest which would enable Cloud CDN for the backend service via Kubernetes. If you support that idea [please star my Google issue](https://issuetracker.google.com/issues/71536907).
@@ -768,8 +767,7 @@ We did a lot of work in the CLI in this post, but GCP's web console is pretty ni
 In particular, I suggest looking at the Stackdriver features (Logs, Error Reporting, Trace).
 
 ### Declarative cloud provisioning
-
-[![Terraform logo](/images/gke-example/terraform.png "Terraform logo")](https://www.terraform.io/)
+{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/terraform.png" alt="Terraform logo" %}
 
 We did a whole lot of manual `gcloud` and `gsutil` CLI commands to provision cloud resources, which is really unwieldy and error-prone for non-trivial projects.
 
@@ -784,8 +782,7 @@ There are unlimited possibilities for automating the builds and deploys; a simpl
 Tools that are specific to Kubernetes CI/CD that I think are worth mentioning include [Keel](https://keel.sh/) and [Jenkins X](http://jenkins-x.io/) (I haven't tried either one but have heard good things).
 
 ### Helm
-
-<img src="/images/gke-example/helm.png" alt="Helm logo" style="width: 200px;"/>
+{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/helm.png" style="width: 200px;" alt="Helm logo" %}
 
 [Helm is Kubernetes's official package manager](https://helm.sh/). It lets you install bundled up apps (called Charts) into your own Kubernetes cluster, but can also be useful for organizing your own internal resources. It also comes with templating so if nothing else it can replace the `envsubst` solution we did earlier.
 

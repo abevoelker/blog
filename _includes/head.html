@@ -39,7 +39,9 @@
   {% endif %}
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:site_name" content="{{ site.title | xml_escape }}">
-  {% if page.facebook.image %}
+  {% if page.og_image %}
+  <meta property="og:image" content="{{ site.url }}{% asset '{{ page.og_image }}' @path %}" />
+  {% elsif page.facebook.image %}
   <meta property="og:image" content="{{ site.url }}/images/{{ page.facebook.image }}" />
   {% else %}
   <meta property="og:image" content="{{ site.url }}/default-site-og-image.jpg" />
