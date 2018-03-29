@@ -724,16 +724,48 @@ In my opinion, ideally GKE would support a special annotation on the Ingress man
 
 ### Redeploying the application
 
-TODO - change version to v1.1 and redeploy
+Now that we've successfully deployed our application, what do we do when we need to make a change?
 
-kubectl set image deployment/some-deployment some-image=vendor/some-image:tag
+Go ahead and change the "v1.0" in the `<h1>` to "v1.1". Then commit the change and submit a new build:
 
-vs. updating YAML
+```console
+$ export COMMIT_SHA=$(git rev-parse --verify HEAD)
+$ gcloud container builds submit --config cloudbuild.yaml --substitutions=COMMIT_SHA=$COMMIT_SHA
+```
 
-tip on kubectl describe -o=yaml to dump current resource
+Then when the remote Docker build is complete, we'll run our template script to update the Kubernetes manifests then run `kubectl apply` to update the Deployment:
+
+```console
+$ ./template.sh
+$ kubectl apply -f k8s/deploy-web.yml
+```
+
+Alternatively, in scenarios like this where only a Docker image has changed, we can use `kubectl set image`:
+
+```console
+$ kubectl set image deployment/captioned-images-web captioned-images-web=us.gcr.io/$PROJECT_ID/gke_demo:$COMMIT_SHA
+```
+
+After a short wait while the Deployment updates, voilà:
+
+<div style="display: flex; align-items: center; justify-content: center;">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_13.png" alt="Screenshot of version 1.1 of the application" %}
+</div>
+
+<div class="alert alert-info" markdown="1">
+**Note:** `kubectl set image` obviously won't update your local manifest file with whatever the current version of the Deployment looks like. To dump the current version of the resource as YAML, we can do:
+
+```console
+$ kubectl get deployment/captioned-images-web -o=yaml
+```
+
+However be aware a lot of extra fields will come back that you probably won't have in your own hand-created manifest file, as this is a "complete" snapshot of the resource.
+</div>
 
 <div class="alert alert-warning" markdown="1">
-**Warning:** if you update a `ConfigMap` and attempt to redeploy a `Deployment` that depends on it, nothing will happen (it doesn't detect that the `ConfigMap` changed). I usually add a junk environment variable to one of the `Deployment` Pod's containers in this scenario.
+**Warning:** if your application change is only an update to a ConfigMap, be aware that redeploying a Deployment that depends on it (with no other changes to the Deployment) will result in no change to the Deployment. In short the Deployment won't detect that the ConfigMap changed.
+
+I usually add a junk environment variable to one of the Deployment's containers in this scenario, which will force a fresh redeploy that picks up the ConfigMap change.
 </div>
 
 ### Enable SSL using Let's Encrypt
@@ -744,13 +776,32 @@ kube-lego or cert-manager?
 
 https://github.com/ahmetb/gke-letsencrypt/
 
-### Opening a Rails console
+### Opening a remote Rails console
 
-TODO
+The simplest way to open a Rails console is attaching to a running Rails server that's part of a Deployment using `kubectl exec`:
+
+```console
+$ kubectl get pods
+NAME                                    READY     STATUS    RESTARTS   AGE
+captioned-images-web-588759688d-8dlxp   3/3       Running   0          1d
+captioned-images-web-588759688d-x87qr   3/3       Running   0          1d
+$ kubectl exec -it captioned-images-web-588759688d-8dlxp -c captioned-images-web -- /var/www/docker/docker-entrypoint.sh bash
+web@captioned-images-web-588759688d-8dlxp:/var/www$ bundle exec rails c
+Loading production environment (Rails 5.1.4)
+irb(main):001:0> CaptionedImage.count
+D, [2018-03-29T02:07:43.331468 #54] DEBUG -- :    (14.2ms)  SELECT COUNT(*) FROM "captioned_images"
+=> 1
+irb(main):002:0> CaptionedImage.first
+D, [2018-03-29T02:11:33.687385 #54] DEBUG -- :   CaptionedImage Load (6.6ms)  SELECT  "captioned_images".* FROM "captioned_images" ORDER BY "captioned_images"."id" ASC LIMIT $1  [["LIMIT", 1]]
+=> #<CaptionedImage id: 1, caption: "test", image_data: "{\"original\":{\"id\":\"82e9768a035d39050eaf01689537fdf...", created_at: "2018-03-26 19:05:58", updated_at: "2018-03-26 19:05:59">
+irb(main):003:0>
+```
+
+A better way to do it would be to create a one-off Pod, copying the Pod template/spec from the Deployment, and running the Rails console on that Pod. Because affecting the resources of a running web server Pod that's handling traffic is not the best idea.
 
 ## Conclusion
 
-Docker was revolutionary but mainly gave us low-level primitives without a way to assemble them for production-worthy application deployments. I hope through this tutorial I've shown that Kubernetes meets and exceeds that gap by providing the abstractions that let us express application deployments in logical terms, and that GKE is the best managed Kubernetes solution.
+Docker was revolutionary but mainly gave us low-level primitives without a way to assemble them for production-ready application deployments. I hope through this tutorial I've shown that Kubernetes meets and exceeds that gap by providing the abstractions that let us express application deployments in logical terms, and that GKE is the best managed Kubernetes solution.
 
 I'll close with a great thought by Kelsey Hightower, in that Kubernetes isn't the final word in a story that doesn't end:
 
@@ -808,7 +859,7 @@ Thank you to Sunny R. Juneja ([@sunnyrjuneja](https://twitter.com/sunnyrjuneja))
 
 ## References
 
-Here are some miscellaneous links I found useful while learning Kubernetes/GKE that I couldn't find a relevant place to link to earlier in this post:
+Here are some miscellaneous links I found useful while learning Kubernetes/GKE that I couldn't find a relevant place to link to earlier in this post.
 
 [Code Cooking: Kubernetes](https://medium.com/google-cloud/code-cooking-kubernetes-e715728a578c)
 
