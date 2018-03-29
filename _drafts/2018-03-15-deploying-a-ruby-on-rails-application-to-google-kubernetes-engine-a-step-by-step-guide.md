@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
 
-Following up on [my last post](https://blog.abevoelker.com/2018-01-18/why-im-switching-from-aws-to-gcp-for-new-personal-projects/) on why I'm switching personal projects from AWS to Google Cloud (GCP), this post will walk through deploying an example Ruby on Rails application to GCP's Kubernetes Engine (GKE). You should be able to follow this tutorial without experience with Ruby or Rails (let me know if I fail here).
+Following up on [my last post](https://blog.abevoelker.com/2018-01-18/why-im-switching-from-aws-to-gcp-for-new-personal-projects/) on why I'm switching personal projects from AWS to Google Cloud (GCP), this post will walk through deploying an example Ruby on Rails application to GCP's Kubernetes Engine (GKE). You should be able to follow this tutorial without experience with Ruby or Rails (please let me know if I fail at this).
 
 <!--more-->
 
@@ -28,7 +28,7 @@ We'll also cover serving [Brotli-compressed](https://en.wikipedia.org/wiki/Brotl
 
     Some folks will recommend configuring Rails to serve static assets, and [simply put a CDN in front](http://guides.rubyonrails.org/asset_pipeline.html#cdns) to cache assets so that only the first asset request (which actually hits Rails) is slow. However, I like that nginx reduces the need to have a bunch of Rack middleware (e.g. for [enforcing SSL access](https://github.com/tobmatth/rack-ssl-enforcer), [gzip-compressing requests](https://robots.thoughtbot.com/content-compression-with-rack-deflater), [aborting slow requests](https://github.com/heroku/rack-timeout)), and supports features Rails/Rack doesn't have quite yet (like [on-the-fly brotli compression](https://github.com/google/ngx_brotli)), as well as letting you opt-out of using a CDN while still having decent asset load performance.
 
-    This comes at the cost of having to run another container alongside Rails, which I think is worth the cost - I understand if others don't.
+    The cost of course is running another container in each application server Pod. I think it's worth that marginal extra cost in resources and deployment complexity, but I appreciate others won't.
 
 <div class="alert alert-warning" markdown="1">
 **Warning**: Running this demo will create resources on GCP and may incur a small cost while running. Remember to delete the project when you are finished so that you don't get charged unnecessarily:
@@ -285,14 +285,6 @@ $ export SQL_USER_EMAIL="$(gcloud iam service-accounts list --format=json | jq -
 $ echo $SQL_USER_EMAIL
 sql-user@captioned-images-2289145e2f29.iam.gserviceaccount.com
 $ gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$SQL_USER_EMAIL" --role='roles/cloudsql.client'
-```
-
-### Stackdriver Error Reporting
-
-This is optional but if you'd like to see Stackdriver's Error Reporting functionality, enable this service:
-
-```console
-$ gcloud services enable clouderrorreporting.googleapis.com
 ```
 
 ## Google Container Registry
@@ -661,7 +653,7 @@ If we click that button and then select one of our Ingresses, we'll see this scr
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_10.png" alt="Screenshot of adding an origin to Cloud CDN" %}
 </div>
 
-These [backend services](https://cloud.google.com/compute/docs/load-balancing/http/backend-service) are a part of GCP's load balancer, which in the case of GKE seem to be a 1:1 mapping to Services that are added to Ingresses. We can get more details on what each backend service is using `gcloud`:
+These [backend services](https://cloud.google.com/compute/docs/load-balancing/http/backend-service) are a component of GCP's load balancer, which in the case of GKE seem to be a 1:1 mapping to Services that are added to Ingresses. We can get more details on what each backend service is using `gcloud`:
 
 ```console
 $ gcloud compute backend-services describe --global <backend service name>
@@ -801,7 +793,7 @@ A better way to do it would be to create a one-off Pod, copying the Pod template
 
 ## Conclusion
 
-Docker was revolutionary but mainly gave us low-level primitives without a way to assemble them for production-ready application deployments. I hope through this tutorial I've shown that Kubernetes meets and exceeds that gap by providing the abstractions that let us express application deployments in logical terms, and that GKE is the best managed Kubernetes solution.
+Docker was revolutionary, but it mainly gave us low-level primitives without a way to assemble them for production-ready application deployments. I hope through this tutorial I've shown that Kubernetes meets and exceeds that need by providing the abstractions that let us express application deployments in logical terms, and that GKE is an excellent managed Kubernetes solution.
 
 I'll close with a great thought by Kelsey Hightower, in that Kubernetes isn't the final word in a story that doesn't end:
 
@@ -813,9 +805,13 @@ This blog post turned into a novel, and yet there are still many topics that I d
 
 ### Web console, Stackdriver
 
-We did a lot of work in the CLI in this post, but GCP's web console is pretty nice, and there are a lot of other features worth exploring.
+We did a lot of work in the CLI in this post, but GCP's web console is pretty nice, and there are a lot of features available that are worth exploring there.
 
-In particular, I suggest looking at the Stackdriver features (Logs, Error Reporting, Trace).
+In particular I suggest checking out the Stackdriver features [Logs](https://console.cloud.google.com/logs/viewer), [Error Reporting](https://console.cloud.google.com/errors), and [Trace](https://console.cloud.google.com/traces/overview). Error Reporting will require the service to be enabled:
+
+```console
+$ gcloud services enable clouderrorreporting.googleapis.com
+```
 
 ### Declarative cloud provisioning
 {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/terraform.png" alt="Terraform logo" %}
@@ -835,11 +831,11 @@ Tools that are specific to Kubernetes CI/CD that I think are worth mentioning in
 ### Helm
 {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/helm.png" style="width: 200px;" alt="Helm logo" %}
 
-[Helm is Kubernetes's official package manager](https://helm.sh/). It lets you install bundled up apps (called Charts) into your own Kubernetes cluster, but can also be useful for organizing your own internal resources. It also comes with templating so if nothing else it can replace the `envsubst` solution we did earlier.
+[Helm is Kubernetes's official package manager](https://helm.sh/). It lets you install bundled up apps (called Charts) into your own Kubernetes cluster, but can also be useful for organizing your own project's resources. It also comes with templating so if nothing else it can replace the `envsubst` solution we did earlier.
 
 ### Kubernetes manifest templating
 
-Speaking of templating, I mentioned in a footnote[^13] that there are many solutions worth investigating. You should try to find one that fits your workflow the best.
+Speaking of templating, I mentioned in a footnote[^13] earlier that there are many solutions worth investigating. You should try to find one that fits your workflow the best.
 
 ### Firewalls
 
@@ -851,7 +847,7 @@ Kubernetes itself also has a [Network Policy feature](https://github.com/ahmetb/
 
 GKE and Kubernetes give you a lot of power for deploying and managing your application, but also a lot of complexity. If you have a really simply application, it's worth considering simpler PaaS-style alternatives.
 
-In this vein GCP has [AppEngine](https://cloud.google.com/appengine/), which is worth considering. It supports several programming languages upfront, but also custom workloads using containers ([AppEngine Flex](https://cloud.google.com/appengine/docs/flexible/)).
+In this vein GCP has [AppEngine](https://cloud.google.com/appengine/), which is worth considering. It supports several programming languages upfront, but also custom workloads using containers ([AppEngine Flex](https://cloud.google.com/appengine/docs/flexible/)). [Here's a nice article](https://medium.com/google-cloud/app-engine-flex-container-engine-946fbc2fe00a) that can help one decide whether to use App Engine Flex or GKE.
 
 ## Thank you
 
@@ -866,8 +862,6 @@ Here are some miscellaneous links I found useful while learning Kubernetes/GKE t
 [Managing Rails tasks such as 'db:migrate' and 'db:seed' on Kubernetes while performing rolling deployments](https://blog.bigbinary.com/2017/06/16/managing-rails-tasks-such-as-db-migrate-and-db-seed-on-kuberenetes-while-performing-rolling-deployments.html)
 
 [Global ingress in practice on Google Container Engine — Part 1: Discussion](https://medium.com/google-cloud/global-ingress-in-practice-on-google-container-engine-part-1-discussion-ccc1e5b27bd0)
-
-[App Engine Flex &#124;&#124; Kubernetes Engine — ?](https://medium.com/google-cloud/app-engine-flex-container-engine-946fbc2fe00a)
 
 [Kubernetes deployment strategies](http://container-solutions.com/kubernetes-deployment-strategies/)
 
