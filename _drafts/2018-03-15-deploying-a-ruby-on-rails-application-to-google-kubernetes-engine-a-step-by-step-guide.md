@@ -21,14 +21,7 @@ We will deploy [a simple app](https://github.com/abevoelker/gke-demo) that allow
 
 Uploaded images will be stored in Cloud Storage and the captions will be stored in Cloud SQL Postgres.
 
-We'll also cover serving [Brotli-compressed](https://en.wikipedia.org/wiki/Brotli) static assets from an nginx sidecar container[^why-nginx] with Cloud CDN caching enabled on a [cookieless domain](https://gtmetrix.com/serve-static-content-from-a-cookieless-domain.html), performing remote Docker builds using [Container Builder](https://cloud.google.com/container-builder/) and [Container Registry](https://cloud.google.com/container-registry/), using `jemalloc` to [improve memory usage/performance](https://www.levups.com/en/blog/2017/optimize_ruby_memory_usage_jemalloc_heroku_scalingo.html), IPv6 support, and popping a remote `rails console` for debugging.
-
-[^why-nginx]:
-    Why an nginx reverse proxy?
-
-    Some folks will recommend configuring Rails to serve static assets, and [simply put a CDN in front](http://guides.rubyonrails.org/asset_pipeline.html#cdns) to cache assets so that only the first asset request (which actually hits Rails) is slow. However, I like that nginx reduces the need to have a bunch of Rack middleware (e.g. for [enforcing SSL access](https://github.com/tobmatth/rack-ssl-enforcer), [gzip-compressing requests](https://robots.thoughtbot.com/content-compression-with-rack-deflater), [aborting slow requests](https://github.com/heroku/rack-timeout)), and supports features Rails/Rack doesn't have quite yet (like [on-the-fly brotli compression](https://github.com/google/ngx_brotli)), as well as letting you opt-out of using a CDN while still having decent asset load performance.
-
-    The cost of course is running another container in each application server Pod. I think it's worth that marginal extra cost in resources and deployment complexity, but I appreciate others won't.
+We'll also cover serving [Brotli-compressed](https://en.wikipedia.org/wiki/Brotli) static assets from an nginx sidecar container with Cloud CDN caching enabled on a [cookieless domain](https://gtmetrix.com/serve-static-content-from-a-cookieless-domain.html), performing remote Docker builds using [Container Builder](https://cloud.google.com/container-builder/) and [Container Registry](https://cloud.google.com/container-registry/), using `jemalloc` to [improve memory usage/performance](https://www.levups.com/en/blog/2017/optimize_ruby_memory_usage_jemalloc_heroku_scalingo.html), IPv6 support, and popping a remote `rails console` for debugging.
 
 <div class="alert alert-warning" markdown="1">
 **Warning**: Running this demo will create resources on GCP and may incur a small cost while running. Remember to delete the project when you are finished so that you don't get charged unnecessarily:
@@ -69,19 +62,7 @@ $ docker-compose up
 
 Which will bring up a development version of the application at [http://localhost:3000](http://localhost:3000).
 
-If you're a Ruby/Rails developer, you might notice a few things (if you're not, you can skip to the next section):
-
-* The Dockerfile is production-oriented (RAILS_ENV=production, it bundles production gems, and precompiles assets)
-* Ruby is compiled using jemalloc to improve memory usage and performance
-* Brotli compression is done by a custom Python script that runs after the normal `rake assets:precompile` step rather than being integrated into the asset pipeline[^asset-pipeline-bug]
-
-[^asset-pipeline-bug]:
-    There is [a gem](https://github.com/hansottowirtz/sprockets-exporters_pack/wiki/How-to-enable-Brotli-with-Rails-and%C2%A0Nginx) that can add Brotli compression directly to Sprockets, but it depends on a newer version of Sprockets [that I find buggy](https://github.com/rails/sprockets/issues/474), so for now I still use my own script
-
-I also included a Makefile like I do on most projects, so that I can just type `make build` to build the image or `make push` to push it without having to remember what I named the Docker image or what Docker registry I'm using.[^make-test]
-
-[^make-test]:
-    I usually also include a `make test` that is sort of a poor man's CI that builds the image and runs `rake test` using docker-compose, but this app doesn't have tests because it's not the focus of the blog post.
+If you're a Ruby/Rails developer, I put notes [at the end of the article](#extras-for-rails-developers) about how and why I made some choices when packaging this app that may interest you.
 
 ## Create GCP project and resources
 
@@ -882,5 +863,32 @@ Here are some miscellaneous links I found useful while learning Kubernetes/GKE t
 [Kubernetes Engine Samples](https://github.com/GoogleCloudPlatform/kubernetes-engine-samples)
 
 [Understanding kubernetes networking: pods](https://medium.com/google-cloud/understanding-kubernetes-networking-pods-7117dd28727)
+
+## Extras for Rails developers
+
+In the interest of keeping the tutorial as content-agnostic as possible I moved Rails-specific notes to the end. If you're a Rails developer and had some questions or concerns hopefully this section addresses them.
+
+### Why an nginx reverse proxy?
+
+Some folks will recommend configuring Rails to serve static assets, and [simply put a CDN in front](http://guides.rubyonrails.org/asset_pipeline.html#cdns) to cache assets so that only the first asset request (which actually hits Rails) is slow. However, I like that nginx reduces the need to have a bunch of Rack middleware (e.g. for [enforcing SSL access](https://github.com/tobmatth/rack-ssl-enforcer), [gzip-compressing requests](https://robots.thoughtbot.com/content-compression-with-rack-deflater), [aborting slow requests](https://github.com/heroku/rack-timeout)), and supports features Rails/Rack doesn't have quite yet (like [on-the-fly brotli compression](https://github.com/google/ngx_brotli)), as well as letting you opt-out of using a CDN while still having decent asset load performance.
+
+The cost of course is running another container in each application server Pod. I think it's worth that marginal extra cost in resources and deployment complexity, but I appreciate others won't.
+
+### Dockerfile
+
+A couple things to note about the Dockerfile:
+
+* Ruby is compiled using jemalloc to improve memory usage and performance
+* Brotli compression is done by a custom Python script that runs after the normal `rake assets:precompile` step rather than being integrated into the asset pipeline. There is [a gem](https://github.com/hansottowirtz/sprockets-exporters_pack/wiki/How-to-enable-Brotli-with-Rails-and%C2%A0Nginx) that can add Brotli compression directly to Sprockets, but it depends on a newer version of Sprockets [that I find buggy](https://github.com/rails/sprockets/issues/474), so for now I still use my own script
+
+I also included a Makefile like I do on most projects, so that I can just type `make build` to build the image or `make push` to push it without having to remember what I named the Docker image or what Docker registry I'm using. I usually also include a `make test` that is sort of a poor man's CI that builds the image and runs `rake test` using docker-compose, but this app doesn't have tests because it's not the focus of the blog post.
+
+### Useful gems
+
+A few lesser-known gems I used that I think deserve some props:
+
+* [Shrine](https://github.com/shrinerb/shrine) is extremely pleasant for handling image uploads, compared to previous experiences I've had with Carrierwave, Paperclip, and Refile.
+* [rails-pulse](https://rubygems.org/gems/rails-pulse) is a simple gem that handles the health checking by setting up a route that does a `SELECT 1` to ensure the database is up.
+* [ENVied](https://github.com/eval/envied) is really useful to ensure the app fails fast (at bootup) if I'm missing a required environment variable.
 
 ## Footnotes
