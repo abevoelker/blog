@@ -40,6 +40,7 @@ $ gcloud projects delete $PROJECT_ID
 
 ## Prerequisites
 
+* [Sign up for Google Cloud](https://cloud.google.com/)
 * [Install the Google Cloud SDK](https://cloud.google.com/sdk/downloads), which will install the `gcloud` and [`gsutil`](https://cloud.google.com/storage/docs/gsutil_install) CLI tools
 * [Install `kubectl` CLI tool](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell)[^2]
 * [Install `jq`](https://stedolan.github.io/jq/download/), needed for some scripting
@@ -52,27 +53,27 @@ $ gcloud projects delete $PROJECT_ID
     $ gcloud components install kubectl
     ```
 
-## Demo Rails app
+## Clone the demo app
 
-First let's take a peek at the [demo Rails app](https://github.com/abevoelker/gke-demo). Clone it from GitHub:
+First let's clone the [demo Rails app](https://github.com/abevoelker/gke-demo) from GitHub:
 
 ```console
 $ git clone https://github.com/abevoelker/gke-demo.git
 ```
 
-If you want to test the app out locally, you should [install Ruby](https://www.ruby-lang.org/en/documentation/installation/) and execute the following commands:
+Although not required for the rest of the tutorial, if you'd like to test the app out locally you can [install docker-compose](https://docs.docker.com/compose/install/#install-compose) and run:
 
 ```console
-$ gem install bundler
-$ bundle
-$ bundle exec rake db:create db:migrate
-$ bundle exec rails s
+$ docker-compose up
 ```
 
-I also included a Dockerfile for building a production-ready Docker image (bundling production gems, precompiling assets). A couple things worth noting in the Dockerfile:
+Which will bring up a development version of the application at [http://localhost:3000](http://localhost:3000).
 
+If you're a Ruby/Rails developer, you might notice a few things (if you're not, you can skip to the next section):
+
+* The Dockerfile is production-oriented (RAILS_ENV=production, it bundles production gems, and precompiles assets)
 * Ruby is compiled using jemalloc to improve memory usage and performance
-* Brotli compression is done by a custom Python script that runs after the normal `rake assets:precompile` step[^3]
+* Brotli compression is done by a custom Python script that runs after the normal `rake assets:precompile` step rather than being integrated into the asset pipeline[^3]
 
 [^3]:
     There is [a gem](https://github.com/hansottowirtz/sprockets-exporters_pack/wiki/How-to-enable-Brotli-with-Rails-and%C2%A0Nginx) that can add Brotli compression directly to Sprockets, but it depends on a newer version of Sprockets [that I find buggy](https://github.com/rails/sprockets/issues/474), so for now I still use my own script
@@ -84,7 +85,9 @@ I also included a Makefile like I do on most projects, so that I can just type `
 
 ## Create GCP project and resources
 
-First of all, if you have not [initialized Google Cloud SDK](https://cloud.google.com/sdk/docs/initializing) to your account (by executing `gcloud auth login` and `gcloud init`), do so now.
+Next we'll create the GCP resources to run our app.
+
+If you haven't [initialized the Google Cloud SDK](https://cloud.google.com/sdk/docs/initializing) to your account by executing `gcloud auth login` and `gcloud init`, do so now. It will prompt to choose various default values, including an automatically-generated project ID to start with - go ahead and accept all defaults presented. We will create a new project in a moment for our purposes.
 
 ### Project
 
@@ -110,7 +113,7 @@ $ gcloud projects create --set-as-default $PROJECT_ID
     These config values can be grouped into sets confusingly called "configurations," in case you want to change multiple config values at once (say if you're switching between projects or deployment environments). We'll stick to using the default configuration here for simplicity.
 
 ```console
-$ gcloud config set project captioned-images
+$ gcloud config set project some-other-project-name
 ```
 
 To see the current project context, you can read the project config value like so:
@@ -165,6 +168,16 @@ NAME                           REGION  ADDRESS             STATUS
 captioned-images-ipv4-address          35.201.64.7         RESERVED
 captioned-images-ipv6-address          2600:1901:0:439d::  RESERVED
 ```
+
+<div class="alert alert-warning" markdown="1">
+**Warning**: if you've signed up for a free trial GCP account, you may get an error here:
+
+```
+Quota 'STATIC_ADDRESSES' exceeded. Limit: 1.0 globally.
+```
+
+This is due to [GCP quota limits for the free trial](https://cloud.google.com/free/docs/frequently-asked-questions#limitations). The solution is to either [upgrade to a paid account](https://cloud.google.com/free/docs/frequently-asked-questions#how-to-upgrade), or proceed with the tutorial without doing the IPv6 steps.
+</div>
 
 Now you should create the A and AAAA records for whatever two DNS names you chose/own for the website and assets site using the IP addresses you just reserved. I can't give exact instructions here since you probably have a different DNS service than me, but here's what my zone file looks like with the two DNS names I'm using and the two IP addresses I reserved above:
 
@@ -298,7 +311,7 @@ $ gcloud services enable containerregistry.googleapis.com
 $ gcloud services enable cloudbuild.googleapis.com
 ```
 
-Now then, to get the image to Container Registry, we can do it a few ways:
+Now to get the image to Container Registry, we can do it a few ways:
 
 1. Build the image locally, and push the image blob from our machine directly to the registry
 2. Submit a .tar of our local source code to [Container Builder](https://cloud.google.com/container-builder/), a service that performs remote Docker builds
@@ -395,7 +408,7 @@ We'll create two Services for this demo to expose our web app - one for static a
 
 An **[Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)** provides external access to Services, and can provide "load balancing, SSL termination and name-based virtual hosting." On GKE, creating an Ingress automatically creates a Google Cloud Load Balancer (GCLB) - awesome!
 
-We'll use two Ingresses to route public traffic to our app. This is solely to support IPv6 in addition to IPv4 - GCP requires separate Ingresses for this. Normally you'd pay extra for this, but GCP doesn't charge for IPv6 Ingresses.
+We'll use two Ingresses to route public traffic to our app. This is solely to support IPv6 in addition to IPv4 as GCP requires separate Ingresses for this. Normally you'd pay extra for having to run two, but GCP doesn't charge for IPv6 Ingresses.
 
 ### [ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)
 
