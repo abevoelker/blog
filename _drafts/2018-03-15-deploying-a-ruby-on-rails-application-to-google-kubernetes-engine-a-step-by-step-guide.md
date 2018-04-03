@@ -21,9 +21,9 @@ We will deploy [a simple app](https://github.com/abevoelker/gke-demo) that allow
 
 Uploaded images will be stored in Cloud Storage and the captions will be stored in Cloud SQL Postgres.
 
-We'll also cover serving [Brotli-compressed](https://en.wikipedia.org/wiki/Brotli) static assets from an nginx sidecar container[^1] with Cloud CDN caching enabled on a [cookieless domain](https://gtmetrix.com/serve-static-content-from-a-cookieless-domain.html), performing remote Docker builds using [Container Builder](https://cloud.google.com/container-builder/) and [Container Registry](https://cloud.google.com/container-registry/), using `jemalloc` to [improve memory usage/performance](https://www.levups.com/en/blog/2017/optimize_ruby_memory_usage_jemalloc_heroku_scalingo.html), IPv6 support, and popping a remote `rails console` for debugging.
+We'll also cover serving [Brotli-compressed](https://en.wikipedia.org/wiki/Brotli) static assets from an nginx sidecar container[^why-nginx] with Cloud CDN caching enabled on a [cookieless domain](https://gtmetrix.com/serve-static-content-from-a-cookieless-domain.html), performing remote Docker builds using [Container Builder](https://cloud.google.com/container-builder/) and [Container Registry](https://cloud.google.com/container-registry/), using `jemalloc` to [improve memory usage/performance](https://www.levups.com/en/blog/2017/optimize_ruby_memory_usage_jemalloc_heroku_scalingo.html), IPv6 support, and popping a remote `rails console` for debugging.
 
-[^1]:
+[^why-nginx]:
     Why an nginx reverse proxy?
 
     Some folks will recommend configuring Rails to serve static assets, and [simply put a CDN in front](http://guides.rubyonrails.org/asset_pipeline.html#cdns) to cache assets so that only the first asset request (which actually hits Rails) is slow. However, I like that nginx reduces the need to have a bunch of Rack middleware (e.g. for [enforcing SSL access](https://github.com/tobmatth/rack-ssl-enforcer), [gzip-compressing requests](https://robots.thoughtbot.com/content-compression-with-rack-deflater), [aborting slow requests](https://github.com/heroku/rack-timeout)), and supports features Rails/Rack doesn't have quite yet (like [on-the-fly brotli compression](https://github.com/google/ngx_brotli)), as well as letting you opt-out of using a CDN while still having decent asset load performance.
@@ -42,11 +42,11 @@ $ gcloud projects delete $PROJECT_ID
 
 * [Sign up for Google Cloud](https://cloud.google.com/)
 * [Install the Google Cloud SDK](https://cloud.google.com/sdk/downloads), which will install the `gcloud` and [`gsutil`](https://cloud.google.com/storage/docs/gsutil_install) CLI tools
-* [Install `kubectl` CLI tool](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell)[^2]
+* [Install `kubectl` CLI tool](https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell)[^kubectl-install]
 * [Install `jq`](https://stedolan.github.io/jq/download/), needed for some scripting
 * Have 2 DNS addresses that you can make A and AAAA records for. One will be used for hosting the web app, and the other static assets.
 
-[^2]:
+[^kubectl-install]:
     After installing the Google Cloud SDK, it can be installed with
 
     ```console
@@ -73,14 +73,14 @@ If you're a Ruby/Rails developer, you might notice a few things (if you're not, 
 
 * The Dockerfile is production-oriented (RAILS_ENV=production, it bundles production gems, and precompiles assets)
 * Ruby is compiled using jemalloc to improve memory usage and performance
-* Brotli compression is done by a custom Python script that runs after the normal `rake assets:precompile` step rather than being integrated into the asset pipeline[^3]
+* Brotli compression is done by a custom Python script that runs after the normal `rake assets:precompile` step rather than being integrated into the asset pipeline[^asset-pipeline-bug]
 
-[^3]:
+[^asset-pipeline-bug]:
     There is [a gem](https://github.com/hansottowirtz/sprockets-exporters_pack/wiki/How-to-enable-Brotli-with-Rails-and%C2%A0Nginx) that can add Brotli compression directly to Sprockets, but it depends on a newer version of Sprockets [that I find buggy](https://github.com/rails/sprockets/issues/474), so for now I still use my own script
 
-I also included a Makefile like I do on most projects, so that I can just type `make build` to build the image or `make push` to push it without having to remember what I named the Docker image or what Docker registry I'm using.[^4]
+I also included a Makefile like I do on most projects, so that I can just type `make build` to build the image or `make push` to push it without having to remember what I named the Docker image or what Docker registry I'm using.[^make-test]
 
-[^4]:
+[^make-test]:
     I usually also include a `make test` that is sort of a poor man's CI that builds the image and runs `rake test` using docker-compose, but this app doesn't have tests because it's not the focus of the blog post.
 
 ## Create GCP project and resources
@@ -107,9 +107,9 @@ Now let's create the GCP project for our demo app:
 $ gcloud projects create --set-as-default $PROJECT_ID
 ```
 
-`--set-as-default` switches gcloud's project context to our newly-created one, meaning all subsequent gcloud commands will operate on this project by default. If at any time you want to switch the project context, you do so by setting a global "project" config value[^5] like so:
+`--set-as-default` switches gcloud's project context to our newly-created one, meaning all subsequent gcloud commands will operate on this project by default. If at any time you want to switch the project context, you do so by setting a global "project" config value[^project-configurations] like so:
 
-[^5]:
+[^project-configurations]:
     These config values can be grouped into sets confusingly called "configurations," in case you want to change multiple config values at once (say if you're switching between projects or deployment environments). We'll stick to using the default configuration here for simplicity.
 
 ```console
@@ -205,20 +205,20 @@ $ echo $BUCKET_NAME
 captioned-images-9fc76933f47f
 ```
 
-Now let's actually create the bucket using gsutil[^6]:
+Now let's actually create the bucket using gsutil[^create-bucket-storage-class]:
 
 ```console
 $ gsutil mb -c regional -l us-central1 gs://$BUCKET_NAME
 ```
 
-[^6]:
+[^create-bucket-storage-class]:
     We'll create it as a [regional storage class](https://cloud.google.com/storage/docs/storage-classes), since we'll be setting cache-control headers that should allow the objects to be cacheable so that [latencies are comparable to multi-region](https://medium.com/google-cloud/google-cloud-storage-what-bucket-class-for-the-best-performance-5c847ac8f9f2)
 
 ### Cloud SQL
 
-Now let's create the Postgres SQL database that will store the captions and uploaded image metadata. If we type `gcloud sql --help`[^7] to investigate how to create the database, it might be tempting to try using `gcloud sql databases` first:
+Now let's create the Postgres SQL database that will store the captions and uploaded image metadata. If we type `gcloud sql --help`[^gcloud-sql-help] to investigate how to create the database, it might be tempting to try using `gcloud sql databases` first:
 
-[^7]:
+[^gcloud-sql-help]:
     `--help` can be put at the end of pretty much any command and is very helpful for navigating and discovering gcloud usage
 
 {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_5.png" alt="Screenshot of gcloud CLI sql help" %}
@@ -319,7 +319,7 @@ Now to get the image to Container Registry, we can do it a few ways:
 
 #1 is simple, but on my machine a locally-built image is 1.3GB (due to all the static and dynamic libs installed via apt-get), so that could take quite a while to upload to GCP if you have a slow upload speed like I do.
 
-Let's try #2 instead. Using Container Builder requires defining a `cloudbuild.yaml` file that tells it how to build the app. I'm a nice guy and already supplied that file, so we can just submit the build now. We'll set the `$COMMIT_SHA` variable[^8] so that the build is tagged with our current git commit SHA:
+Let's try #2 instead. Using Container Builder requires defining a `cloudbuild.yaml` file that tells it how to build the app. I'm a nice guy and already supplied that file, so we can just submit the build now. We'll set the `$COMMIT_SHA` variable[^commit-sha] so that the build is tagged with our current git commit SHA:
 
 ```console
 $ export COMMIT_SHA=$(git rev-parse --verify HEAD)
@@ -328,7 +328,7 @@ $ echo $COMMIT_SHA
 $ gcloud container builds submit --config cloudbuild.yaml --substitutions=COMMIT_SHA=$COMMIT_SHA
 ```
 
-[^8]:
+[^commit-sha]:
     `$COMMIT_SHA` is a special variable to Container Builder that it is automatically provided if you have Container Builder build your image from a GCP-hosted git repo. Since we're submitting a manual build though, we have to provide the value [as a substitution](https://cloud.google.com/container-builder/docs/configuring-builds/substitute-variable-values#using_user-defined_substitutions).
 
     It's important to tag each build with the `$COMMIT_SHA` because that is the best practice for image references during deployments - a mutable tag like `latest` would be confusing and might be ignored for certain update commands (the command may not know that the `latest` reference changed, and not do anything). The `latest` tag will mainly be useful as a handy caching reference between builds.
@@ -380,13 +380,13 @@ Many applications default to binding `0.0.0.0`, but that's only for IPv4 traffic
 
 **[Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)** mainly tackle two concerns:
 
-1. A way to specify a desired number of Pods to be run ("replicas"[^9]), continually ensuring that number is maintained by killing or spinning up new Pods as necessary
-2. Intelligently transitioning between desired Pod definitions. For example, if you have a running Deployment and then change the image of the underlying Pods, the Deployment will perform a "rolling update"[^10] which slowly creates new Pods with the updated definition, balanced with draining outdated Pods in equal measure until all old Pods are dead (replaced with the new definition)
+1. A way to specify a desired number of Pods to be run ("replicas"[^replica-set]), continually ensuring that number is maintained by killing or spinning up new Pods as necessary
+2. Intelligently transitioning between desired Pod definitions. For example, if you have a running Deployment and then change the image of the underlying Pods, the Deployment will perform a "rolling update"[^deploy-strategy] which slowly creates new Pods with the updated definition, balanced with draining outdated Pods in equal measure until all old Pods are dead (replaced with the new definition)
 
-[^9]:
+[^replica-set]:
     Internally, Deployments use another K8s abstraction called a [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) but you shouldn't need to worry about that unless you have advanced requirements.
 
-[^10]:
+[^deploy-strategy]:
     The default `RollingUpdate` update strategy is [even interchangeable](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy); you can instead choose `Recreate` which will kill all existing Pods before bringing up any new ones.
 
 It is even relatively simple to do [canary releases](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#canary-deployments) with Deployments.
@@ -395,9 +395,9 @@ We'll create one Deployment to run multiple instances of our web app and ensure 
 
 ### [Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 
-**[Services](https://kubernetes.io/docs/concepts/services-networking/service/)** are a networking abstraction that logically groups a set of Pods under a label, making them accessible from inside (and sometimes outside) the cluster from a single endpoint, while load balancing[^11] requests. This is useful if you have have, say, a group of "frontend" Pods that need to communicate with a "backend" group - Services tame the complexity of Pods discovering and connecting with eachother.
+**[Services](https://kubernetes.io/docs/concepts/services-networking/service/)** are a networking abstraction that logically groups a set of Pods under a label, making them accessible from inside (and sometimes outside) the cluster from a single endpoint, while load balancing[^service-load-balancing] requests. This is useful if you have have, say, a group of "frontend" Pods that need to communicate with a "backend" group - Services tame the complexity of Pods discovering and connecting with eachother.
 
-[^11]:
+[^service-load-balancing]:
     Although load balancing can be disabled, creating a ["headless" Service](https://kubernetes.io/docs/concepts/services-networking/service/#headless-services)
 
 There are different types of services which offer different exposure methods; [this is a good article](https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0) explaining some differences.
@@ -432,9 +432,9 @@ We'll use a Job to run our database migrations.
 
 ## Kubernetes commands
 
-To interact with our Kubernetes cluster (GKE), we'll be using `kubectl`. There are a lot of available commands, but we'll only be using the following:[^12]
+To interact with our Kubernetes cluster (GKE), we'll be using `kubectl`. There are a lot of available commands, but we'll only be using the following:[^kubectl-help]
 
-[^12]:
+[^kubectl-help]:
     View the CLI help by executing a bare `kubectl` or visit the [online manual](https://kubernetes.io/docs/reference/kubectl/overview/) to see all available commands
 
 * [`kubectl create`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#create) - create a resource
@@ -446,24 +446,21 @@ To interact with our Kubernetes cluster (GKE), we'll be using `kubectl`. There a
 
 ## Kubernetes deployment
 
-Kubernetes resource configurations are stored as YAML files (sometimes called manifests).
+Kubernetes resource configurations are stored as YAML files called manifests.
 
-I've created a repo that has all the Kubernetes resources defined for our project, which you should now clone:
+I've stored all the Kubernetes manifests for our project under the `deploy` directory. To be precise these files are actually templates that will need to be filled in with the environment variables that we've been setting as we've went through the tutorial.
 
-```console
-$ git clone https://github.com/abevoelker/gke-demo-deploy.git
-```
+To accomplish this, I've written a homebrew `template.sh` script that uses `envsubst` from the GNU gettext package; this should already be installed on most Linuxes but if you're on Mac you may need to [install from homebrew](https://stackoverflow.com/a/37192554/215168). If you're missing a variable the script will let you know and you can set the variable and try again. It might seem weird to use a homebrew solution here but Kubernetes doesn't ship with a templating solution,[^k8s-templating] so I thought this would be simpler than adding another third-party program to the srerequisites to complete the demo.
 
-This repo uses a homebrew `template.sh` script[^13] that populates Kubernetes manifests using the environment variables that we've been setting as we've went through the tutorial. If you're missing a variable the script will let you know and you can set the variable and try again. The script uses `envsubst` from the GNU gettext package; this should already be installed on most Linuxes but if you're on Mac you may need to [install from homebrew](https://stackoverflow.com/a/37192554/215168).
-
-[^13]:
-    Unfortunately Kubernetes doesn't ship with a built-in templating solution. There are [many, many solutions](https://blog.openshift.com/kubernetes-state-app-templating/) that have sprang up in the community to fill the gap, but many are tied into larger tools or opinionated workflows (e.g. some also want to [de-dupe sections of manifests](https://github.com/thisendout/kenv)). The Kubernetes maintainers seem to be [aware of the situation](https://github.com/kubernetes/kubernetes/issues/23896#issuecomment-313544857) but for now there is no official integration.
+[^k8s-templating]:
+    There are [many, many solutions](https://blog.openshift.com/kubernetes-state-app-templating/) that have sprang up in the community to fill the gap, but many are tied into larger tools or opinionated workflows (e.g. some also want to [de-dupe sections of manifests](https://github.com/thisendout/kenv)). The Kubernetes maintainers seem to be [aware of the situation](https://github.com/kubernetes/kubernetes/issues/23896#issuecomment-313544857) but for now there is no official integration.
 
     A mature Kubernetes deployment will probably end up using [Helm](https://helm.sh/), which comes with templating, but for a tutorial I don't want to over-complicate things.
 
-Let's run the template script now and see what gets populated:
+Let's run the template script now to turn the templates into ready-to-run Kubernetes manifests:
 
 ```console
+$ cd deploy
 $ ./template.sh
 ./k8s/configmap-nginx-conf.yml
 ./k8s/configmap-nginx-site.yml
@@ -530,6 +527,10 @@ NAME                                READY     STATUS              RESTARTS   AGE
 captioned-images-db-migrate-qzkdt   0/2       ContainerCreating   0          15s
 ```
 
+<div class="alert alert-info" markdown="1">
+**Note:** your pod names will be different than mine throughout the tutorial
+</div>
+
 <div class="alert alert-secondary" markdown="1">
 **Tip:** if you're watching for changes, instead of re-executing `kubectl get pods` over and over you can do `kubectl get pods -w` (or `--watch`) which will poll indefinitely and automatically print changes
 </div>
@@ -586,9 +587,9 @@ service "captioned-images-web" created
 
 We don't have to worry about applying manifests in order - Kubernetes will figure things out.
 
-Now we can grab a cup of coffee, and in a couple minutes the site should be online at the DNS address you selected. For a little while, you may see a blank page with "default backend - 404"[^14] while the Ingress is still spinning up:
+Now we can grab a cup of coffee, and in a couple minutes the site should be online at the DNS address you selected. While the Ingress is still spinning up, you'll see a blank page with "default backend - 404"[^ingress-spin-up] until the backend app becomes available:
 
-[^14]:
+[^ingress-spin-up]:
     You may also see a 502 or 500 error briefly while the Ingress is coming online and checking the `readinessProbe`.
 
     Our container is configured to do a `SELECT 1` when the load balancer hits `/pulse`, which ensures that our Rails server can reach our SQL database (i.e. it's ready to serve traffic). If you want to learn more about Kubernetes' probes (`readinessProbe` and `livenessProbe`), [read the documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/).
@@ -653,9 +654,9 @@ To get a feel for how Cloud CDN works, let's first visit the [Cloud CDN web cons
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_9.png" alt="Screenshot of Cloud CDN" %}
 </div>
 
-If we click that button and then select one of our Ingresses, we'll see this screen with some opaque choices for selecting "backend services"[^15]:
+If we click that button and then select one of our Ingresses, we'll see this screen with some opaque choices for selecting "backend services"[^backend-service-cli]:
 
-[^15]:
+[^backend-service-cli]:
     These backend services are added as an annotation to the Ingress, so we can also list them from the CLI with
 
     ```console
@@ -715,7 +716,7 @@ Cache-Control: public,max-age=31536000
 Age: 454
 ```
 
-And now we can use a [tool like this one](https://latency.apex.sh) using our application.css asset URL to verify it loads quickly across the globe:
+And now we can use a [tool like this one](https://latency.apex.sh) using our application.css asset URL to verify it loads quickly (mostly) across the globe:
 
 <div style="display: flex; align-items: center; justify-content: center;">
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_12.png" alt="Chart of asset load latencies from various global locations" %}
@@ -848,7 +849,7 @@ Tools that are specific to Kubernetes CI/CD that I think are worth mentioning in
 
 ### Kubernetes manifest templating
 
-Speaking of templating, I mentioned in a footnote[^13] earlier that there are many solutions worth investigating. You should try to find one that fits your workflow the best.
+Speaking of templating, I mentioned in a footnote[^k8s-templating] earlier that there are many solutions worth investigating. You should try to find one that fits your workflow the best.
 
 ### Firewalls
 
@@ -860,11 +861,11 @@ Kubernetes itself also has a [Network Policy feature](https://github.com/ahmetb/
 
 GKE and Kubernetes give you a lot of power for deploying and managing your application, but also a lot of complexity. If you have a really simply application, it's worth considering simpler PaaS-style alternatives.
 
-In this vein GCP has [AppEngine](https://cloud.google.com/appengine/), which is worth considering. It supports several programming languages upfront, but also custom workloads using containers ([AppEngine Flex](https://cloud.google.com/appengine/docs/flexible/)). [Here's a nice article](https://medium.com/google-cloud/app-engine-flex-container-engine-946fbc2fe00a) that can help one decide whether to use App Engine Flex or GKE.
+In this vein GCP has [AppEngine](https://cloud.google.com/appengine/), which supports several programming languages upfront as well as custom workloads using containers ([AppEngine Flex](https://cloud.google.com/appengine/docs/flexible/)). [Here's a nice article](https://medium.com/google-cloud/app-engine-flex-container-engine-946fbc2fe00a) that can help one decide whether to use App Engine Flex or GKE.
 
 ## Thank you
 
-Thank you to Sunny R. Juneja ([@sunnyrjuneja](https://twitter.com/sunnyrjuneja)) for reviewing a draft of this blog post and providing feedback. 😀 Any mistakes in this post are of course solely my own.
+HUGE thanks to my reviewers, Daniel Brice ([@fried_brice](https://twitter.com/fried_brice)) and Sunny R. Juneja ([@sunnyrjuneja](https://twitter.com/sunnyrjuneja)) for reviewing very rough drafts of this blog post and providing feedback. 😍 They stepped on a lot of rakes so that you didn't have to - please give them a follow! 😀 Any mistakes in this post are of course solely my own.
 
 ## References
 
