@@ -263,7 +263,7 @@ We will be running our application under a [service account](https://cloud.googl
 $ gcloud iam service-accounts create app-user
 $ export APP_USER_EMAIL="$(gcloud iam service-accounts list --format=json | jq -r '.[] | select(.email | startswith("app-user@")) | .email')"
 $ echo $APP_USER_EMAIL
-app-user@captioned-images-2289145e2f29.iam.gserviceaccount.com
+app-user@captioned-images-cbc464e43d1b.iam.gserviceaccount.com
 $ gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$APP_USER_EMAIL" --role='roles/storage.admin'
 $ gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$APP_USER_EMAIL" --role='roles/errorreporting.admin'
 $ gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$APP_USER_EMAIL" --role='roles/logging.admin'
@@ -277,7 +277,7 @@ We will also need a service account to control access to our SQL database:
 $ gcloud iam service-accounts create sql-user
 $ export SQL_USER_EMAIL="$(gcloud iam service-accounts list --format=json | jq -r '.[] | select(.email | startswith("sql-user@")) | .email')"
 $ echo $SQL_USER_EMAIL
-sql-user@captioned-images-2289145e2f29.iam.gserviceaccount.com
+sql-user@captioned-images-cbc464e43d1b.iam.gserviceaccount.com
 $ gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$SQL_USER_EMAIL" --role='roles/cloudsql.client'
 ```
 
@@ -305,7 +305,7 @@ Let's try #2 instead. Using Container Builder requires defining a `cloudbuild.ya
 ```console
 $ export COMMIT_SHA=$(git rev-parse --verify HEAD)
 $ echo $COMMIT_SHA
-6b1314895b7449308c43eba0930b872b0f4219d6
+4824b56f52b5620c5a25d378017b24353b0c7421
 $ gcloud container builds submit --config cloudbuild.yaml --substitutions=COMMIT_SHA=$COMMIT_SHA
 ```
 
@@ -352,9 +352,9 @@ You should never create bare Pods directly, because they are unmanaged (if they 
 </div>
 
 <div class="alert alert-secondary" markdown="1">
-**Tip:** in Pod templates where the application should handle both IPv4 and IPv6 traffic, you should bind to [`localhost`](https://en.wikipedia.org/wiki/Localhost#Name_resolution). This seems counter-intuitive because we think of `localhost` as being private, but remember Kubernetes is opening up container-local ports to the outside world for us.
+**Tip:** in Pod templates where the application should handle both IPv4 and IPv6 traffic, you should bind to [`localhost`](https://en.wikipedia.org/wiki/Localhost#Name_resolution) (which on most modern systems defines a loopback for both IPv4 and IPv6). This seems counter-intuitive because we think of `localhost` as being private, but remember Kubernetes is opening up container-local ports to the outside world for us.
 
-Many applications default to binding `0.0.0.0`, but that's only for IPv4 traffic; `[::1]` is the IPv6 equivalent. Without this trick your application would have to be capable of binding to both of those interfaces (or you'd have to add a custom hostname to the hosts file that does so).
+Many applications default to binding `0.0.0.0`, but remember that's an IPv4 address which will only handle IPv4 traffic; binding to `[::1]` (the IPv6 equivalent) would likewise only yield IPv6 traffic. Without this trick your application would have to be capable of binding to both of those interfaces (or you'd have to add a custom hostname to the hosts file that does so).
 </div>
 
 ### [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
@@ -370,7 +370,7 @@ Many applications default to binding `0.0.0.0`, but that's only for IPv4 traffic
 [^deploy-strategy]:
     The default `RollingUpdate` update strategy is [even interchangeable](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy); you can instead choose `Recreate` which will kill all existing Pods before bringing up any new ones.
 
-It is even relatively simple to do [canary releases](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#canary-deployments) with Deployments.
+Using Deployments, you can build all sorts of deploy strategies such as [canary releases](https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/#canary-deployments), [blue-green](http://container-solutions.com/kubernetes-deployment-strategies/), ["rainbow" deploys](http://brandon.dimcheff.com/2018/02/rainbow-deploys-with-kubernetes/) and [many others](http://container-solutions.com/kubernetes-deployment-strategies/).
 
 We'll create one Deployment to run multiple instances of our web app and ensure they remain up.
 
@@ -431,7 +431,9 @@ Kubernetes resource configurations are stored as YAML files called manifests.
 
 I've stored all the Kubernetes manifests for our project under the `deploy` directory. To be precise these files are actually templates that will need to be filled in with the environment variables that we've been setting as we've went through the tutorial.
 
-To accomplish this, I've written a homebrew `template.sh` script that uses `envsubst` from the GNU gettext package; this should already be installed on most Linuxes but if you're on Mac you may need to [install from homebrew](https://stackoverflow.com/a/37192554/215168). If you're missing a variable the script will let you know and you can set the variable and try again. It might seem weird to use a homebrew solution here but Kubernetes doesn't ship with a templating solution,[^k8s-templating] so I thought this would be simpler than adding another third-party program to the srerequisites to complete the demo.
+To accomplish this, I've written a homebrew `template.sh` script that uses `envsubst` from the GNU gettext package; this should already be installed on most Linuxes but if you're on Mac you may need to [install from homebrew](https://stackoverflow.com/a/37192554/215168). If you're missing a variable the script will let you know and you can set the variable and try again.
+
+It might seem weird to use a homebrew solution here but Kubernetes doesn't ship with a templating solution,[^k8s-templating] so I thought this would be simpler than adding another third-party program to the prerequisites to complete the demo.
 
 [^k8s-templating]:
     There are [many, many solutions](https://blog.openshift.com/kubernetes-state-app-templating/) that have sprang up in the community to fill the gap, but many are tied into larger tools or opinionated workflows (e.g. some also want to [de-dupe sections of manifests](https://github.com/thisendout/kenv)). The Kubernetes maintainers seem to be [aware of the situation](https://github.com/kubernetes/kubernetes/issues/23896#issuecomment-313544857) but for now there is no official integration.
@@ -441,33 +443,32 @@ To accomplish this, I've written a homebrew `template.sh` script that uses `envs
 Let's run the template script now to turn the templates into ready-to-run Kubernetes manifests:
 
 ```console
-$ cd deploy
-$ ./template.sh
-./k8s/configmap-nginx-conf.yml
-./k8s/configmap-nginx-site.yml
-./k8s/deploy-web.yml
-./k8s/ingress-ipv4.yml
-./k8s/ingress-ipv6.yml
-./k8s/jobs/job-migrate.yml
-./k8s/service-assets.yml
-./k8s/service-web.yml
+$ deploy/template.sh
+deploy/k8s/configmap-nginx-conf.yml
+deploy/k8s/configmap-nginx-site.yml
+deploy/k8s/deploy-web.yml
+deploy/k8s/ingress-ipv4.yml
+deploy/k8s/ingress-ipv6.yml
+deploy/k8s/jobs/job-migrate.yml
+deploy/k8s/service-assets.yml
+deploy/k8s/service-web.yml
 ```
 
 <div class="alert alert-info">
 <strong>Note</strong>: I've left all the manifests separated into their own individual files for ease of learning, but it is a best practice to <a href="https://kubernetes.io/docs/concepts/configuration/overview/#general-configuration-tips">combine related resources into the same YAML file</a>
 </div>
 
-Feel free to look through the manifests, particularly the Deploy which will be the backbone of our application. You may notice that there are some Secrets referenced there that we haven't defined yet; let's go ahead and create those now.
+Feel free to look through the manifests, particularly the Deployment which will be the backbone of our application. You may notice that there are some Secrets referenced there that we haven't defined yet; let's go ahead and create those now.
 
 First let's create the Secrets containing private keys for our service accounts:
 
 ```console
-$ gcloud iam service-accounts keys create .keys/app-user.json --iam-account $APP_USER_EMAIL
+$ gcloud iam service-accounts keys create deploy/.keys/app-user.json --iam-account $APP_USER_EMAIL
 $ kubectl create secret generic app-user-credentials \
-    --from-file=keyfile=.keys/app-user.json
-$ gcloud iam service-accounts keys create .keys/sql-user.json --iam-account $SQL_USER_EMAIL
+    --from-file=keyfile=deploy/.keys/app-user.json
+$ gcloud iam service-accounts keys create deploy/.keys/sql-user.json --iam-account $SQL_USER_EMAIL
 $ kubectl create secret generic cloudsql-instance-credentials \
-    --from-file=credentials.json=.keys/sql-user.json
+    --from-file=credentials.json=deploy/.keys/sql-user.json
 ```
 
 We'll also need to store our SQL password as a Secret:
@@ -484,7 +485,7 @@ At this point everything should finally be ready for us to bring up our applicat
 The first thing we'll want to do is run the database migration to initialize our database. We'll do that by creating a Job:
 
 ```console
-$ kubectl apply -f k8s/jobs/job-migrate.yml
+$ kubectl apply -f deploy/k8s/jobs/job-migrate.yml
 job "captioned-images-db-migrate" created
 ```
 
@@ -556,7 +557,7 @@ job "captioned-images-db-migrate" deleted
 Now that our database is migrated, we can finally bring up the application. This will be really easy as `kubectl apply` accepts a directory so we can simply feed it the whole directory that contains the rest of our manifests:
 
 ```console
-$ kubectl apply -f k8s
+$ kubectl apply -f deploy/k8s
 configmap "nginx-conf" created
 configmap "nginx-confd" created
 deployment "captioned-images-web" created
@@ -629,55 +630,73 @@ If you only have IPv4 like I do you can test IPv6 connectivity using a site like
 
 In order to accelerate static asset fetching, we should enable Cloud CDN. But we **only** want to enable it for our static assets, not our dynamic content - we don't want our root page at `/` caching stale content and never showing new pictures that people upload. And some day we might add user accounts to our app, and we don't want someone's private `/settings` page being cached and displayed to everyone else who visits that path.
 
-To get a feel for how Cloud CDN works, let's first visit the [Cloud CDN web console page](https://console.cloud.google.com/net-services/cdn/list), where we'll be prompted to add an origin:
+We're not going to use the web console to actually enable Cloud CDN, but just to get a feel for how Cloud CDN works, if we *were* to visit the [Cloud CDN web console page](https://console.cloud.google.com/net-services/cdn/list) we'd be prompted to add an origin:
 
 <div style="display: flex; align-items: center; justify-content: center;">
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_9.png" alt="Screenshot of Cloud CDN" %}
 </div>
 
-If we click that button and then select one of our Ingresses, we'll see this screen with some opaque choices for selecting "backend services"[^backend-service-cli]:
-
-[^backend-service-cli]:
-    These backend services are added as an annotation to the Ingress, so we can also list them from the CLI with
-
-    ```console
-    $ kubectl describe ing/captioned-images-ipv6-ingress
-    ```
+If we then clicked that button and then selected one of our Ingresses, we'd see this screen with some opaque choices for selecting "backend services":
 
 <div style="display: flex; align-items: center; justify-content: center;">
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_10.png" alt="Screenshot of adding an origin to Cloud CDN" %}
 </div>
 
-These [backend services](https://cloud.google.com/compute/docs/load-balancing/http/backend-service) are a component of GCP's load balancer, which in the case of GKE seem to be a 1:1 mapping to Services that are added to Ingresses. We can get more details on what each backend service is using `gcloud`:
+These [backend services](https://cloud.google.com/compute/docs/load-balancing/http/backend-service) are a component of GCP's load balancer. When using GKE, it seems that creating an Ingress creates a backend service for each Service linked to the Ingress.
+
+GKE adds a "backends" annotation to the Ingress, so we can list them in human-readable form from the CLI with `kubectl describe`:
 
 ```console
-$ gcloud compute backend-services describe --global <backend service name>
+$ kubectl describe ing/captioned-images-ipv4-ingress
+# look for the Annotations section in the output
 ```
 
-If we run that command for each backend service, we'd see one is for our static assets service, one is for our regular website service, and the last seems to be a default HTTP backend for Kubernetes (don't ask me). The static assets service is the one we want to enable Cloud CDN for, so we could use this information to enable the correct backend service in the Cloud CDN web console.
-
-But we don't want to go through this whole nasty process every time we want to use Cloud CDN with a GKE app, and we want to do things programmatically, not through the web console.
-
-Luckily I wrote a script (in the `gke-demo-deploy` repo) that automates the whole process:
+or machine-readable form with `kubectl get -o=json`:
 
 ```console
-$ ./enable-cloud-cdn.sh captioned-images-ipv6-ingress captioned-images-assets
+$ kubectl get ing/captioned-images-ipv4-ingress -o=json | jq -r '.metadata .annotations ."ingress.kubernetes.io/backends"'
+{"k8s-be-31468--4f88d9d22add978a":"HEALTHY","k8s-be-31477--4f88d9d22add978a":"HEALTHY","k8s-be-31534--4f88d9d22add978a":"HEALTHY"}
+```
+
+<div class="alert alert-info" markdown="1">
+**Note:** your backend service IDs will be different than mine
+</div>
+
+We can get more details on what each backend service is using `gcloud`:
+
+```console
+$ gcloud compute backend-services describe --global "k8s-be-31477--4f88d9d22add978a"
+# look for the "description" key in the output
+```
+
+If we run that command for each of the three listed backend services, we'd see one is for our static assets service, one is for our regular website service, and the last seems to be a default HTTP backend for Kubernetes (don't ask me).
+
+The static assets service is the one we want to enable Cloud CDN for, so when we find its ID we could use it to enable the correct backend service in the Cloud CDN web console, or programmatically with:
+
+```console
+$ gcloud compute backend-services update --global "k8s-be-31477--4f88d9d22add978a" --enable-cdn
+```
+
+But we don't want to go through this whole nasty manual process every time we want to use Cloud CDN with a GKE app. Luckily I wrote a script (in the `gke-demo-deploy` repo) that automates this whole process - just give it an Ingress name and the corresponding Service name and it will enable Cloud CDN for the corresponding backend service:
+
+```console
+$ deploy/enable-cloud-cdn.sh captioned-images-ipv6-ingress captioned-images-assets
 enabling Cloud CDN for backend k8s-be-31477--4f88d9d22add978a
 Updated [https://www.googleapis.com/compute/v1/projects/captioned-images-cbc464e43d1b/global/backendServices/k8s-be-31477--4f88d9d22add978a].
-$ ./enable-cloud-cdn.sh captioned-images-ipv4-ingress captioned-images-assets
+$ deploy/enable-cloud-cdn.sh captioned-images-ipv4-ingress captioned-images-assets
 enabling Cloud CDN for backend k8s-be-31477--4f88d9d22add978a
 No change requested; skipping update for [k8s-be-31477--4f88d9d22add978a].
 ```
 
-(The backend service is the same for both Ingresses so the second command isn't really necessary, but it doesn't hurt anything so I always double check anyway - the script could maybe be improved here)
+<small>(The backend service always seems to be the same for both Ingresses so the second command isn't really necessary, but it doesn't hurt anything so I always double check anyway - the script could maybe be improved here)</small>
 
-If we reload the Cloud CDN web console page we'll see the assets backend service has been CDN-ified across both Ingresses:
+If we were to visit the Cloud CDN web console page we'd see the assets backend service has been CDN-ified across both Ingresses:
 
 <div style="display: flex; align-items: center; justify-content: center;">
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_11.png" alt="Screenshot of Cloud CDN showing assets backends added" %}
 </div>
 
-We can verify that Cloud CDN is working by making an HTTP request for a static asset and verifying that [`Age:` appears in the response headers](https://cloud.google.com/cdn/docs/support#top_of_page):
+We can now verify that Cloud CDN is working by making an HTTP request for a static asset and verifying that [`Age:` appears in the response headers](https://cloud.google.com/cdn/docs/support#top_of_page):
 
 ```console
 $ curl -I http://assets-captioned-images.abevoelker.com/assets/application-ee08f0058ad69a7cad88c4bfabd2595f037cc764cddf32ada35c6b5efabb26a8.css
@@ -696,6 +715,8 @@ Via: 1.1 google
 Cache-Control: public,max-age=31536000
 Age: 454
 ```
+
+<small>(You can find a static asset URL by viewing the HTML source of your deployed app - there should be a hashed application.css and application.js URL to choose from)</small>
 
 And now we can use a [tool like this one](https://latency.apex.sh) using our application.css asset URL to verify it loads quickly (mostly) across the globe:
 
@@ -723,8 +744,8 @@ $ gcloud container builds submit --config cloudbuild.yaml --substitutions=COMMIT
 Then when the remote Docker build is complete, we'll run our template script to update the Kubernetes manifests then run `kubectl apply` to update the Deployment:
 
 ```console
-$ ./template.sh
-$ kubectl apply -f k8s/deploy-web.yml
+$ deploy/template.sh
+$ kubectl apply -f deploy/k8s/deploy-web.yml
 ```
 
 Alternatively, in scenarios like this where only a Docker image has changed, we can use `kubectl set image`:
@@ -740,7 +761,7 @@ After a short wait while the Deployment updates, voilà:
 </div>
 
 <div class="alert alert-info" markdown="1">
-**Note:** `kubectl set image` obviously won't update your local manifest file with whatever the current version of the Deployment looks like. To dump the current version of the resource as YAML, we can do:
+**Note:** `kubectl set image` obviously won't update your local manifest file with whatever the current version of the Deployment looks like. To dump the current version of a resource as YAML, we can do:
 
 ```console
 $ kubectl get deployment/captioned-images-web -o=yaml
@@ -755,13 +776,220 @@ However be aware a lot of extra fields will come back that you probably won't ha
 I usually add a junk environment variable to one of the Deployment's containers in this scenario, which will force a fresh redeploy that picks up the ConfigMap change.
 </div>
 
-### Enable SSL using Let's Encrypt
+## Enable TLS/SSL using Let's Encrypt
 
-TODO
+<div style="display: flex; align-items: center; justify-content: center;">
+{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/lets-encrypt-logo.png" alt="Let's Encrypt logo" width="320px" height="320px" %}
+</div>
 
-kube-lego or cert-manager?
+This is one area that unfortunately GCP/GKE is at a major deficit compared to AWS, the latter of which has the [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) which can easily provision SSL/TLS certificates, attach them directly to load balancers (or CloudFront - their CDN), and automatically renew them. I've said many times on Twitter that this is the primary feature that I really miss migrating from AWS:
 
-https://github.com/ahmetb/gke-letsencrypt/
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I think the only thing I would really miss moving to Google Cloud right now is AWS&#39;s certificate manager (ACM) and its ALB/ELB integration</p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/839954994803720194?ref_src=twsrc%5Etfw">March 9, 2017</a></blockquote>
+
+And I'm not the only one:
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Really impressed by Google Cloud Platform so far. It&#39;s like AWS minus the obfuscated Amazonspeak, and with a better console.<br><br>The only service I miss is ACM — zero-hassle HTTPS is *such* a killer feature. A Kubernetes/Let&#39;s Encrypt Rube Goldberg machine just isn&#39;t the same.</p>&mdash; Brandur (@brandur) <a href="https://twitter.com/brandur/status/973357848863244289?ref_src=twsrc%5Etfw">March 13, 2018</a></blockquote>
+
+Instead we will be using [Let's Encrypt](https://en.wikipedia.org/wiki/Let's_Encrypt) to provision free certificates using [cert-manager](https://github.com/jetstack/cert-manager), which is a Kubernetes add-on that we'll install into our cluster that automatically performs the magic handshakes with Let's Encrypt to verify we own the domains we need certificates for and handles certificate renewals.
+
+Let's Encrypt allows validating domains via its [ACME protocol](https://letsencrypt.org/how-it-works/) by either serving a special URI via HTTP or by serving a special TXT record via DNS. While cert-manager supports both methods, and HTTP seems to be the most popular, I had [nothing but problems with it](https://github.com/jetstack/cert-manager/issues/281) so I will be demonstrating the DNS TXT record method in this post. If you want to try the HTTP method there is [an excellent tutorial here](https://github.com/ahmetb/gke-letsencrypt), however apparently [it is broken as of this writing](https://github.com/jetstack/cert-manager/issues/347#issuecomment-368758773).
+
+I will demonstrate using GCP as the DNS provider, which along with AWS Route 53, Cloudflare, and Azure are currently the only DNS providers cert-manager supports (see [the project's example `acme-issuer.yaml`](https://github.com/jetstack/cert-manager/blob/acfc2f78d1eb0582447d3d25d8efc452e20d5547/docs/examples/acme-issuer.yaml) for how to modify the Issuer manifest to accommodate other DNS providers). Unfortunately if you don't use one of the aforementioned DNS providers, you won't be able to follow along - maybe try the aforementioned [HTTP method tutorial](https://github.com/ahmetb/gke-letsencrypt) instead.
+
+### DNS service account
+
+First, we need to enable the DNS API:
+
+```console
+$ gcloud services enable dns.googleapis.com
+```
+
+Now, we are going to need a service account with privileges to modify our DNS:
+
+```console
+$ gcloud iam service-accounts create dns-user
+$ export DNS_USER_EMAIL="$(gcloud iam service-accounts list --format=json | jq -r '.[] | select(.email | startswith("dns-user@")) | .email')"
+$ echo $DNS_USER_EMAIL
+dns-user@captioned-images-cbc464e43d1b.iam.gserviceaccount.com
+$ gcloud projects add-iam-policy-binding $PROJECT_ID --member="serviceAccount:$DNS_USER_EMAIL" --role='roles/dns.admin'
+```
+
+We will need to save the service account credentials as a secret to be consumed in our Kubernetes manifests:
+
+```console
+$ gcloud iam service-accounts keys create deploy/.keys/dns-user.json --iam-account $DNS_USER_EMAIL
+$ kubectl create secret generic dns-svc-acct-secret \
+    --from-file=credentials.json=deploy/.keys/dns-user.json
+```
+
+### Install Helm
+
+Next we need to install Helm, the Kubernetes package manager:
+
+```console
+$ kubectl create serviceaccount -n kube-system tiller
+$ kubectl create clusterrolebinding tiller-binding \
+    --clusterrole=cluster-admin \
+    --serviceaccount kube-system:tiller
+$ helm init --service-account tiller
+$ helm repo update
+```
+
+### Install cert-manager
+
+Now it's time to install cert-manager using Helm:
+
+```console
+$ helm install --name cert-manager \
+    --namespace kube-system stable/cert-manager
+```
+
+### Provision Issuer and Certificate manifests
+
+cert-manager takes a really neat approach and introduces two new Kubernetes resource types, Issuer and Certificate.
+
+Issuer defines a certificate issuer - i.e. where you can get a certificate from. We'll define two: one for Let's Encrypt's staging endpoint, and one for the production endpoint. We'll go straight to using the production endpoint, but staging should generally be used first since the rate limiting is more permissive, so if you run into errors you can debug them quicker before you cut over to production.
+
+Certificate defines the structure of the X.509 certificate we want issued and specifies which method to use to validate it (HTTP or DNS).
+
+I've added manifests for these two resources under the `deploy/k8s/ssl` folder, which we haven't interacted with yet. Go ahead and read the .yml files to see how they're structured, then let's use our template script to fill in the needed values (also supplying a new `EMAIL` value, which Let's Encrypt may use to notify us if our certificate is nearing expiration):
+
+```console
+$ EMAIL='abe@abevoelker.com' deploy/template.sh
+deploy/k8s/configmap-nginx-conf.yml
+deploy/k8s/configmap-nginx-site.yml
+deploy/k8s/deploy-web.yml
+deploy/k8s/ingress-ipv4.yml
+deploy/k8s/ingress-ipv6.yml
+deploy/k8s/jobs/job-migrate.yml
+deploy/k8s/service-assets.yml
+deploy/k8s/service-web.yml
+deploy/k8s/ssl/certificate.yml
+deploy/k8s/ssl/issuer.yml
+$ kubectl create -f deploy/k8s/ssl/issuer.yml
+clusterissuer "letsencrypt-staging" created
+clusterissuer "letsencrypt-prod" created
+$ kubectl create -f deploy/k8s/ssl/certificate.yml
+certificate "captioned-images-tls" created
+```
+
+Once we provision the Certificate, cert-manager should begin contacting the Let's Encrypt server and doing the ACME validation dance. We can check on the progress with:
+
+```console
+$ kubectl describe certificate
+```
+
+The "Events" section is where to look to keep an eye on the progress. Once finished successfully (it may take several minutes), it should look like something like this:
+
+```
+Events:
+  Type     Reason                 Age              From                     Message
+  ----     ------                 ----             ----                     -------
+  Warning  ErrorCheckCertificate  4m               cert-manager-controller  Error checking existing TLS certificate: secret "captioned-images-tls" not found
+  Normal   PrepareCertificate     4m               cert-manager-controller  Preparing certificate with issuer
+  Normal   PresentChallenge       4m               cert-manager-controller  Presenting dns-01 challenge for domain assets-captioned-images.abevoelker.com
+  Normal   PresentChallenge       4m               cert-manager-controller  Presenting dns-01 challenge for domain captioned-images.abevoelker.com
+  Normal   SelfCheck              4m               cert-manager-controller  Performing self-check for domain captioned-images.abevoelker.com
+  Normal   SelfCheck              4m               cert-manager-controller  Performing self-check for domain assets-captioned-images.abevoelker.com
+  Normal   ObtainAuthorization    2m               cert-manager-controller  Obtained authorization for domain assets-captioned-images.abevoelker.com
+  Normal   ObtainAuthorization    2m               cert-manager-controller  Obtained authorization for domain captioned-images.abevoelker.com
+  Normal   IssueCertificate       2m               cert-manager-controller  Issuing certificate...
+  Normal   CeritifcateIssued      2m               cert-manager-controller  Certificated issued successfully
+  Normal   RenewalScheduled       2m (x2 over 2m)  cert-manager-controller  Certificate scheduled for renewal in 1438 hours
+```
+
+At this point we'll also have a new secret of type `kubernetes.io/tls` which contains the actual SSL/TLS certificate:
+
+```console
+$ kubectl get secrets --field-selector=type="kubernetes.io/tls"
+NAME                   TYPE                DATA      AGE
+captioned-images-tls   kubernetes.io/tls   2         20m
+```
+
+### Attach certificate to Ingresses
+
+Now that we have our certificate, it's time to attach it to our Ingresses so that SSL starts working!
+
+I have put the changes to our Ingress and other manifests on a separate git branch named "ssl"; let's check that out now:
+
+```console
+$ git fetch
+$ git checkout ssl
+```
+
+If we [compare the changes between the master and ssl branch](https://github.com/abevoelker/gke-demo/compare/master...ssl), this is what we added to the Ingresses:
+
+```diff
+diff --git a/deploy/templates/k8s/ingress-ipv4.yml b/deploy/templates/k8s/ingress-ipv4.yml
+index 1283910..b6ada67 100644
+--- a/deploy/templates/k8s/ingress-ipv4.yml
++++ b/deploy/templates/k8s/ingress-ipv4.yml
+@@ -5,6 +5,11 @@ metadata:
+   annotations:
+     kubernetes.io/ingress.global-static-ip-name: captioned-images-ipv4-address
+ spec:
++  tls:
++  - secretName: captioned-images-tls
++    hosts:
++    - ${DNS_WEBSITE}
++    - ${DNS_ASSETS}
+   rules:
+   - host: ${DNS_WEBSITE}
+     http:
+diff --git a/deploy/templates/k8s/ingress-ipv6.yml b/deploy/templates/k8s/ingress-ipv6.yml
+index 573bf75..c573b90 100644
+--- a/deploy/templates/k8s/ingress-ipv6.yml
++++ b/deploy/templates/k8s/ingress-ipv6.yml
+@@ -5,6 +5,11 @@ metadata:
+   annotations:
+     kubernetes.io/ingress.global-static-ip-name: captioned-images-ipv6-address
+ spec:
++  tls:
++  - secretName: captioned-images-tls
++    hosts:
++    - ${DNS_WEBSITE}
++    - ${DNS_ASSETS}
+   rules:
+   - host: ${DNS_WEBSITE}
+     http:
+```
+
+Let's regenerate our manifests using the updated templates and apply the updated Ingress manifests:
+
+```console
+$ EMAIL=abe@abevoelker.com ./template.sh
+$ kubectl apply -f deploy/k8s/ingress-ipv4.yml
+$ kubectl apply -f deploy/k8s/ingress-ipv6.yml
+```
+
+After a few minutes, you should be able to access your site using https://! It will look a little funky at first because Rails is still serving assets using http:// URLs, so Chrome and other modern browsers will refuse to load the assets (so the stylesheet will not load):
+
+<div style="display: flex; align-items: center; justify-content: center;">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/ssl-content-warning.png" alt="Screenshot of app running over HTTPS with insecure content warning blocking assets" %}
+</div>
+
+Let's fix that now by applying the rest of the changes I made to the SSL branch, which will configure Rails and nginx to force everything to HTTPS:
+
+```console
+$ kubectl apply -f deploy/k8s
+```
+
+After the Deployment finishes updating, everything should be working over HTTPS without any warnings!
+
+<div style="display: flex; align-items: center; justify-content: center;">
+  {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/ssl-fully-working.png" alt="Screenshot of app running over HTTPS successfully" %}
+</div>
+
+### Let's ask Google to do better
+
+Unfortunately, while tools like cert-manager and kube-lego are really neat, they still leave the responsibility for renewing certificates in our hands and increase the maintenance burden of our GKE clusters (e.g. what happens when we upgrade our Kubernetes version? Do things keep working?[^kube-lego-deprecation]). We have to keep an eye on a new spinning cog in our cluster and still set up health checks on certificate expirations lest we be surprised:
+
+[^kube-lego-deprecation]:
+    kube-lego for example has been deprecated and is no longer tested on the latest version of Kubernetes.
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Great, kube-lego decided to break at some point and now I have an expired SSL cert. GCP&#39;s reliance on Kubernetes cluster-integrated tools like kube-lego, cert-manager, etc. is a big issue compared to AWS&#39;s ACM simplicity</p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/976871230883160064?ref_src=twsrc%5Etfw">March 22, 2018</a></blockquote>
+
+If you agree that GCP should have a similar product to AWS's ACM, please star [the issue I opened requesting this feature](https://issuetracker.google.com/issues/70801227).
 
 ### Opening a remote Rails console
 
@@ -846,7 +1074,9 @@ In this vein GCP has [AppEngine](https://cloud.google.com/appengine/), which sup
 
 ## Thank you
 
-HUGE thanks to my reviewers, Daniel Brice ([@fried_brice](https://twitter.com/fried_brice)) and Sunny R. Juneja ([@sunnyrjuneja](https://twitter.com/sunnyrjuneja)) for reviewing very rough drafts of this blog post and providing feedback. 😍 They stepped on a lot of rakes so that you didn't have to - please give them a follow! 😀 Any mistakes in this post are of course solely my own.
+HUGE thanks to my reviewers, Daniel Brice ([@fried_brice](https://twitter.com/fried_brice)) and Sunny R. Juneja ([@sunnyrjuneja](https://twitter.com/sunnyrjuneja)) for reviewing very rough drafts of this blog post and providing feedback. 😍 They stepped on a lot of rakes so that you didn't have to - please give them a follow! 😀
+
+Any mistakes in this post remain of course solely my own.
 
 ## References
 
@@ -857,8 +1087,6 @@ Here are some miscellaneous links I found useful while learning Kubernetes/GKE t
 [Managing Rails tasks such as 'db:migrate' and 'db:seed' on Kubernetes while performing rolling deployments](https://blog.bigbinary.com/2017/06/16/managing-rails-tasks-such-as-db-migrate-and-db-seed-on-kuberenetes-while-performing-rolling-deployments.html)
 
 [Global ingress in practice on Google Container Engine — Part 1: Discussion](https://medium.com/google-cloud/global-ingress-in-practice-on-google-container-engine-part-1-discussion-ccc1e5b27bd0)
-
-[Kubernetes deployment strategies](http://container-solutions.com/kubernetes-deployment-strategies/)
 
 [Kubernetes Engine Samples](https://github.com/GoogleCloudPlatform/kubernetes-engine-samples)
 
@@ -885,9 +1113,9 @@ I also included a Makefile like I do on most projects, so that I can just type `
 
 ### Useful gems
 
-A few lesser-known gems I used that I think deserve some props:
+A few lesser-known gems I used in the demo app that I think deserve some props:
 
-* [Shrine](https://github.com/shrinerb/shrine) is extremely pleasant for handling image uploads, compared to previous experiences I've had with Carrierwave, Paperclip, and Refile.
+* [Shrine](https://github.com/shrinerb/shrine) is extremely pleasant for handling image uploads compared to previous experiences I've had with Carrierwave, Paperclip, and Refile.
 * [rails-pulse](https://rubygems.org/gems/rails-pulse) is a simple gem that handles the health checking by setting up a route that does a `SELECT 1` to ensure the database is up.
 * [ENVied](https://github.com/eval/envied) is really useful to ensure the app fails fast (at bootup) if I'm missing a required environment variable.
 
