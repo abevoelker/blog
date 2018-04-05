@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 2: up and running with Kubernetes"
+title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 2: Up and running with Kubernetes"
 date: 2018-04-05 00:01
 comments: false
 og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
@@ -10,7 +10,11 @@ excerpt_separator: <!--more-->
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
 
 <div class="alert alert-secondary" markdown="1">
-<small>Welcome to part two of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, please start at [part one](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/).</small>
+<small>Welcome to part two of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can jump to a different part:</small><br />
+<small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
+<small>[Part 3: Cache static assets using Cloud CDN](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/)</small><br />
+<small>[Part 4: Enable HTTPS using Let's Encrypt and cert-manager](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-4/)</small><br />
+<small>[Part 5: Conclusion, further topics and Rails extras](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-5/)</small>
 </div>
 
 So we've got our resources created and sitting idle, and the Docker image of our application is built and ready to deploy. In order to deploy the app on GKE, we'll first have to understand some basic K8s concepts. This will be a quick introduction; if you want a full-fledged tutorial check out the [official documentation](https://kubernetes.io/docs/tutorials/) or [Kubernetes By Example](http://kubernetesbyexample.com/).

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 4: enable HTTPS using Let's Encrypt and cert-manager"
+title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 4: Enable HTTPS using Let's Encrypt and cert-manager"
 date: 2018-04-05 00:03
 comments: false
 og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/k8s-lets-encrypt.png"
@@ -10,7 +10,11 @@ excerpt_separator: <!--more-->
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/k8s-lets-encrypt.svg" alt="Let's Encrypt logo" width="320px" height="320px" %}]({{ page.url }})
 
 <div class="alert alert-secondary" markdown="1">
-<small>Welcome to part four of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, please start at [part one](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/).</small>
+<small>Welcome to part four of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can jump to a different part:</small><br />
+<small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
+<small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
+<small>[Part 3: Cache static assets using Cloud CDN](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/)</small><br />
+<small>[Part 5: Conclusion, further topics and Rails extras](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-5/)</small>
 </div>
 
 Unfortunately TLS/SSL certificates is one area that GCP/GKE is at a major deficit compared to AWS, the latter of which has the [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) which can easily provision SSL/TLS certificates, attach them directly to load balancers (or CloudFront - their CDN), and automatically renew them. I've said many times on Twitter that this is the primary feature that I really miss migrating from AWS:

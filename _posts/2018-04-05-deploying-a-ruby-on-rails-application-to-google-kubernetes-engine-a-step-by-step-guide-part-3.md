@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 3: cache static assets using Cloud CDN"
+title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 3: Cache static assets using Cloud CDN"
 date: 2018-04-05 00:02
 comments: false
 og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/google-cloud-cdn.png"
@@ -10,7 +10,11 @@ excerpt_separator: <!--more-->
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/google-cloud-cdn.png" alt="Google Cloud CDN logo" %}]({{ page.url }})
 
 <div class="alert alert-secondary" markdown="1">
-<small>Welcome to part three of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, please start at [part one](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/).</small>
+<small>Welcome to part three of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can jump to a different part:</small><br />
+<small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
+<small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
+<small>[Part 4: Enable HTTPS using Let's Encrypt and cert-manager](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-4/)</small><br />
+<small>[Part 5: Conclusion, further topics and Rails extras](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-5/)</small>
 </div>
 
 In order to accelerate static asset fetching, we should enable Cloud CDN. But we **only** want to enable it for our static assets, not our dynamic content - we don't want our root page at `/` caching stale content and never showing new pictures that people upload. And some day we might add user accounts to our app, and we don't want someone's private `/settings` page being cached and displayed to everyone else who visits that path.

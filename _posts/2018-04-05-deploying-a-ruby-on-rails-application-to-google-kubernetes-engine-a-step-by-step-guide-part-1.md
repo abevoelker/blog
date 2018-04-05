@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 1: introduction and creating cloud resources"
+title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 1: Introduction and creating cloud resources"
 date: 2018-04-05 00:00
 comments: false
 og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
@@ -8,6 +8,14 @@ excerpt_separator: <!--more-->
 ---
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
+
+<div class="alert alert-secondary" markdown="1">
+<small>Welcome to part one of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you'd like to jump ahead, you can visit the following parts:</small><br />
+<small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
+<small>[Part 3: Cache static assets using Cloud CDN](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/)</small><br />
+<small>[Part 4: Enable HTTPS using Let's Encrypt and cert-manager](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-4/)</small><br />
+<small>[Part 5: Conclusion, further topics and Rails extras](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-5/)</small>
+</div>
 
 Following up on [my last post](https://blog.abevoelker.com/2018-01-18/why-im-switching-from-aws-to-gcp-for-new-personal-projects/) on why I'm switching personal projects from AWS to Google Cloud (GCP), this series of posts will walk through deploying an example Ruby on Rails application to GCP's Kubernetes Engine (GKE). You should be able to follow this tutorial without experience with Ruby or Rails (please let me know if I fail at this).
 

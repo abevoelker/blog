@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 5: conclusion, thank you, further topics and Rails extras"
+title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 5: Conclusion, further topics and Rails extras"
 date: 2018-04-05 00:04
 comments: false
 og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/congratulations.gif"
@@ -10,7 +10,11 @@ excerpt_separator: <!--more-->
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/congratulations.gif" alt="Neon Genesis-style congratulations" %}]({{ page.url }})
 
 <div class="alert alert-secondary" markdown="1">
-<small>Welcome to the last post of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, please start at [part one](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/).</small>
+<small>Welcome to the last post of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can visit the previous parts:</small><br />
+<small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
+<small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
+<small>[Part 3: Cache static assets using Cloud CDN](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/)</small><br />
+<small>[Part 4: Enable HTTPS using Let's Encrypt and cert-manager](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-4/)</small>
 </div>
 
 Congratulations, we've finished deploying the application!
