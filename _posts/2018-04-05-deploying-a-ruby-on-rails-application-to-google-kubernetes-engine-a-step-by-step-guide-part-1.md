@@ -243,9 +243,12 @@ $ export CONNECTION_NAME="$(gcloud sql instances describe captioned-images-db --
 
 ### Kubernetes Engine
 
-Now let's create a Kubernetes cluster to run our app. For our database instance we used a very small machine type, but for GKE clusters I've found it runs smoother using `n1-standard-1` (1 vCPU, 3.75GB RAM) versus using the smaller [shared-core machine types](https://cloud.google.com/compute/pricing#sharedcore) +`g1-small` (0.5 vCPU, 1.7GB RAM) or `f1-micro` (0.2 vCPU, 0.6GB RAM). I think having a lot of small, weak machines in a cluster makes it hard to allocate the workload effectively (e.g. one machine may not be enough to run more than one, or maybe not even one large job).
+Now let's create a Kubernetes cluster to run our app. For our database instance we used the smallest machine type available, but for GKE clusters we have to choose an instance type with enough resources to allocate workloads effectively.
 
-Anyway, in this case the demo would *probably* work fine with `g1-small` but I'm going to stick with `n1-standard-1` just to be on the safe side, so you don't see odd errors related to not enough resources when K8s allocates pods.
+The smallest VM instance type is currently `f1-micro`, weighing in at 0.2 vCPU and 0.6GB RAM which is a bit too shrimpy for our purposes (workloads will likely fail to allocate). Instead we're going to use `g1-small`, which is the next size up at 0.5 vCPU and 1.7GB RAM. It's still a [shared-core machine type](https://cloud.google.com/compute/pricing#sharedcore), which we probably wouldn't want to use for a high-traffic production app, but for our demo - and probably for most side project-type apps - it's fine.[^n1-standard-1]
+
+[^n1-standard-1]:
+    A previous version of this post advised using `n1-standard-1` (1 vCPU, 3.75GB RAM) for the cluster, which is the base level of the standard (non-shared-core) machine types. After testing it out I've decided `g1-small` is sufficient so I've revised the instructions.
 
 First we have to enable the Container API:
 
@@ -253,10 +256,15 @@ First we have to enable the Container API:
 $ gcloud services enable container.googleapis.com
 ```
 
-Then we'll create an autoscaling cluster which will spin up a max of 4 VMs if we run out of CPU when running K8s pods. We'll also enable autoupgrade so that GKE handles upgrading the K8s version for us:
+Then we'll create an autoscaling cluster which will spin up a min of 3[^node-upgrade-min] and a max of 5 VMs if we run out of CPU when running K8s pods. We'll also enable autoupgrade so that GKE handles upgrading the K8s version for us:
+
+[^node-upgrade-min]:
+    If you have less than three nodes in a cluster you may have downtime when upgrading Kubernetes. This is what the web console warns if you select less than three nodes:
+
+    {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke-min-3-node-warning.png" alt="GKE console message warning of 3-node minimum" %}
 
 ```console
-$ gcloud container clusters create captioned-images-app --enable-autoupgrade --enable-autoscaling --min-nodes=2 --max-nodes=4 --machine-type=n1-standard-1 --scopes=default,compute-rw,storage-rw,sql
+$ gcloud container clusters create captioned-images-app --enable-autoupgrade --enable-autoscaling --min-nodes=3 --max-nodes=5 --machine-type=g1-small --scopes=default,compute-rw,storage-rw,sql
 ```
 
 There are lots of options available when creating clusters; you can explore them with:
