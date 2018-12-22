@@ -7,6 +7,14 @@ og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-s
 excerpt_separator: <!--more-->
 ---
 
+<div class="alert alert-warning" markdown="1">
+Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
+blog post series but **updated with the latest changes** in Kubernetes and
+Google Cloud and **greatly simplified** coursework based on feedback I got
+from these blog posts. All packaged up in an **easy-to-follow** screencast
+format. Please check it out! ☺️ - Abe
+</div>
+
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/google-cloud-cdn.png" alt="Google Cloud CDN logo" %}]({{ page.url }})
 
 <div class="alert alert-secondary" markdown="1">

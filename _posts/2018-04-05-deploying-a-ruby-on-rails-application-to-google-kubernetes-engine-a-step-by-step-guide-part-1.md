@@ -7,6 +7,14 @@ og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-s
 excerpt_separator: <!--more-->
 ---
 
+<div class="alert alert-warning" markdown="1">
+Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
+blog post series but **updated with the latest changes** in Kubernetes and
+Google Cloud and **greatly simplified** coursework based on feedback I got
+from these blog posts. All packaged up in an **easy-to-follow** screencast
+format. Please check it out! ☺️ - Abe
+</div>
+
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
 
 <div class="alert alert-secondary" markdown="1">
@@ -118,7 +126,8 @@ Or list all current config values with
 ```console
 $ gcloud config list
 ```
-Other default properties are also controlled by config values, such as default region and zone. Let's set those now:
+
+Other default properties are also controlled by config values, such as default region and zone. Let's set those now:
 
 ```console
 $ gcloud config set compute/zone us-central1-a
