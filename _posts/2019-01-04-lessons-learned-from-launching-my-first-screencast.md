@@ -1,15 +1,15 @@
 ---
 layout: post
-title: "Lessons learned from recording my first screencast series / training course, Kubernetes on Rails"
+title: "Lessons learned from launching my first screencast series / training course, Kubernetes on Rails"
 date: 2019-01-04
 comments: false
-og_image: "lessons-learned-from-recording-my-first-screencast/kubernetes-on-rails-screenshot.png"
+og_image: "lessons-learned-from-launching-my-first-screencast/kubernetes-on-rails-screenshot.png"
 excerpt_separator: <!--more-->
 ---
 
-[{% asset "lessons-learned-from-recording-my-first-screencast/kubernetes-on-rails-screenshot.png" alt="Kubernetes on Rails website preview" %}]({{ page.url }})
+[{% asset "lessons-learned-from-launching-my-first-screencast/kubernetes-on-rails-screenshot.png" alt="Kubernetes on Rails website preview" %}]({{ page.url }})
 
-Last month I recorded my first ever screencast series, [Kubernetes on Rails](https://kubernetesonrails.com/). It's a teaching course on learning Kubernetes by showing step-by-step how to deploy a sample Ruby on Rails application to Google Cloud's Kubernetes Engine (GKE) (note: although "Rails" is in the title, there's very little Rails-specific bits in the course[^title-note]). In addition, since Google Cloud (GCP) is still a bit more exotic than AWS, I end up teaching some GCP basics as well so it's not *only* about Kubernetes.
+Last month I recorded my first ever screencast series, [Kubernetes on Rails](https://kubernetesonrails.com/). It's a course that teaches Kubernetes by showing step-by-step how to deploy a sample Ruby on Rails application to Google Cloud's Kubernetes Engine (GKE) (note: although "Rails" is in the title, there's very little Rails-specific bits in the course[^title-note]). In addition, since Google Cloud (GCP) is still a bit more exotic than AWS, I end up teaching some GCP basics as well so it's not *only* about Kubernetes.
 
 [^title-note]:
     Maybe I should've titled the course differently to reflect this. But
@@ -80,7 +80,7 @@ Being in the basement, I'm also seated about 10 feet away from our gas furnace, 
 
 We also happen to live very close to train tracks and a small airport due to our location right off the Mississippi river, so once in a while I would have to stop recording when a train horn would be blaring or a loud jet would be coming or going.
 
-{% asset "lessons-learned-from-recording-my-first-screencast/planes-overhead.png" alt="Flight radar showing planes flying near my house" %}
+{% asset "lessons-learned-from-launching-my-first-screencast/planes-overhead.png" alt="Flight radar showing planes flying near my house" %}
 
 Other fun house noises I now pick up on are the water pipes making noise for a few minutes after someone flushes a toilet and the tank refills, and our hot water heater occasionally kicking on for several minutes. Houses are alive, man!
 
@@ -102,13 +102,13 @@ First, my development machine runs Ubuntu so I'm limited to Linux-friendly softw
 
 So the first software I tried was [OBS Studio](https://obsproject.com/), which is **amazing** for streaming and honestly really fun to just play around with - you can add multiple video and audio inputs, add different effects and filters on each, script transitions, do chroma key / green screen compositing, all sorts of stuff. It's so good that professional Twitch and YouTube streamers use it; it's really awesome that it's open source and GPLv2-licensed. Although it excels at streaming it also has a record function that works just fine too.
 
-[{% asset "lessons-learned-from-recording-my-first-screencast/obs-screenshot.jpg" alt="OBS screenshot from official project page" %}](https://obsproject.com/)
+[{% asset "lessons-learned-from-launching-my-first-screencast/obs-screenshot.jpg" alt="OBS screenshot from official project page" %}](https://obsproject.com/)
 
 However if I recall correctly, when recording a first sample with OBS I suffered some screen tearing. I did a quick google search but it was apparent I'd have to do a little tinkering, which led me to try out an alternative recording program first: [SimpleScreenRecorder (SSR)](http://www.maartenbaert.be/simplescreenrecorder/).
 
 When SSR started up, right away it told me that [I had "allow flipping" enabled](http://www.maartenbaert.be/simplescreenrecorder/troubleshooting/#weird-glitches-horizontal-lines-missing-objects-when-using-the-nvidia-proprietary-drivers) in my NVIDIA driver settings which could cause screen glitches, and asked me if I wanted to disable it. After disabling it and recording some sample footage with SSR, I was pleased with the quality so decided to just stick with it. As the name implies, it's simple and does exactly what I needed.
 
-[{% asset "lessons-learned-from-recording-my-first-screencast/SimpleScreenRecorder.png" alt="SimpleScreenRecorder screenshot from official project page" %}](http://www.maartenbaert.be/simplescreenrecorder/)
+[{% asset "lessons-learned-from-launching-my-first-screencast/SimpleScreenRecorder.png" alt="SimpleScreenRecorder screenshot from official project page" %}](http://www.maartenbaert.be/simplescreenrecorder/)
 
 With the recording software setup, the next thing I did was create a separate Chrome profile to use for recording. This was handy for not accidentally exposing my browser history, bookmarks, extensions and so on when recording, and I could also set the zoom level to 150% for better readability for viewers.
 
@@ -124,7 +124,7 @@ I discovered this apparently this has to do with how [PulseAudio](https://www.fr
 
 One really annoying thing that happened on occasion is when I'd get a Google Hangouts message, or any other type of audible "ding" on my main account, it would knock out the audio output on the screencast account for like 15 seconds.
 
-[{% asset "lessons-learned-from-recording-my-first-screencast/poettering-meme.png" alt="AmazonBasics condenser microphone" %}](https://en.wikipedia.org/wiki/Lennart_Poettering)
+[{% asset "lessons-learned-from-launching-my-first-screencast/poettering-meme.png" alt="AmazonBasics condenser microphone" %}](https://en.wikipedia.org/wiki/Lennart_Poettering)
 
 I did briefly look into what it would take to fix, and it seemed like it would be a headache of [having to enable system-wide mode](https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/) or some such, and [ignore a bunch of security warnings](https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/WhatIsWrongWithSystemWide/) telling you you're probably an idiot for doing it.
 
@@ -148,7 +148,7 @@ I also should've trusted my gut and looked into things early on when my spidey s
 
 Before recording an episode, I would write some notes (or for some episodes, almost a whole transcript) in Google Docs so I wouldn't forget anything when recording:
 
-{% asset "lessons-learned-from-recording-my-first-screencast/notes.png" alt="Google Docs notes" %}
+{% asset "lessons-learned-from-launching-my-first-screencast/notes.png" alt="Google Docs notes" %}
 
 Then during recording, I would put my notes up on my leftmost monitor (I have three monitors for my desktop PC setup - the left and right monitors are oriented in portrait mode, and the center monitor is landscape).
 
@@ -170,7 +170,7 @@ If I wanted to continue making screencasts I think I should take a public speaki
 
 For editing, I chose [Kdenlive](https://kdenlive.org/) and have been very happy with it. It makes it very easy to splice clips together, overlay text, add transitions and other effects, split out audio, all sorts of things. Like OBS, it's GPLv2-licensed and runs great on Ubuntu.
 
-[{% asset "lessons-learned-from-recording-my-first-screencast/kdenlive.png" alt="Kdenlive screenshot" %}](https://kdenlive.org)
+[{% asset "lessons-learned-from-launching-my-first-screencast/kdenlive.png" alt="Kdenlive screenshot" %}](https://kdenlive.org)
 
 Also, it has well thought out features around saving which saved my bacon a couple times. It will do auto-saves (saved me once on a rare occasion where the program had hung when I hadn't manually saved in a long time) as well as keep a history of several backup saves (saved me once when I made an irreversible change that I couldn't undo - I was able to revert to an old save).
 
