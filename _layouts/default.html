@@ -3,10 +3,7 @@
 
   {% include head.html %}
 
-  <body class="sidebar-overlay">
-
-    {% include sidebar.html %}
-
+  <body>
     <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
          content to avoid any CSS collisions with our real content. -->
     <div class="wrap">
@@ -24,28 +21,12 @@
       </div>
     </div>
 
-    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
-
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     {% if site.enable_anchorjs %}
     <script src="{{ site.baseurl }}/public/javascript/anchor.min.js"></script>
     {% endif %}
     <script>
       (function(document) {
-        var toggle = document.querySelector('.sidebar-toggle');
-        var sidebar = document.querySelector('#sidebar');
-        var checkbox = document.querySelector('#sidebar-checkbox');
-
-        document.addEventListener('click', function(e) {
-          var target = e.target;
-
-          if(!checkbox.checked ||
-             sidebar.contains(target) ||
-             (target === checkbox || target === toggle)) return;
-
-          checkbox.checked = false;
-        }, false);
-
         {% if site.enable_anchorjs %}
         //anchors.options.visible = 'always';
         anchors.add('h2, h3, h4, h5, h6');
