@@ -24,7 +24,7 @@ group :jekyll_plugins do
   gem "jekyll-coffeescript", "1.1.1"
   gem "jekyll-commonmark-ghpages", "0.1.5"
   gem "jekyll-default-layout", "0.1.4"
-  gem "jekyll-feed", "0.9.3"
+  gem "jekyll-feed"
   gem "jekyll-gist", "1.5.0"
   gem "jekyll-github-metadata", "2.9.4"
   #gem "jekyll-mentions", "1.3.0"
