@@ -142,6 +142,8 @@ GEM
       jekyll-seo-tag (~> 2.0)
     jekyll-titles-from-headings (0.5.1)
       jekyll (~> 3.3)
+    jekyll-toc (0.9.1)
+      nokogiri (~> 1.8)
     jekyll-watch (2.1.2)
       listen (~> 3.0)
     kramdown (1.17.0)
@@ -154,6 +156,7 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
     mercenary (0.3.6)
+    mini_magick (4.9.2)
     mini_portile2 (2.4.0)
     minima (2.5.0)
       jekyll (~> 3.5)
@@ -235,9 +238,14 @@ DEPENDENCIES
   jekyll-theme-tactile (= 0.1.0)
   jekyll-theme-time-machine (= 0.1.0)
   jekyll-titles-from-headings (= 0.5.1)
+  jekyll-toc
   kramdown
+  mini_magick
   minima (~> 2.0)
   terminal-table (~> 1.4)
 
+RUBY VERSION
+   ruby 2.5.3p105
+
 BUNDLED WITH
-   1.16.2
+   1.17.1

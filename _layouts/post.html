@@ -3,7 +3,8 @@ layout: default
 ---
 
 <div class="post">
-  <h1 class="post-title">{{ page.title }}</h1>
+  {% unless page.hide_post_header %}
+  <h1 class="post-title no_toc">{{ page.title }}</h1>
   <span class="post-date">{{ page.date | date_to_string }}</span>
   <span class="post-reading-time" title="Estimated read time">
     <small><em>
@@ -15,6 +16,7 @@ layout: default
       {% endif %}
     </em></small>
   </span>
+  {% endunless %}
   {{ content }}
 </div>
 
@@ -38,11 +40,11 @@ layout: default
 {% endif %}
 
 <div class="related">
-  <h2 class="no-anchor">Related Posts</h2>
+  <h2 class="no-anchor no_toc">Related Posts</h2>
   <ul class="related-posts">
     {% for post in site.related_posts limit:3 %}
       <li>
-        <h3 class="no-anchor">
+        <h3 class="no-anchor no_toc">
           <a href="{{ site.baseurl }}{{ post.url }}">
             {{ post.title }}
             <small>{{ post.date | date_to_string }}</small>

@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+ruby "2.5.3"
 
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
@@ -55,6 +56,8 @@ group :jekyll_plugins do
   #gem "jemoji"
 
   gem "jekyll-assets"
+  gem "mini_magick"
+  gem "jekyll-toc"
 end
 
 gem "kramdown"

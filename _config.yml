@@ -110,6 +110,19 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
+  - jekyll-toc
 # https://github.com/jekyll/jekyll/issues/2938
 exclude: ["vendor", "Gemfile*", "deploy.sh", "_private"]
 include: [".well-known"]
+assets:
+  sources:
+    - _assets/css
+    - _assets/fonts
+    - _assets/images
+    - _assets/videos
+    - _assets/javascript
+    - _assets/video
+    - _assets/image
+    - _assets/img
+    - _assets/js
+    - _assets/other
