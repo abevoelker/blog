@@ -25,8 +25,6 @@ hide_post_header: true
   </div>
 </div>
 
-{{ mytoc }}
-
 This Christmas, like every other, I traveled to northern Wisconsin to stay with my parents on the dairy farm I grew up on.
 
 As usual I took the opportunity to help my dad and younger brother with barn chores and milk cows. The cows need to be milked twice a day, every day, roughly around 4AM and 4PM. I didn't help out every shift but I worked more than enough to once again be humbled about the life I left behind and recalibrate my nostalgia.
@@ -571,6 +569,11 @@ In Wisconsin, the number of dairy CAFOs and the total number of cows on these op
     <p>
       <small>
         <em>Source: <a href="https://dnr.wi.gov/topic/AgBusiness/data/CAFO/">Wisconsin DNR CAFO Permittees</a></em>
+      </small>
+    </p>
+    <p>
+      <small>
+        <em>Note: These numbers only cover the latest CAFO permit issued to each operation. I have a FOIA request in progress with the WI DNR to get the historical permit data in order to improve this chart's accuracy.</em>
       </small>
     </p>
   </figcaption>
