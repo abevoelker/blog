@@ -982,6 +982,7 @@ Some family farm-oriented organizations you can support are:
 * [National Family Farm Coalition](http://nffc.net/)
 * [Wisconsin Farmers Union](https://www.wisconsinfarmersunion.com/)
 * [Farm Aid](https://www.farmaid.org/take-action/)
+* [National Dairy Producers Organization](https://nationaldairyproducersorganization.com/)
 
 Some organizations that defend Wisconsin's water are:
 
@@ -995,6 +996,8 @@ And finally, I recommend everyone, but especially rural folks support the [Insti
 ### Addendum
 
 This article is based solely on my own reflection and attempts to understand the systemic changes that affected my family's dairy farm. Any mistakes I made are solely my own and do not reflect upon anyone else mentioned in the article.
+
+I spent a lot of time writing this post but there are so many other issues that I wasn't able to even get to. For example, the startling rate of farmers committing suicide ([more than double that of veterans](https://www.theguardian.com/us-news/2017/dec/06/why-are-americas-farmers-killing-themselves-in-record-numbers)), which hit close to home when the man who visited our farm my entire life in his familiar white truck and sold my dad farm equipment killed himself (RIP Marty); to creamery cooperative mismanagement and ineffectiveness and the farmers doing battle with their own creameries, and the general failure of the [Capper-Volstead Act](https://en.wikipedia.org/wiki/Capper%E2%80%93Volstead_Act); to the [consolidation of the farm implement industry](https://www.farm-equipment.com/articles/15963-whats-driving-consolidation-among-farm-equipment-dealers); to John Deere doing some shady things ([here](https://www.zerohedge.com/news/2017-07-18/farmers-go-broke-john-deere-ramps-its-captive-financing-operation-keep-ag-party-goin) and [here](https://motherboard.vice.com/en_us/article/kzp7ny/tractor-hacking-right-to-repair)); to statistical changes of the [price spread from farm to consumer](https://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/) (i.e. the amount of money farmers get from a gallon of milk or other dairy products compared to their retail cost); and so many more I regret I wasn't able to do justice to.
 
 ### Footnotes
 
