@@ -83,7 +83,7 @@ I instead went to college and became a computer programmer, and haven't lived in
 
 I also have two older brothers; neither of them got the farming gene either. My eldest brother Jerry[^jerry-pic] lives near Madison and also works in the software field. My second-eldest brother John lives near my folks and helps out quite often, but he also does other work and has other obligations, so most of the daily farming work falls on my youngest brother Noah and my dad, who is now into his seventies.
 
-Sadly this year I found out that it will have been my final Christmas coming home and milking cows, because they'll be selling off the cows over the next year.
+Sadly this year I found out that it will have been my final Christmas coming home and milking cows, because they'll be selling off the cows over the coming spring and fall.
 
 [^jerry-pic]:
     Not to leave brother Jerry out of the pics, 🤭 here he is with his nieces and nephews
@@ -473,7 +473,7 @@ This has allowed overall milk production to increase, even while the total numbe
   {{ cows_vs_production_caption }}
 </figure>
 
-While the overall number of cows have decreased a bit, the number of *herds* of cows, i.e. the number of farming operations, have decreased **dramatically**:
+While the overall number of cows have decreased a bit, the number of *herds* of cows, i.e. the number of farming operations, have decreased **dramatically** (and continues to do so - the latest count on the rate of change is [two dairy farms per day closing](https://hoards.com/article-23968-wisconsin-losing-almost-two-dairies-per-day.html)):
 
 {% capture cows_vs_herds_caption %}
   <figcaption>
@@ -972,11 +972,7 @@ Butz joke. I suspect my brother will keep farming until the money is dried up.
 
 ## What you can do
 
-It's vital that rural folks pay attention to what's going on in their area. Wisconsin CAFOs will continue to grow and spread, and through organizations like the [Dairy Business Association](https://www.dairyforward.com/) lobby for laws giving them freer ability to pollute the air, water, and land that we all need in order to survive. I suggest lobbying your city or township to pass ordinances banning polluting activities in your area.
-
-Everyone, including cityfolk, should get educated on what is going on with our food economy, and the dangerous direction it's headed.
-
-Some family farm-oriented organizations you can support are:
+As I said, I don't think there's anything on the horizon that would save family dairy farms, save for a supply management program suddenly appearing like a deus ex machina and solving the overproduction problem. I suggest lobbying your representatives for supporting such a measure in a future Farm Bill, and/or supporting family farm organizations who are fighting for that and other measures such as:
 
 * [Family Farm Defenders](http://familyfarmers.org/)
 * [National Family Farm Coalition](http://nffc.net/)
@@ -984,20 +980,22 @@ Some family farm-oriented organizations you can support are:
 * [Farm Aid](https://www.farmaid.org/take-action/)
 * [National Dairy Producers Organization](https://nationaldairyproducersorganization.com/)
 
-Some organizations that defend Wisconsin's water are:
+If you live in a rural or semi-rural area, it's critical you pay attention to what's going on in your local area. CAFOs will continue to grow and spread, and through organizations like the [Dairy Business Association](https://www.dairyforward.com/) lobby for laws giving them freer ability to pollute the air, water, and land that we all need in order to survive. I suggest proactively lobbying your city or township to pass ordinances banning polluting activities in your area and restrictions that prevent CAFOs from operating in your area. Some organizations that defend Wisconsin's water you can support are:
 
 * [Wisconsin Conservation Voters](https://conservationvoters.org/)
 * [Midwest Environmental Advocates](http://midwestadvocates.org/)
 * [Friends of the Little Plover](http://www.friendsofthelittleploverriver.org/)
 * [Farms not Factories](https://mary-dougherty-h7w1.squarespace.com/)
 
-And finally, I recommend everyone, but especially rural folks support the [Institute for Local Self-Reliance](https://ilsr.org/), as they work hard on several fronts (including another issue dear to my heart, broadband access) to empower local communities.
+Everyone, including cityfolk, must get educated on what is going on with our food economy, and the dangerous direction it has taken. I'm still getting educated myself so am open to suggestions, but the [Food and Environment Reporting Network](https://thefern.org/) seems to do good work here.
+
+Finally, I also recommend everyone, but especially rural folks support the [Institute for Local Self-Reliance](https://ilsr.org/), as they work hard on several fronts (including another issue dear to my heart, improving broadband access) to empower local communities.
 
 ### Addendum
 
 This article is based solely on my own reflection and attempts to understand the systemic changes that affected my family's dairy farm. Any mistakes I made are solely my own and do not reflect upon anyone else mentioned in the article.
 
-I spent a lot of time writing this post but there are so many other issues that I wasn't able to even get to. For example, the startling rate of farmers committing suicide ([more than double that of veterans](https://www.theguardian.com/us-news/2017/dec/06/why-are-americas-farmers-killing-themselves-in-record-numbers)), which hit close to home when the man who visited our farm my entire life in his familiar white truck and sold my dad farm equipment killed himself (RIP Marty); to creamery cooperative mismanagement and ineffectiveness and the farmers doing battle with their own creameries, and the general failure of the [Capper-Volstead Act](https://en.wikipedia.org/wiki/Capper%E2%80%93Volstead_Act); to the [consolidation of the farm implement industry](https://www.farm-equipment.com/articles/15963-whats-driving-consolidation-among-farm-equipment-dealers); to John Deere doing some shady things ([here](https://www.zerohedge.com/news/2017-07-18/farmers-go-broke-john-deere-ramps-its-captive-financing-operation-keep-ag-party-goin) and [here](https://motherboard.vice.com/en_us/article/kzp7ny/tractor-hacking-right-to-repair)); to statistical changes of the [price spread from farm to consumer](https://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/) (i.e. the amount of money farmers get from a gallon of milk or other dairy products compared to their retail cost); and so many more I regret I wasn't able to do justice to.
+I spent a lot of time writing this post but there are so many other issues that I wasn't able to even get to. For example, the startling rate of farmers committing suicide ([more than double that of veterans](https://www.theguardian.com/us-news/2017/dec/06/why-are-americas-farmers-killing-themselves-in-record-numbers)), which hit close to home when the man who visited our farm my entire life in his familiar white truck and sold my dad farm equipment killed himself (RIP Marty); to creamery cooperative mismanagement and ineffectiveness and the farmers doing battle with their own creameries, and the general failure of the [Capper-Volstead Act](https://en.wikipedia.org/wiki/Capper%E2%80%93Volstead_Act); to the [consolidation of the farm implement industry](https://www.farm-equipment.com/articles/15963-whats-driving-consolidation-among-farm-equipment-dealers); to John Deere doing some shady things ([here](https://www.zerohedge.com/news/2017-07-18/farmers-go-broke-john-deere-ramps-its-captive-financing-operation-keep-ag-party-goin) and [here](https://motherboard.vice.com/en_us/article/kzp7ny/tractor-hacking-right-to-repair)); to statistical changes of the [price spread from farm to consumer](https://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/) (i.e. the amount of money farmers get from a gallon of milk or other dairy products compared to their retail cost); to digging into the nasty things CAFO lobbyists are doing; and so many more I regret I wasn't able to do justice to.
 
 ### Footnotes
 
