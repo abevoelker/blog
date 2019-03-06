@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "On the death of my family's dairy farm"
-date: 2019-03-05 00:00
+date: 2019-03-04 00:00
 comments: false
 og_image: "on-the-death-of-my-familys-dairy-farm/cover-image.jpg"
 excerpt_separator: <!--more-->
