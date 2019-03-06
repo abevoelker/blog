@@ -266,15 +266,6 @@ Later in 1998 they succeeded in establishing their union[^union] (technically a 
   </div>
 </div>
 
-<!--
-May 1997:
-
-{% asset 'on-the-death-of-my-familys-dairy-farm/save-our-family-farms.jpg' alt='Newspaper clipping of "Save Our Family Farms" and the attempt at a national referendum' %}
-
-Wisconsin Dairy Farmers Association? 02/25/1998
--->
-
-
 Unfortunately, while my mom and the other farmers had some success in raising awareness and garnering some attention from various government officials, their efforts didn't have any discernible effect on policy or the milk price bottom line. Dairy farmers once again had to either hold on tight and ride it out, or go bust (and many did).
 
 For our family at that time, the milk price situation combined with my dad needing knee surgery (from repeated stress of kneeling on concrete to milk cows) resulted in us having a dispersal sale and selling off most of the herd.
@@ -322,27 +313,6 @@ While not a scientific poll, it's an interesting sample. If you look at the herd
   </figcaption>
 </figure>
 
-
-<!--
-https://www.change.org/p/secretary-of-agriculture-sonny-perdue-help-dairy-farmers-survive?recruiter=928323288&utm_source=share_petition&utm_medium=email&utm_campaign=share_email_responsive&utm_term=share_petition
-
-> The number of dairy farmers in the US has declined from nearly 360,000 in 1981 down to the present level of approximately 40,000.
-
-
-My dad told me that when he was young he remembers when his folks were finished with chores they'd have time to eat dinner, play cards and visit with relatives and neighbors. He told me how although they weren't making a lot of money, they were content with what they had and had no sense of needing to expand.
-
-That's hard to imagine compared to today. When I was young and my older brothers were teens, I remember us all working hard on the farm, and my dad always had a hired man or two to help out (and they were grown men who worked hard). With that amount of help the work felt manageable. Nowadays that same amount of work mainly falls upon just my dad and younger brother to complete. 
-
-My dad and brother 
-
-there was no frantic rush to expand and 
-
-
-https://www.dairyherd.com/article/licensed-dairy-farm-numbers-drop-nearly-4-2017
-https://www.milkbusiness.com/article/licensed-dairy-farm-numbers-drop-to-just-over-40000
-https://release.nass.usda.gov/reports/mkpr0218.pdf
-!-->
-
 From what I can tell, the farming landscape changed dramatically in the 1970s when [President Nixon promoted agribusiness lobbyist Earl "Rusty" Butz](https://grist.org/article/the-butz-stops-here/) to USDA secretary. Butz had [a reputation going back to at least the 1950s](https://www.nytimes.com/1976/06/13/archives/why-they-love-earl-butz-prosperous-farmers-see-him-as-the-greatest.html) for lobbying for dramatic modernizations to farming at the expense of small farms. ["Adapt or die; resist and perish... Agriculture is now big business" he would say](https://books.google.com/books?id=zJs4AAAAIAAJ&pg=PA136&dq=%22Adapt+or+die,+resist+and+perish%22&hl=en&sa=X&ved=0ahUKEwi6lPm4t53gAhVE5YMKHft2AdkQ6AEIKDAA#v=onepage&q=%22Adapt%20or%20die%2C%20resist%20and%20perish%22&f=false). By the 1970s, before his USDA nomination, he was a director of three large agribusiness corporations.
 
 <figure>
@@ -373,30 +343,6 @@ To make up for the grain shortfall, Butz removed all production limits on grain 
 The effects were quickly apparent, as before his USDA tenure was finished [Butz became a pariah to everyone but the big farmers](https://www.nytimes.com/1976/06/13/archives/why-they-love-earl-butz-prosperous-farmers-see-him-as-the-greatest.html) as small farmers went bust under the continual tightening of the efficiency noose (Butz of course had no sympathy for these "inefficient" farms).
 
 While not the whole story, Butz's era was undoubtedly a major turning point in orienting our food economy towards consolidation and concentration of production in fewer and fewer hands.
-
-<!--
-Throughout the 1970s, grain farmers continued to do well, supermarket prices remained high, the USDA was exposed as being very "cozy" with large grain exporters, and [Butz became a pariah to everyone but the big farmers](https://www.nytimes.com/1976/06/13/archives/why-they-love-earl-butz-prosperous-farmers-see-him-as-the-greatest.html) as small farmers went bust under the continual tightening of the efficiency noose (Butz of course had no sympathy for these "inefficient" farms).
-
-http://www.aei.org/publication/no-butz-about-it/
-
-https://www.statista.com/topics/1284/milk-market/
-
-https://data.bls.gov/timeseries/APU0000709112?amp%253bdata_tool=XGtable&output_view=data&include_graphs=true
-
-https://www.statista.com/statistics/236854/retail-price-of-milk-in-the-united-states/
-
-
-The evaporation of small farms as American farm products were turned into global commodities has continued ever since.
--->
-
-<!--
-https://www.google.com/search?q=butz+grain+storage+sale+to+russia&rlz=1C5CHFA_enUS809US809&oq=butz+grain+storage+sale+to+russia&aqs=chrome..69i57.7710j0j7&sourceid=chrome&ie=UTF-8
-
-
-> While vaguely aimed at helping the "family farmer," (g)government assistance programs have... benefited the largest farms... Because they are geared to production, the percentage of farmers receiving government payments rises with farm size, as does the size of the payment. Government assistance programs have also become capitalized into land values, thereby benefiting larger landholders to the greatest extent.
-
-source: 1978 article https://aliciapatterson.org/stories/american-farm-policy-helps-b-hurts-american-farm
-!-->
 
 ## Rise of the CAFOs
 
@@ -672,25 +618,6 @@ In 2014 in Juneau County, a man was [forced to sell](https://madison.com/wsj/new
   </figcaption>
 </figure>
 
-
-<!--
-Seeing manure being aerosolized and shot great distances worries me about potential long-range
-
-https://www.cdc.gov/nceh/ehs/Docs/Understanding_CAFOs_NALBOH.pdf
-
-
-
-https://web.archive.org/web/20180809130833/https://co.ashland.wi.us/vertical/sites/%7B215E4EAC-21AA-4D0B-8377-85A847C0D0ED%7D/uploads/Manure_Irrigation_Rules_and_Regs_Baeten_Mar_2016.pdf
-
-
-Looking at an irrigator aerosolizing 
-
-
-that could happen, given how far aerosols can travel - outbreaks of Legionnaires' disease, for example, [have been tracked to dispersions of water vapor 6km](https://www.patientcareonline.com/articles/clinical-citations-legionnaires-disease-how-far-can-contaminated-aerosols-travel) from nuclear cooling towers.
-
-Worse yet, the next step many CAFOs take is to use irrigation systems that would typically be used for water, to spray the liquid manure on the fields. This aerosolized cow manure with the previously-mentioned toxic chemicals and pathogens is then free to blow in the wind to nearby properties. One resident of Junea County, Scott Murray, [was forced to move after "](https://madison.com/wsj/news/local/environment/manure-spraying-under-scrutiny/article_66a5b80b-b8c8-5daf-92ec-3d24585f35ea.html)
--->
-
 Besides environmental externalities, it's also an open secret that these CAFOs heavily rely on undocumented immigrants for their day-to-day labor, particularly the parlor milking setups. In a recent news story, [Congressman Devin Nunes's family's large dairy farm in Iowa got busted](https://www.esquire.com/news-politics/a23471864/devin-nunes-family-farm-iowa-california/) for such practices.
 
 <figure>
@@ -749,42 +676,6 @@ So I spoke to the county's conservation officer who had nothing but good things 
 
 For my brother Noah, who is taking over the farm, having the county's biggest CAFO nearby unfortunately puts a competetive strain on his already-difficult situation. Because [Wisconsin Pollutant Discharge Elimination System (WPDES) permit requirements](https://dnr.wi.gov/topic/AgBusiness/documents/LargeDairyCAFOGP-WPDESPermit.pdf) require these CAFOs to own or rent enough land to spread manure on proportional to the amount of cows they have, this multi-million dollar corporation down the road is under land-pressure, and gobbles up all farming land in the area often before it's even on the market. This makes it harder for my brother to find farmland to buy or rent nearby.
 
-
-<!--
-Informal Enforcement Action - Notice of Violation - 09/11/2017
-
-https://iaspub.epa.gov/enviro/ICIS_DETAIL_REPORTS_NPDESID.icis_tst?npdesid=WI0059340&npvalue=1&npvalue=13&npvalue=14&npvalue=3&npvalue=4&npvalue=5&npvalue=6&rvalue=13&npvalue=2&npvalue=7&npvalue=8&npvalue=11&npvalue=12
-
-4 water system violations:
-
-https://ofmpub.epa.gov/apex/sfdw/f?p=108:11:::NO:11,RIR:IREQ_PWSID:WI6030024
-
-https://echo.epa.gov/detailed-facility-report?fid=110050575436
-
-https://oaspub.epa.gov/enviro/fii_query_dtl.disp_program_facility?p_registry_id=110040433395
-
-https://echo.epa.gov/detailed-facility-report?fid=110040433395
-
-
-NPDES ID WI0059340
-
-https://echo.epa.gov/trends/loading-tool/reports/dmr-pollutant-loading?year=2019&permit_id=WI0059340
-
-
-http://wtnnews.com/articles/524/
-
-> These agencies have identified animal feeding operations as the greatest contributors to the problem of excess mineral pollutants in water runoff, the most significant remaining source of water pollution.
-
-
-https://dnr.wi.gov/topic/AgBusiness/CAFO/StatsMap.html
-
-https://www.sierraclub.org/sites/www.sierraclub.org/files/sce-authors/u2196/CAFO%20White%20Paper%20final.pdf
-
-
-https://docs.google.com/spreadsheets/d/1vqzLw2iKf2QvZG4QwspwcMb53Q-hiyoom0QLLG3aKe4/edit?usp=sharing
-
--->
-
 ## Failure of the cooperatives
 
 One last thing I'd like to touch on is the failure of the farmer cooperatives in this era.
@@ -824,14 +715,6 @@ Farmers are generally scared to speak up about this kind of stuff for fear of ge
 
 [^patron-loss]:
     Creameries sometimes drop a bunch of patrons instead of cutting rates across the board for everyone. In 2017 Grassland made headlines [when they dumped 75 patrons](https://www.farmprogress.com/dairy/grassland-dairys-actions-wakeup-call-farmers) at once. Right around this past Christmas, one creamery [even dropped their Amish farmers](https://www.jsonline.com/story/money/2018/12/21/amish-dairy-farmers-risk-losing-their-living/2378827002/) after entering into an agreement with another creamery - something one would think a creamery would do to benefit their patrons.
-
-<!--
-<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FGrasslandDairyProducts%2Fposts%2F1949161728496934&width=500" width="500" height="291" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
--->
-
-<!--
-"Recently our cooperative, having gained large quantities of milk due to their BST-free policy, reversed the policy. There was no knowledge of reversal consideration, no opportunity for membership input, no vote, no voice. This is common practice in cooperatives, mergers have transpired in this manner."
--->
 
 Point being, farmer cooperatives were once local institutions bootstrapped by the farmers themselves, but now they too have fallen into the trap of corporate consolidation and become disconnected from the people they were meant to serve. Now, in hard times, these institutions have become a source of anxiety - at best an indifferent, inefficient use of resources, and at worst a potential hostile actor that could destroy you. Something unthinkable compared to their founding principles.
 
@@ -958,18 +841,6 @@ Whatever happens, these family bonds that were forged on the farm remain, and we
   </figcaption>
 </figure>
 
-
-
-<!--
-
-It would be easy to dismiss this post as sour grapes, but there are real lessons to be learned here of system failures and death of cultural value
-
-> I saw this farmer, and I asked him, ‘What's your hobby?’ He said, ‘Farming.’ I said, ‘What would you do if you inherited a million dollars?’ He said, ‘I'd keep on farming as long as the money lasted.’ 
-
-Butz joke. I suspect my brother will keep farming until the money is dried up.
-
--->
-
 ## What you can do
 
 As I said, I don't think there's anything on the horizon that would save family dairy farms, save for a supply management program suddenly appearing like a deus ex machina and solving the overproduction problem. I suggest lobbying your representatives for supporting such a measure in a future Farm Bill, and/or supporting family farm organizations who are fighting for that and other measures such as:
@@ -998,198 +869,3 @@ This article is based solely on my own reflection and attempts to understand the
 I spent a lot of time writing this post but there are so many other issues that I wasn't able to even get to. For example, the startling rate of farmers committing suicide ([more than double that of veterans](https://www.theguardian.com/us-news/2017/dec/06/why-are-americas-farmers-killing-themselves-in-record-numbers)), which hit close to home when the man who visited our farm my entire life in his familiar white truck and sold my dad farm equipment killed himself (RIP Marty); to creamery cooperative mismanagement and ineffectiveness and the farmers doing battle with their own creameries, and the general failure of the [Capper-Volstead Act](https://en.wikipedia.org/wiki/Capper%E2%80%93Volstead_Act); to the [consolidation of the farm implement industry](https://www.farm-equipment.com/articles/15963-whats-driving-consolidation-among-farm-equipment-dealers); to John Deere doing some shady things ([here](https://www.zerohedge.com/news/2017-07-18/farmers-go-broke-john-deere-ramps-its-captive-financing-operation-keep-ag-party-goin) and [here](https://motherboard.vice.com/en_us/article/kzp7ny/tractor-hacking-right-to-repair)); to statistical changes of the [price spread from farm to consumer](https://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/) (i.e. the amount of money farmers get from a gallon of milk or other dairy products compared to their retail cost); to digging into the nasty things CAFO lobbyists are doing; to rural communities fighting against CAFOs in their area; to Trump's tariffs and a certain political anger people direct at farmers; and so many more I regret I wasn't able to do justice to.
 
 ### Footnotes
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-### What you can do
-
-"We're required to go by the law"
-
-https://www.greenbaypressgazette.com/story/news/local/oconto-county/2018/09/14/neighbors-sue-stop-nearly-finished-manure-pit-oconto-co/1292391002/
--->
-
-<!--
-https://uspirg.org/news/usp/new-report-highlights-how-toxic-%E2%80%9Caccidents-waiting-happen%E2%80%9D-threaten-us-waterways
-
-https://www.epa.gov/wotus-rule/step-two-revise
--->
-
-
-<!--
-https://www.wpr.org/how-we-produce-more-milk-fewer-cows
-
-https://www.newhope.com/blog/dairy-cows-produce-61-more-milk-25-years-ago
-
-https://www.wpr.org/one-third-wisconsin-cafos-operating-under-expired-permits
-
-https://dnr.wi.gov/topic/AgBusiness/data/CAFO/cafo_all.asp
-
-https://madison.com/wsj/business/large-feedlot-hit-with-fine-for-manure-pollution/article_a6413723-2fc8-5569-884c-dd32015792f7.html
-
-https://www.sierraclub.org/sites/www.sierraclub.org/files/sce-authors/u2196/CAFO%20White%20Paper%20final.pdf
-
-https://www.wpr.org/cafos-northeastern-wisconsin-look-expand-farms-seek-permit-renewal
-
-https://www.wehnonline.org/cafos/
-
-https://www.dhs.wisconsin.gov/publications/p00977.pdf
-
-https://dnr.wi.gov/topic/AgBusiness/CAFO/StatsMap.html
--->
-
-
-
-<!--
-## Some graphs
-
-<iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=692393765&amp;format=interactive"></iframe>
--->
-
-
-
-
-<!--
-American milk is a global commodity. Commodities are volatile for multiple reasons, including speculative trading, and being subject to 
-
-[Cost of Production Outpaces All-Milk Price, Again](https://www.milkbusiness.com/article/cost-of-production-outpaces-all-milk-price-again)
-
-
-https://www.ers.usda.gov/data-products/commodity-costs-and-returns/interactive-visualization-us-commodity-costs-and-returns-by-region-and-by-commodity/
-
-
-[Price Spreads from Farm to Consumer](https://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/)
-
-[Farm share of milk and dairy products](https://www.ers.usda.gov/data-products/price-spreads-from-farm-to-consumer/summary-findings/)
--->
-
-
-
-
-
-<!--
-[Wisconsin annual number of cows - 1867 to 2018](http://quickstats.nass.usda.gov/results/7BAA35F6-E43C-3C3D-8CC3-503DCDBABB91)
-
-[Wisconsin annual licensed herd counts - 2003 to 2017](http://quickstats.nass.usda.gov/results/8E0A45DF-14CE-3A05-BCFB-330A431562F7)
-
-[Wisconsin operations with inventory - 1965 to 2007](http://quickstats.nass.usda.gov/results/EF543C3E-3A98-38AB-8A21-6866C0C67B5E)
-
-[Wisconsin annual milk production in lbs - 1924 to 2017](http://quickstats.nass.usda.gov/results/C9B07057-72F5-3430-B5B8-987D54A7F123)
-
-[Wisconsin annual milk production measured in lb/head (cow efficiency) - 1924 to 2017](http://quickstats.nass.usda.gov/results/0F9E6099-F603-3ECB-9089-4D1005A9C9FC)
-
-
-[Wisconsin annual number of cows measured by herd avg](http://quickstats.nass.usda.gov/results/B9726576-5A65-3116-B79A-2BB3F1BCD0B2)
-
-
-[Milk price received 1980 to 2017](http://quickstats.nass.usda.gov/results/54B40DDA-2252-35BE-B720-546DB93F92D3)
--->
-
-
-
-<!--
-## This time is different
-
-Family farms have been going bust in droves ever since I was a kid, and 2018 was the worst year for Wisconsin family farms in a long time. [Farm Aid](https://en.wikipedia.org/wiki/Farm_Aid), which blah blah since 1985, is receiving record numbers of calls on farmer suicide.
-
-At this point I think it's fair to say the family dairy farm in American is in its final death throes.
-
-
-Some farmers move to niches like organic: https://www.washingtonpost.com/outlook/dairy-farming-is-dying-after-40-years-im-out/2018/12/21/79cd63e4-0314-11e9-b6a9-0aa5c2fcc9e4_story.html?utm_term=.c1bc6568672b
-
-We personally know other farmers that did the same thing with similar result. Organic farming has already been overtaken by large farms that are unlikely to be following the grazing rules. Organic crop farming can yield more profit per acre, but you get a lot less yield per acre as your crops get eaten up by pests.
--->
-
-
-
-<!--
-## Cultural malaise
-
-Trump derangement syndrome
-
-https://www.channel3000.com/news/-pride-doesn-t-pay-the-bills-farmer-shares-story-of-attempted-suicide-why-it-s-a-growing-problem/765567868
-
-
-
-https://www.jsonline.com/story/money/business/2018/11/12/tony-evers-governor-have-agriculture-woes-his-plate/1947169002/
-
-> Federal court data showed the Western District of Wisconsin had the highest number of Chapter 12 farm bankruptcies in the nation in 2017, and that's only a glimpse into the problem, since Chapter 12 is a relatively rare tool used in bankruptcies. 
-> ...
-> About 90 percent of Wisconsin’s milk goes into making cheese.
-
-
-## "Get big or get out"
-
-Transition to Agribusiness
-
-["Get big or get out"](https://grist.org/article/the-butz-stops-here/)
--->
-
-
-
-<!--
-### Loss of Wisconsin culture
-
-### Rise of the "big" - the CAFOs
-
-Just down the road from my parents farm is a Concentrated Animal Feeding Operation (CAFO)
-
-
-#### Lobbying
-
-
-Wisconsin Farm Bureau Federation tries to represent all farmers but their policy handbook clearly favors CAFOs with their policy support of reduced regulation around water laws, drainage wells (large farms need high capacity wells)
-
-https://wfbf.com/wp-content/uploads/2018/02/2018-Policy-Book_web.pdf
--->
-
-
-<!--
-[Milk pricing 101](https://www.adpi.org/Portals/0/Academy/Milk%20Pricing%20101.pdf)
-
-"Class 1 prices around the US were based off of the distance from Eau Claire, WI." ???
-
-https://www.adpi.org/Portals/0/Academy/Intel%20and%20Commentaries/Dairy%20Economics%20101.pdf
--->
-
-
-<!--
-[GAO Report: Information on Prices for Fluid Milk and the Factors That Influence Them](https://www.gao.gov/products/GAO/RCED-99-4)
-
-"From January 1996 through February 1998, for the 31 fluid milk markets
-that we reviewed, on average, farmers received 42 percent of the retail
-price for a gallon of 2-percent milk, cooperatives received 10 percent,2
-wholesalers received 31 percent, and retailers received 17 percent"
-
-
-
-https://www.mintecglobal.com/top-stories-2018/us-milk-and-the-usmca
-
-
-https://www.dairyherd.com/article/dairy-outlook-falling-leaves-slowly-climbing-milk-price
-
-
-
-http://themccullygroup.com/wp-content/uploads/2018/11/The-McCully-Report-October-2018.pdf
-
-http://themccullygroup.com/wp-content/uploads/2018/09/CMN-Guest-Column-Aug-24-2018.pdf
-
-^ Wal-Mart fluid milk bottling plant in Indiana; Dean Foods terminated milk supply contracts with 100 farmers in 8 states noting Wal-Mart private label milk sales; fluid milk consumption long downward trend
-
-
-https://madison.com/wsj/business/large-feedlot-hit-with-fine-for-manure-pollution/article_a6413723-2fc8-5569-884c-dd32015792f7.html
--->
