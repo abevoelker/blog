@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "On the death of my family's dairy farm"
-date: 2019-03-04 00:00
+date: 2019-03-06 00:00
 comments: false
 og_image: "on-the-death-of-my-familys-dairy-farm/cover-image.jpg"
 excerpt_separator: <!--more-->
@@ -83,7 +83,7 @@ I instead went to college and became a computer programmer, and haven't lived in
 
 I also have two older brothers; neither of them got the farming gene either. My eldest brother Jerry[^jerry-pic] lives near Madison and also works in the software field. My second-eldest brother John lives near my folks and helps out quite often, but he also does other work and has other obligations, so most of the daily farming work falls on my youngest brother Noah and my dad, who is now into his seventies.
 
-Sadly this year I found out that it will have been my final Christmas coming home and milking cows, because in the spring they'll be selling off the cows.
+Sadly this year I found out that it will have been my final Christmas coming home and milking cows, because they'll be selling off the cows over the next year.
 
 [^jerry-pic]:
     Not to leave brother Jerry out of the pics, 🤭 here he is with his nieces and nephews
