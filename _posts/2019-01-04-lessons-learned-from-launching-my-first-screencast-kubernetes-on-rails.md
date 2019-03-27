@@ -227,7 +227,7 @@ Although I don't have many e-friends, I have at least a few I could count on to 
 
 Another thing I find distasteful that I didn't do, but I'm seeing more often, is retweet myself later on in the day to catch more eyeballs. Then again I have a small Twitter reach so this may not have done much.
 
-The last thing I'd do is also post something on [DEV.to](https://dev.to), after seeing something from Dan Abramov saying he gets a surprising amount of views from posting on there.
+The last thing I'd do is also post something on [DEV.to](https://dev.to), after seeing [something from Abraham Williams](https://dev.to/abraham/a-month-of-flutter-a-look-back-1j1a) saying he gets a surprising amount of views from posting on there.
 
 Honestly I really hate this whole marketing process. I sympathize with the late [Bill Hicks's attitude on marketing](https://www.youtube.com/watch?v=tHEOGrkhDp0), and the damnedest thing is that social media has turned every single one of us into marketers.
 
