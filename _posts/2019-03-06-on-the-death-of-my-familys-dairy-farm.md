@@ -6,6 +6,8 @@ comments: false
 og_image: "on-the-death-of-my-familys-dairy-farm/cover-image.jpg"
 excerpt_separator: <!--more-->
 hide_post_header: true
+additional_css:
+  - "on-the-death-of-my-familys-dairy-farm.scss"
 ---
 
 <div class="row-full">
@@ -126,23 +128,30 @@ This probably shouldn't be a huge shock. Ever since I can remember there has alw
 </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="210.33647058823527" height="386.40625" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1756609052&amp;format=interactive"></iframe>
   {{ milk_price_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="259" height="386" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1794751928&amp;format=interactive"></iframe>
   {{ milk_price_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="521.0128220402086" height="321.89099438470794" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1018332924&amp;format=interactive"></iframe>
   {{ milk_price_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=16272520&amp;format=interactive"></iframe>
+  {{ milk_price_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/milk-price.svg'
+    width="100%"
+  %}
   {{ milk_price_caption }}
 </figure>
 
@@ -155,23 +164,30 @@ Our family farm was subjected to the same ups and downs as every other farm but 
 </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="211" height="389" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1327472397&amp;format=interactive"></iframe>
   {{ small_farm_production_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="259" height="389" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=342453800&amp;format=interactive"></iframe>
   {{ small_farm_production_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="526" height="325" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=488802163&amp;format=interactive"></iframe>
   {{ small_farm_production_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1477499018&amp;format=interactive"></iframe>
+  {{ small_farm_production_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/value-of-production.svg'
+    width="100%"
+  %}
   {{ small_farm_production_caption }}
 </figure>
 
@@ -315,20 +331,17 @@ While not a scientific poll, it's an interesting sample. If you look at the herd
 
 From what I can tell, the farming landscape changed dramatically in the 1970s when [President Nixon promoted agribusiness lobbyist Earl "Rusty" Butz](https://grist.org/article/the-butz-stops-here/) to USDA secretary. Butz had [a reputation going back to at least the 1950s](https://www.nytimes.com/1976/06/13/archives/why-they-love-earl-butz-prosperous-farmers-see-him-as-the-greatest.html) for lobbying for dramatic modernizations to farming at the expense of small farms. ["Adapt or die; resist and perish... Agriculture is now big business" he would say](https://books.google.com/books?id=zJs4AAAAIAAJ&pg=PA136&dq=%22Adapt+or+die,+resist+and+perish%22&hl=en&sa=X&ved=0ahUKEwi6lPm4t53gAhVE5YMKHft2AdkQ6AEIKDAA#v=onepage&q=%22Adapt%20or%20die%2C%20resist%20and%20perish%22&f=false). By the 1970s, before his USDA nomination, he was a director of three large agribusiness corporations.
 
+<div >
 <figure>
   {% asset 'on-the-death-of-my-familys-dairy-farm/earl-butz-usda-portrait-2.jpg'
-    srcset:width=640
-    srcset:width=960
-    srcset:width=1440
-    sizes="(max-width: 320px) 640px,
-          (max-width: 480px) 960px,
-          1440px"
-    width="100%"
+    width="320px"
+    class="center"
   %}
   <figcaption>
     <em>Portrait of former USDA secretary Earl Butz. Public domain image <a href="https://www.usda.gov/our-agency/about-usda/history/former-secretaries">courtesy USDA</a>.</em>
   </figcaption>
 </figure>
+</div>
 
 Before Butz, farming practices were ruled by [FDR New Deal](https://en.wikipedia.org/wiki/New_Deal)-era controls on production, when memories of the [Dust Bowl](https://en.wikipedia.org/wiki/Dust_Bowl) and destruction of the land through overproduction were still vivid. These production controls aimed to smooth out volatility by paying farmers to keep fields fallow in times of overproduction, and to release grain from storage in times of shortages. Farming production was geared toward American consumption, but even with the production controls there was always a surplus of grain to deal with.
 
@@ -363,23 +376,30 @@ One change is that through selective breeding, improved nutrition, increased mil
   </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="221" height="393" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1257936240&amp;format=interactive"></iframe>
   {{ average_milk_production_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="255" height="393" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=368073399&amp;format=interactive"></iframe>
   {{ average_milk_production_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="519" height="321" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1443506890&amp;format=interactive"></iframe>
   {{ average_milk_production_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=559722744&amp;format=interactive"></iframe>
+  {{ average_milk_production_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/one-cow-avg-milk-production.svg'
+    width="100%"
+  %}
   {{ average_milk_production_caption }}
 </figure>
 
@@ -399,23 +419,30 @@ This has allowed overall milk production to increase, even while the total numbe
   </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="215" height="445" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1921257666&amp;format=interactive"></iframe>
   {{ cows_vs_production_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="258" height="445" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=892985456&amp;format=interactive"></iframe>
   {{ cows_vs_production_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="518" height="321" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1319655728&amp;format=interactive"></iframe>
   {{ cows_vs_production_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=126435417&amp;format=interactive"></iframe>
+  {{ cows_vs_production_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/number-of-cows-vs-production.svg'
+    width="100%"
+  %}
   {{ cows_vs_production_caption }}
 </figure>
 
@@ -436,23 +463,30 @@ While the overall number of cows have decreased a bit, the number of *herds* of 
   </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="213" height="384" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1570145872&amp;format=interactive"></iframe>
   {{ cows_vs_herds_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="268" height="383" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=328395745&amp;format=interactive"></iframe>
   {{ cows_vs_herds_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="518" height="320" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=557559046&amp;format=interactive"></iframe>
   {{ cows_vs_herds_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=692393765&amp;format=interactive"></iframe>
+  {{ cows_vs_herds_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/number-of-cows-vs-herds.svg'
+    width="100%"
+  %}
   {{ cows_vs_herds_caption }}
 </figure>
 
@@ -469,23 +503,30 @@ What this means is that the average number of cows on a given dairy operation ha
   </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="207" height="617.5" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=966735344&amp;format=interactive"></iframe>
   {{ net_value_by_operation_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="260" height="507" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1527273449&amp;format=interactive"></iframe>
   {{ net_value_by_operation_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="523" height="323" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1728392211&amp;format=interactive"></iframe>
   {{ net_value_by_operation_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="687.5" height="425.1041666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSSJYhi-sgAOJLG__tPV1KEBkKJJtJEg48DoZXB8LcN2scBSx_WKbX5QKM2zeJLW1LK2iyAKiWorsvn/pubchart?oid=1972740286&amp;format=interactive"></iframe>
+  {{ net_value_by_operation_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/value-of-production-by-operation-size.svg'
+    width="100%"
+  %}
   {{ net_value_by_operation_caption }}
 </figure>
 
@@ -525,23 +566,30 @@ In Wisconsin, the number of dairy CAFOs and the total number of cows on these op
   </figcaption>
 {% endcapture %}
 
-<figure class="google-chart-xs">
+<figure class="google-chart-xs hide-print">
   <iframe width="219" height="398" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQHVfMjApdFVlGaRgKY5hjKdI9T3H-tNKakPSGvPQgsu-7DIzk60h56Lds2X2Vc69OR46QM-BT7RqGH/pubchart?oid=1954327728&amp;format=interactive"></iframe>
   {{ wisconsin_cafo_caption }}
 </figure>
 
-<figure class="google-chart-sm">
+<figure class="google-chart-sm hide-print">
   <iframe width="257" height="398" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQHVfMjApdFVlGaRgKY5hjKdI9T3H-tNKakPSGvPQgsu-7DIzk60h56Lds2X2Vc69OR46QM-BT7RqGH/pubchart?oid=158188559&amp;format=interactive"></iframe>
   {{ wisconsin_cafo_caption }}
 </figure>
 
-<figure class="google-chart-md">
+<figure class="google-chart-md hide-print">
   <iframe width="522.4712522206468" height="323" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQHVfMjApdFVlGaRgKY5hjKdI9T3H-tNKakPSGvPQgsu-7DIzk60h56Lds2X2Vc69OR46QM-BT7RqGH/pubchart?oid=622794509&amp;format=interactive"></iframe>
   {{ wisconsin_cafo_caption }}
 </figure>
 
-<figure class="google-chart-lg">
+<figure class="google-chart-lg hide-print">
   <iframe width="646.4028776978417" height="399.6666666666667" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQHVfMjApdFVlGaRgKY5hjKdI9T3H-tNKakPSGvPQgsu-7DIzk60h56Lds2X2Vc69OR46QM-BT7RqGH/pubchart?oid=1743810319&amp;format=interactive"></iframe>
+  {{ wisconsin_cafo_caption }}
+</figure>
+
+<figure class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/charts/number-of-cows-on-cafo-operations.svg'
+    width="100%"
+  %}
   {{ wisconsin_cafo_caption }}
 </figure>
 
@@ -595,7 +643,20 @@ For some real-world examples, in Wisconsin in 2017 a [baby died from blue baby s
 In Kewaunee County in northeast Wisconsin, [more than one-third (!) of 320 wells tested](https://madison.com/ct/news/local/environment/bacteria-in-state-s-drinking-water-is-public-health-crisis/article_dd9b5d97-084b-5337-a664-37b9a6b36d30.html) were found to be unsafe to use due to unsafe levels of coliform bacteria or nitrates. In 2004 in that region, a six-month-old became violently ill after taking a bath in water poisoned by manure runoff. A state representative called the situation there a ["public health crisis."](http://legis.wisconsin.gov/senate/democrats/news/2015-press-releases/groundwater-protection-bill/)
 
 <figure>
+  <div class="youtube-embed">
   {% include youtube url="https://www.youtube.com/embed/ug31xUsCHcw" %}
+  </div>
+  <div class="youtube-embed-print">
+    {% asset 'on-the-death-of-my-familys-dairy-farm/youtube-preview-manure-shower.jpg'
+      srcset:width=640
+      srcset:width=960
+      srcset:width=1440
+      sizes="(max-width: 320px) 640px,
+            (max-width: 480px) 960px,
+            1440px"
+      width="100%"
+    %}
+  </div>
   <figcaption>
     <em>A shower in rural Kewaunee County runs brown, contaminated by manure after a rainfall. Courtesy Erika and Rob Balza.</em>
   </figcaption>
@@ -647,10 +708,21 @@ This CAFO has received [four Safe Drinking Water Act (SDWA) violations]({% asset
 
 Those are the federally-documented violations, anyway. My mom took some video of a leak about a month after the EPA-documented CWA violation which traveled down the hill into a creek that runs through my parents' property, killing the wildlife there for God knows how long:
 
-<div class="video-container">
+<div class="video-container hide-print">
   <video autoplay loop muted class="responsive">
     <source src="{% asset 'on-the-death-of-my-familys-dairy-farm/norswiss-discharge.mp4' @path %}" type="video/mp4" />
   </video>
+</div>
+<div class="hide-screen">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/video-preview-mom-manure-spill.jpg'
+    srcset:width=640
+    srcset:width=960
+    srcset:width=1440
+    sizes="(max-width: 320px) 640px,
+          (max-width: 480px) 960px,
+          1440px"
+    width="100%"
+  %}
 </div>
 
 This CAFO is now going through the process of installing a manure pipeline to move waste around to various fields - so far through private lands, but apparently they are also pursuing public right-of-ways.
@@ -684,7 +756,20 @@ It's probably well-known that there have been periods where farmers have went th
 
 Check out this quaint 1940s-era video for an explainer:
 
+<div class="youtube-embed">
 {% include youtube url="https://www.youtube.com/embed/gLVqXrATB5w" width="420" height="315" %}
+</div>
+<div class="youtube-embed-print">
+{% asset 'on-the-death-of-my-familys-dairy-farm/youtube-preview-the-rural-coop.jpg'
+  srcset:width=640
+  srcset:width=960
+  srcset:width=1440
+  sizes="(max-width: 320px) 640px,
+        (max-width: 480px) 960px,
+        1440px"
+  width="100%"
+%}
+</div>
 
 Unfortunately, the modern reality is that through repeated mergers, farming cooperatives have conglomerated into corporate behemoths. The co-op's presence in a farming community today is as a local outpost that belongs to a sprawling empire.
 

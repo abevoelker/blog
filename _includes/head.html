@@ -16,6 +16,11 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="{% asset 'application.scss' @path %}">
+  {% if page.additional_css %}
+  {% for x in page.additional_css %}
+  <link rel="stylesheet" href="{% asset '{{x}}' @path %}">
+  {% endfor %}
+  {% endif %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
 
   <!-- Icons -->

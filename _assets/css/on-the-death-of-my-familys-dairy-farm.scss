@@ -1,0 +1,50 @@
+div.masthead {
+  display: none;
+}
+
+img.center {
+  display: block;
+  margin: 0 auto;
+}
+
+@media only screen {
+  .google-chart-svg {
+    display: none;
+  }
+  .youtube-embed-print {
+    display: none;
+  }
+  .hide-screen {
+    display: none;
+  }
+}
+
+@media only print {
+  div.masthead {
+    display: none;
+  }
+  div.related {
+    display: none;
+  }
+  .google-chart-xs {
+    display: none;
+  }
+  .google-chart-sm {
+    display: none;
+  }
+  .google-chart-md {
+    display: none;
+  }
+  .google-chart-lg {
+    display: none;
+  }
+  .youtube-embed {
+    display: none;
+  }
+  .hide-print {
+    display: none;
+  }
+  .container {
+    max-width: 38rem;
+  }
+}
