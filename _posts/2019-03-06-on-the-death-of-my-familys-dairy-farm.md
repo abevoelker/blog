@@ -11,7 +11,7 @@ additional_css:
 ---
 
 <div class="row-full">
-  <div class="video-container">
+  <div class="video-container" style="margin-bottom: 1rem;">
     <video autoplay loop muted class="responsive" style="height: 20vh;">
       <source src="{% asset 'on-the-death-of-my-familys-dairy-farm/farm-hover-1080p.m4v' @path %}" type="video/mp4" />
     </video>
