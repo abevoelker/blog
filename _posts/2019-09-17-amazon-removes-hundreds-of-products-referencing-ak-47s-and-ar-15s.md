@@ -1,0 +1,50 @@
+---
+layout: post
+title: "Amazon removes hundreds of products referencing AK-47s and AR-15s"
+date: 2019-09-17 12:00
+comments: false
+og_image: "amazon-removes-hundreds-of-products-referencing-ak-47s-and-ar-15s/Amazon 404 screenshot.png"
+excerpt_separator: <!--more-->
+---
+
+Starting in early August, Amazon seemingly began purging hundreds of listings for firearm accessories from its website that include the terms "AR-15" or "AK-47." At the moment, many of these products still show up in [Google's search cache](https://www.google.com/search?q=site%3Aamazon.com+ak-47+sling), however following the results render [Amazon's 404 page](https://www.amazon.com/404) which displays a picture of a random employee's dog:
+
+[{% asset "amazon-removes-hundreds-of-products-referencing-ak-47s-and-ar-15s/Amazon 404 screenshot.png" %}]({{ page.url }})
+
+I first noticed this happening last month when some products I was planning to buy disappeared, as well as products that I had already bought from Amazon that were in my order history. When I started noticing a pattern, I wrote a quick crawler to perform some Google queries and walk the results to see what exactly had been recently removed. I came up with [a list of a couple hundred products](https://docs.google.com/spreadsheets/d/1_9ejadA-zl-Xwal_RODEqQ1zsFlkuml0pWwgRGY4AZQ/edit?usp=sharing), although there could be many more I'm missing.
+
+[{% asset "amazon-removes-hundreds-of-products-referencing-ak-47s-and-ar-15s/spreadsheet-screenshot.png" %}](https://docs.google.com/spreadsheets/d/1_9ejadA-zl-Xwal_RODEqQ1zsFlkuml0pWwgRGY4AZQ/edit?usp=sharing)
+
+<!--more-->
+
+Reviewing the list, casualties of the deleting frenzy are many basic accessories such as [slings](https://webcache.googleusercontent.com/search?q=cache:xy6I7EP1kG8J:https://www.amazon.com/Soviet-Russian-Standard-sling-Kalashnikov/dp/B00J62BYI0+&cd=1&hl=en&ct=clnk&gl=us), [bayonets](https://webcache.googleusercontent.com/search?q=cache:I__w08PJ9B4J:https://www.amazon.com/Bulgarian-Bakelite-Scabbard-NORTHRIDGE-INTERNATIONAL/dp/B00D3TLC48+&cd=14&hl=en&ct=clnk&gl=us), and [rails](https://webcache.googleusercontent.com/search?q=cache:KU1IL-eboNwJ:https://www.amazon.com/Midwest-Industries-Railed-American-Defense/dp/B006ESJJUY+&cd=19&hl=en&ct=clnk&gl=us), to items as innocuous as [flashlights](https://webcache.googleusercontent.com/search?q=cache:vc6ImRO6_KUJ:https://www.amazon.com/Adjustable-Flashlights-Rifle-Mounted-Flashlight-Pressure/dp/B07FKT47RB+&cd=17&hl=en&ct=clnk&gl=us), [front sight adjustment tools](https://webcache.googleusercontent.com/search?q=cache:7cmDYtX38YsJ:https://www.amazon.com/UTG-Ergonomic-SKS-Sight-Tool/dp/B002TUSK0Q+&cd=1&hl=en&ct=clnk&gl=us), [cleaning kits](https://web.archive.org/web/20160403195125/http://www.amazon.com:80/AK-47-SKS-Field-Cleaning-Kit/dp/B005T3F8NM) and [screw sets](https://web.archive.org/web/20160120193611/http://www.amazon.com:80/AK47-Grip-Screw-Base-Spacer/product-reviews/B00D1U6XDO). Some of the more popular products had been listed on Amazon for several years and [had hundreds of reviews](https://webcache.googleusercontent.com/search?q=cache:7cmDYtX38YsJ:https://www.amazon.com/UTG-Ergonomic-SKS-Sight-Tool/dp/B002TUSK0Q+&cd=1&hl=en&ct=clnk&gl=us).
+
+I reached out to several sellers who had their listings removed.  Gerd F Bauer II, [co-owner of Magnamatic](https://www.magna-matic-defense.com/aboutus.asp) and maker of the popular [AKFST AK platform sight adjustment tool](https://www.magna-matic-defense.com/AKFST-AK-47-Front-Sight-Tool-p/akfst.htm) which had [its Amazon listing removed](https://webcache.googleusercontent.com/search?q=cache:KpBbqoI9I7MJ:https://www.amazon.com/AKFST-Front-Sight-Adjustment-Tool/dp/B00510LEDQ+&cd=2&hl=en&ct=clnk&gl=us), responded and confirmed Amazon is targeting AK-47 and AR-15 tools and accessories in the purge:
+
+> Yes Amazon took our listing down they are making new policies about firearms listings that is even applicable to tools for firearms.
+>
+> I don't know why other companies like NcSTAR are allowed to still sell AK front sight tools, but I have to see if I can appeal the take-down of my product listing.  In their policy they target AK-47 and AR-15 rifles any tools or accessories.
+
+After a little googling, it seems the wave of enforcement was likely triggered by a [Washington Post exposé](https://www.washingtonpost.com/technology/2019/08/06/google-amazon-prohibit-firearm-parts-listings-its-easy-find-them-anyway/?noredirect=on) written August 6 blasting Google and Amazon for not enforcing bans against firearm accessories (including Butler Creek 25-round magazine "ammunition clips"), which was closely followed a few days later by [a letter](https://www.brown.senate.gov/download/amazon-gun-letter-8919) sent by a group of Democratic Senators led by Sen. Robert Menendez (D-N.J.) to Amazon CEO Jeff Bezos (who also owns The Washington Post) repeating the discovery of the "ammunition clips" and urging Amazon both to take action and provide an accounting of itself.
+
+I believe Amazon [has always had a policy](https://sellercentral.amazon.com/gp/help/help.html?itemID=200164950#mnd_2jc_jcb__SECTION_781FE202F83741B69526EE4CC835B164) banning certain weapons and accessories (and I doubt you could ever sell a firearm or magazine there). Reading that policy today, there is a prohibition against the "listing or sale of certain firearm and imitation firearm accessories," including prohibition of "assault weapon parts or accessories or products marketed as assault weapon parts or accessories, including reference to various assault weapon models."
+
+It's unclear if that "assault weapons" bit existed before political pressure was applied or added after, as the policy article is marked as updated on August 23 and there is no ability to view a history of policy changes. But I assume that is the policy now being enforced here, regardless of how dumb "assault weapon" bans that target aesthetics are:
+
+{% include youtube url="https://www.youtube.com/embed/yATeti5GmI8?start=355" %}
+
+<br />
+
+While further reviewing my crawler's output, I realized some products have survived the wave of bans by removing the forbidden words from their titles, for instance replacing ["AK-47"](https://webcache.googleusercontent.com/search?q=cache:H7DRt8a04Y0J:https://www.amazon.com/Original-Shoulder-Bandolier-Vintage-Collection/dp/B01N1MOOGV+&cd=11&hl=en&ct=clnk&gl=us) with ["SKS"](https://www.amazon.com/Original-Shoulder-Bandolier-Vintage-Collection/dp/B01N1MOOGV) or ["AR-15"](https://web.archive.org/save/https://webcache.googleusercontent.com/search?q=cache:K1FOzYJgsH4J:https://www.amazon.com/Monstrum-Tactical-AR-15-Mount-Handle/dp/B00CX00LJU+&cd=14&hl=en&ct=clnk&gl=us) with ["rifle."](https://www.amazon.com/HWZ-Carry-Handle-Scope-Mount/dp/B076HL956Z?_encoding=UTF8&pd_rd_i=B076HL956Z&pd_rd_r=ab193278-f51c-4f4f-89d3-99116610d0d2&pd_rd_w=H2o9c&pd_rd_wg=ACpgK&pf_rd_p=3b323567-8df4-459a-bcb9-5adf545829d4&pf_rd_r=G2Q50XAQSR8QF8TN2H4G&psc=1&sa-no-redirect=1) Another [added the disclaimer](https://www.amazon.com/Tacksport-Scope-Mount-Picatinny-Weaver/dp/B01LZ3TO76/ref=pd_cp_200_1?pd_rd_w=sBvKV&pf_rd_p=ef4dc990-a9ca-4945-ae0b-f8d549198ed6&pf_rd_r=024PQJC9V8QBRDS03YZK&pd_rd_r=8fe6e74f-a74f-11e9-a0bf-2dce394488bd&pd_rd_wg=8ef78&pd_rd_i=B01LZ3TO76&psc=1&refRID=024PQJC9V8QBRDS03YZK) "this red dot scope mount cannot be an assault weapon part or accessory" despite being a generic AK side rail mount. It's unclear if the self-censorship has appeased Amazon or if the sellers are simply evading enforcement, but if Amazon approves of these changes, it perfectly highlights how "assault weapon"-type bans are driven by emotion rather than any kind of logic.
+
+I also realized that many of the removed products are still visible on Amazon's website by visiting the Amazon Canada URL of the product, i.e. www.amazon.ca instead of www.amazon.com. For example, the aforementioned AKFST sight tool is [still visible on Amazon Canada](https://www.amazon.ca/AKFST-Front-Sight-Adjustment-Tool/dp/B00510LEDQ).
+
+As Amazon [continues its struggle](https://www.bbc.com/news/business-47941181) against the scourge of knockoff products and fake reviews severely undermining trust in its platform, it remains to be seen whether the leviathan retailer's capitulation to the latest "assault weapon" scare and taking itself out of this segment of the gun accessory market will be harmful in the long-term, or if the absence of the country's largest glorified Chinese flea market distribution centers will enable a healthier market to bloom.
+
+Personally, years ago I used to lament the fact I couldn't do more firearm shopping on Amazon or some other centralized retailer, but nowadays I think it has turned out to be a blessing:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Used to think it was sad Amazon didn&#39;t carry more firearm-related products but now that they&#39;re basically an Ali Baba distribution center I think gun people lucked out. Imagine spending $1500 on an optic via Amazon Prime™ and receiving a crackerjack box toy <a href="https://twitter.com/hashtag/PrimeDayAmazon?src=hash&amp;ref_src=twsrc%5Etfw">#PrimeDayAmazon</a> <a href="https://t.co/aFH051rMBo">pic.twitter.com/aFH051rMBo</a></p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/1150872762640162819?ref_src=twsrc%5Etfw">July 15, 2019</a></blockquote>
+
+For now, some firearm accessories such as scopes remain purchasable on the platform, despite the fact that buyers may choose to attach them to an AR-15 or AK platform rifle. So there is still time for you to play russian roulette on whether that ACOG you've been saving up to buy is legit [or a Chinese knockoff](https://www.amazon.com/product-reviews/B073Y3PHC8/ref=cm_cr_arp_d_viewpnt_rgt?filterByStar=critical&pageNumber=1).
+
+I emailed [Amazon's PR department](https://press.aboutamazon.com/contact-pr) for a request for more info/comment on September 4 but they haven't responded.
