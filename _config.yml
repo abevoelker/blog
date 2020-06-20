@@ -5,7 +5,7 @@ email:       abe@abevoelker.com
 author:      Abe Voelker
 description: "Abe Voelker's blog. Programming stuff, mainly"
 baseurl:     ""
-url:         "https://blog.abevoelker.com"
+url:         "https://abevoelker.com"
 date_format: "%b %-d, %Y"
 
 # Google services
