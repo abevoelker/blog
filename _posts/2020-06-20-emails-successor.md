@@ -5,7 +5,7 @@ date: 2020-06-20
 comments: false
 og_image: "emails-successor/log.png"
 excerpt_separator: <!--more-->
-permalink: "emails-successor-the-personal-log-and-inter-personal-protocol"
+permalink: "emails-successor-the-personal-log-and-inter-personal-protocol/"
 ---
 
 Recently on my Twitter I've been seeing some buzz about a new email app called [HEY][]. It seems to improve some ergonomics with traditional approaches to email, like moving receipt emails to a "paper trail" area, better screening of new contacts, and some other things.
@@ -15,6 +15,8 @@ Fundamentally though, it's still email under the covers. This made me wonder wha
 Maybe it would help to consider where email is already evolving. Email began as exchanging plain text electronic letters between humans but now it is used for so much more.
 
 For example, every time you place an online order you immediately get an order receipt, sent from a machine. When your order ships you get an update with a tracking number. As your shipment proceeds towards your house, you get tracking updates until the item arrives. This isn't traditional correspondence between humans any more, this is **data exchange**.
+
+<!--more-->
 
 ## Data schemas
 
@@ -156,12 +158,6 @@ Can the personal log be adapted to fit generalized notes, like people used to (s
 How about the people who do ["quantified self"][] tracking and measurements of their own bodies - seems like the personal log would be a good place to store that instead of some proprietary database. If your doctor could pull up your Apple Watch's heart rate history and correlate that with the physician-kept medical records it seems like they could [do some cool things][stanford-heart-study].
 
 What about all the pictures and video I take (particularly of my family); wouldn't that be a good data stream to add to the personal log? Would it be easy to share data streams with say my wife or other family members?
-
-## Far future - world computer?
-
-As I'm wrapping this up it struck me that some of this reminds me of a persistent world computer like [Urbit][] or the [Ethereum virtual machine][ethereum].
-
-Based on the protocol and security churn on these types of cryptocurrency-rooted projects I don't think it would be a good idea using current implementations, but it's interesting to think about as a future possibility for eternally-persistent data storage and exchange.
 
 ## Challenges
 
