@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/abevoelker/rouge.git
+  revision: 2a001b37da36ca0437a4d6e3591821b950bd90ff
+  specs:
+    rouge (3.10.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -15,7 +21,7 @@ GEM
     colorator (1.1.0)
     commonmarker (0.17.13)
       ruby-enum (~> 0.5)
-    concurrent-ruby (1.1.4)
+    concurrent-ruby (1.1.5)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -28,12 +34,12 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     fastimage (2.1.5)
-    ffi (1.10.0)
+    ffi (1.11.1)
     forwardable-extended (2.6.0)
     http_parser.rb (0.6.0)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    jekyll (3.8.5)
+    jekyll (3.8.6)
       addressable (~> 2.4)
       colorator (~> 1.0)
       em-websocket (~> 0.5)
@@ -62,13 +68,13 @@ GEM
     jekyll-coffeescript (1.1.1)
       coffee-script (~> 2.2)
       coffee-script-source (~> 1.11.1)
-    jekyll-commonmark (1.2.0)
+    jekyll-commonmark (1.3.1)
       commonmarker (~> 0.14)
-      jekyll (>= 3.0, < 4.0)
-    jekyll-commonmark-ghpages (0.1.5)
+      jekyll (>= 3.7, < 5.0)
+    jekyll-commonmark-ghpages (0.1.6)
       commonmarker (~> 0.17.6)
-      jekyll-commonmark (~> 1)
-      rouge (~> 2)
+      jekyll-commonmark (~> 1.2)
+      rouge (>= 2.0, < 4.0)
     jekyll-default-layout (0.1.4)
       jekyll (~> 3.0)
     jekyll-feed (0.11.0)
@@ -144,10 +150,10 @@ GEM
       jekyll (~> 3.3)
     jekyll-toc (0.9.1)
       nokogiri (~> 1.8)
-    jekyll-watch (2.1.2)
+    jekyll-watch (2.2.1)
       listen (~> 3.0)
     kramdown (1.17.0)
-    liquid (4.0.1)
+    liquid (4.0.3)
     liquid-tag-parser (1.9.0)
       extras (~> 0.3)
       liquid (>= 3.0, < 5.0)
@@ -170,18 +176,17 @@ GEM
       sawyer (~> 0.8.0, >= 0.5.3)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
-    public_suffix (3.0.3)
+    public_suffix (3.1.1)
     rack (2.0.6)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    rouge (2.2.1)
     ruby-enum (0.7.2)
       i18n
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
-    safe_yaml (1.0.4)
-    sass (3.7.3)
+    safe_yaml (1.0.5)
+    sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -209,7 +214,7 @@ DEPENDENCIES
   jekyll-assets
   jekyll-avatar (= 0.5.0)
   jekyll-coffeescript (= 1.1.1)
-  jekyll-commonmark-ghpages (= 0.1.5)
+  jekyll-commonmark-ghpages
   jekyll-default-layout (= 0.1.4)
   jekyll-feed
   jekyll-gist (= 1.5.0)
@@ -242,10 +247,11 @@ DEPENDENCIES
   kramdown
   mini_magick
   minima (~> 2.0)
+  rouge!
   terminal-table (~> 1.4)
 
 RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.17.1
+   1.17.3

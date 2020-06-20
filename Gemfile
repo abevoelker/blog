@@ -23,7 +23,7 @@ group :jekyll_plugins do
   # unrolled from github-pages gem:
   gem "jekyll-avatar", "0.5.0"
   gem "jekyll-coffeescript", "1.1.1"
-  gem "jekyll-commonmark-ghpages", "0.1.5"
+  gem "jekyll-commonmark-ghpages" #, "0.1.5"
   gem "jekyll-default-layout", "0.1.4"
   gem "jekyll-feed"
   gem "jekyll-gist", "1.5.0"
@@ -61,4 +61,5 @@ group :jekyll_plugins do
 end
 
 gem "kramdown"
+gem "rouge", github: "abevoelker/rouge"
 gem "terminal-table", "~> 1.4"
