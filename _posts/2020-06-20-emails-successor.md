@@ -3,7 +3,7 @@ layout: post
 title: "Email's successor: the personal log and inter-personal protocol"
 date: 2020-06-20
 comments: false
-og_image: "emails-successor/log.png"
+og_image: "emails-successor/log-square.png"
 excerpt_separator: <!--more-->
 permalink: "emails-successor-the-personal-log-and-inter-personal-protocol/"
 ---
