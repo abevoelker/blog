@@ -59,7 +59,7 @@ So I'd like to spend the rest of the article outlining some publicly-available d
 
 Many states sell registered voter information. For example, Wisconsin has [a handy website](https://badgervoters.wi.gov) where anyone can buy voters' personal information at a rate of $5 per 1,000 voters, with [no restrictions on usage](https://badgervoters.wi.gov/faq.html) (commercial or otherwise).
 
-Here's part of the data format, which includes full name, mailing address, phone number, and email address:
+The [data provided includes full name, mailing address, phone number, email address, and many other fields](https://elections.wi.gov/sites/electionsuat.wi.gov/files/page/data_elements_electors_with_participation_pdf_19477.pdf).
 
 **Countermeasures**
 
