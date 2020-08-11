@@ -10,7 +10,7 @@ permalink: "doxxing-countermeasures-for-faceposters/"
 
 {% asset 'doxxing-countermeasures-for-faceposters/AC-130.jpg' %}
 
-Do you post online under your real name (*facepost*)?
+Do you post online under your real name and face (*facepost*)?
 
 Have you ever worried you'll eventually say something stupid, or have something you said misconstrued, and be attacked by an angry online individual (or worse, mob)?
 
