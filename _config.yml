@@ -1,12 +1,40 @@
 # Site settings
 title:       Abe Voelker
-tagline:     Programming stuff, mainly
-email:       abe@abevoelker.com
+email:       _@abevoelker.com
 author:      Abe Voelker
-description: "Abe Voelker's blog. Programming stuff, mainly"
 baseurl:     ""
 url:         "https://abevoelker.com"
 date_format: "%b %-d, %Y"
+
+author:
+  name: "Abe Voelker"
+  home: "/"
+  avatar: "bio-photo.jpg"
+  bio: "Programming, guns, ISP/telecom, rural life. Ex-farm boy"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:_@abevoelker.com"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/abevoelker"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/abevoelker"
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      show_date: true
+      comments: false
+      share: true
+      related: true
+
 
 # Google services
 google_verification:
@@ -102,15 +130,17 @@ text:
 markdown:     kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
-permalink:    '/:year-:month-:day/:title/'
-paginate:     4
+permalink:    '/:title'
+timezone: "America/Chicago"
 sass:
   compressed: true
+theme: minimal-mistakes-jekyll
 plugins:
-  - jekyll-paginate
+  #- jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-toc
+  - jekyll-include-cache
 # https://github.com/jekyll/jekyll/issues/2938
 exclude: ["vendor", "Gemfile*", "deploy.sh", "_private"]
 include: [".well-known"]
