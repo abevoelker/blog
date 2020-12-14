@@ -344,7 +344,7 @@ Otherwise, the nuclear option is to roll the secret key, which will invalidate a
 
 If you want to understand how these work at a deeper level by reading the source code, I recommend [this series](http://www.monkeyandcrow.com/blog/reading_rails_how_does_message_encryptor_work/) of blog articles.
 
-Also, on my projects I tend to put the `MessageEncryptor` logic into a porcelein class that handles creating tokens with the proper salt, sets and checks token expiration, and makes the token error handling simpler. [Here's an example of that](https://github.com/abevoelker/devise-passwordless/blob/master/lib/devise/passwordless/login_token.rb) in my devise-passwordless gem.
+Once you get comfortable with `MessageEncryptor` and start using it in your projects, you will probably want to abstract away some of the repeated work you do into a porcelein class. [Here's what mine typically looks like](https://github.com/abevoelker/devise-passwordless/blob/master/lib/devise/passwordless/login_token.rb) from my devise-passwordless gem; it handles salts, sets and checks token expiration, and makes the token error handling simpler. 
 
 ## Disclaimer
 
