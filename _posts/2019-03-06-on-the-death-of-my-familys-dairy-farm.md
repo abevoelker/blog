@@ -1,11 +1,8 @@
 ---
-layout: post
 title: "On the death of my family's dairy farm"
 date: 2019-03-06 00:00
-comments: false
-og_image: "on-the-death-of-my-familys-dairy-farm/cover-image.jpg"
-excerpt_separator: <!--more-->
-hide_post_header: true
+header:
+  og_image: "on-the-death-of-my-familys-dairy-farm/cover-image.jpg"
 additional_css:
   - "on-the-death-of-my-familys-dairy-farm.scss"
 ---
