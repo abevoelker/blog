@@ -1,10 +1,8 @@
 ---
-layout: post
 title: "Email's successor: the personal log and inter-personal protocol"
 date: 2020-06-20
-comments: false
-og_image: "emails-successor/log-square.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "emails-successor/log-square.png"
 permalink: "emails-successor-the-personal-log-and-inter-personal-protocol/"
 ---
 
@@ -15,8 +13,6 @@ Fundamentally though, it's still email under the covers. This made me wonder wha
 Maybe it would help to consider where email is already evolving. Email began as exchanging plain text electronic letters between humans but now it is used for so much more.
 
 For example, every time you place an online order you immediately get an order receipt, sent from a machine. When your order ships you get an update with a tracking number. As your shipment proceeds towards your house, you get tracking updates until the item arrives. This isn't traditional correspondence between humans any more, this is **data exchange**.
-
-<!--more-->
 
 ## Data schemas
 

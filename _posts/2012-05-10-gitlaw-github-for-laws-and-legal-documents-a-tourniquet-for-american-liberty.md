@@ -1,22 +1,21 @@
 ---
-layout: post
 title: "GitLaw: GitHub for Laws and Legal Documents - a Tourniquet for American Liberty"
 date: 2012-05-10 04:23
-comments: true
-facebook:
-  image: house_of_representatives_chamber_octocat.jpg
-excerpt_separator: <!--more-->
-permalink: gitlaw-github-for-laws-and-legal-documents-a-tourniquet-for-american-liberty/
+header:
+  og_image: gitlaw-github-for-laws-and-legal-documents-a-tourniquet-for-american-liberty/house_of_representatives_chamber_octocat.jpg
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![GitHub's Octocat in the House of Representatives](/images/house_of_representatives_chamber_octocat_thumb.jpg)](/images/house_of_representatives_chamber_octocat.jpg)
+{% asset "gitlaw-github-for-laws-and-legal-documents-a-tourniquet-for-american-liberty/house_of_representatives_chamber_octocat.jpg" alt="GitHub's Octocat in the House of Representatives" %}
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Update**: This post received a lot of [attention on Hacker News][6]. Please
 also visit there to read many insightful comments!
 </p>
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Update 2**: Apparently this post also provided [some inspiration][7] for a
 TED Talk entitled "[How the Internet will (one day) transform government][8]" by
 [Clay Shirky][9]. Check it out!
@@ -28,8 +27,6 @@ Congress is doing (only 14% approve).  I can only speak for myself,
 but the disdain I feel for Congress is due to suspicion of a combination of
 malfeasance, misfeasance and nonfeasance.  I simply don't trust them to
 represent me, and I don't think most Americans do, either.
-
-<!--more-->
 
 How can we restore public trust in Congress?  The first solution that comes to
 mind would probably get me arrested or put on some secret government list

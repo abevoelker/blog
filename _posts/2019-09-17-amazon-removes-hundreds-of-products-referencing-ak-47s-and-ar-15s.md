@@ -1,10 +1,8 @@
 ---
-layout: post
 title: "Amazon removes hundreds of products referencing AK-47s and AR-15s"
 date: 2019-09-17 12:00
-comments: false
-og_image: "amazon-removes-hundreds-of-products-referencing-ak-47s-and-ar-15s/Amazon 404 screenshot.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "amazon-removes-hundreds-of-products-referencing-ak-47s-and-ar-15s/Amazon 404 screenshot.png"
 ---
 
 Starting in early August, Amazon seemingly began purging hundreds of listings for firearm accessories from its website that include the terms "AR-15" or "AK-47." At the moment, many of these products still show up in [Google's search cache](https://www.google.com/search?q=site%3Aamazon.com+ak-47+sling), however following the results render [Amazon's 404 page](https://www.amazon.com/404) which displays a picture of a random employee's dog:

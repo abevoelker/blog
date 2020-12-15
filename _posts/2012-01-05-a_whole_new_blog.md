@@ -1,15 +1,11 @@
 ---
-layout: post
 title: A Whole New Blog!
 date: 2012-01-05
-comments: true
-facebook:
-  image: octopress.png
-excerpt_separator: <!--more-->
-permalink: a_whole_new_blog/
+header:
+  og_image: a_whole_new_blog/octopress.png
 ---
 
-![Octopress logo](/images/octopress.png "Octopress logo")
+{% asset "a_whole_new_blog/octopress.png" alt="Octopress logo" %}
 
 Welcome to my new blog design! I've migrated my blog posts from Wordpress
 over to [Octopress][], which is a custom version of [Jekyll][] with a sensible
@@ -21,8 +17,6 @@ Octopress/Jekyll are static site generators, meaning that there is no
 server-side rendering that takes place when you are viewing these pages -
 it's all HTML/CSS/JavaScript! The great thing about this is that pages
 load very fast, especially under heavy load.
-
-<!--more-->
 
 For syntax highlighting they use the excellent [Pygments][] library, which
 unfortunately didn't already have a lexer for OpenEdge ABL / Progress, so I

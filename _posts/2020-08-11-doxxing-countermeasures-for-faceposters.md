@@ -1,11 +1,10 @@
 ---
-layout: post
 title: "Doxxing countermeasures for faceposters"
 date: 2020-08-11
 comments: false
-og_image: "doxxing-countermeasures-for-faceposters/AC-130.jpg"
-excerpt_separator: <!--more-->
 permalink: "doxxing-countermeasures-for-faceposters/"
+header:
+  og_image: "doxxing-countermeasures-for-faceposters/AC-130.jpg"
 ---
 
 {% asset 'doxxing-countermeasures-for-faceposters/AC-130.jpg' %}

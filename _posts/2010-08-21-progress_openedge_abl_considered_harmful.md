@@ -1,10 +1,10 @@
 ---
-layout: post
 title: Progress / OpenEdge ABL Language and DBMS Considered Harmful
 date: 2010-08-21
-comments: true
-excerpt_separator: <!--more-->
 permalink: progress_openedge_abl_considered_harmful/
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
 I won't go into any detail about how I got the job I currently have programming
@@ -19,8 +19,6 @@ documents has since turned into a fiery rage that burns with the intensity of a
 thousand suns after having learned it.  I have done my best to make do with the
 language's limitations, and I believe I have pushed it to about as far as it can
 go without directly linking into external .NET libraries.
-
-<!--more-->
 
 I am aware that Progress (later Progress 4GL, now OpenEdge ABL) was really
 created as a [DSL](http://en.wikipedia.org/wiki/Domain-specific_language)
@@ -81,7 +79,7 @@ I will mention that in the ABL language there <em>is</em> a querying shortcut,
 however, where if you use identical field names (and at least one unique
 index) in differing tables you can do
 
-```abl
+```openedge
 FOR EACH order-line OF order
 ```
 
@@ -92,7 +90,7 @@ than syntactic sugar for doing simple table joins.
 ### ABL: Division of integers isn't "integer division" (it rounds up!).
 Example:
 
-```abl
+```openedge
 DEF VAR i AS INT NO-UNDO.
 i = 1 / 2.
 MESSAGE i. /* Displays '1'! */
@@ -104,7 +102,7 @@ are dividing two `INTEGER` datatypes and storing the result in another
 `DECIMAL` value of 0.5, which, when assigned to the `INTEGER` datatype, is
 rounded up to 1 (!).  The workaround is to do this:
 
-```abl
+```openedge
 TRUNCATE(1 / 2, 0). /* Force integer division (returns '0') */
 ```
 
@@ -130,11 +128,11 @@ enumeration equal to `0xFF0000`; if you define the color `RED` as a public
 constant you can then have other classes refer to it like so: `Color::RED`, and
 they will simply get the value `0xFF0000`.  Pretty slick!
 
-<p class="message">
+<p class="notice--primary">
   <strong>Update 2010-10-02</strong>: Just wanted to point out that the above
   Enum example can be achieved like so:
 
-```abl
+```openedge
 CLASS Color:
   DEFINE PUBLIC STATIC PROPERTY RED AS INTEGER INITIAL 16711680 NO-UNDO
     GET.
@@ -183,14 +181,14 @@ When I had to learn Progress for my job, I had been taught from an old manual
 that stated that when `ASSIGN`ing to multiple variables sequentially, it is
 more efficient to group the assignments into a single `ASSIGN` statement, e.g.
 
-```abl
+```openedge
 ASSIGN i = 0
        j = 1.
 ```
 
 is supposedly more efficient than
 
-```abl
+```openedge
 ASSIGN i = 0.
 ASSIGN j = 1.
 ```
@@ -221,7 +219,7 @@ somewhat more complex optimization - converting
 <a href="http://en.wikipedia.org/wiki/Tail_recursion">tail recursive</a> calls
 into iterative:
 
-```abl
+```openedge
 PROCEDURE tailcall:
     DEFINE INPUT PARAMETER ipiNum AS INTEGER NO-UNDO.
     IF ipiNum EQ 99999 THEN
@@ -241,7 +239,7 @@ The result, of course: the stack went "boom".
 A while ago, I had found an interesting scenario where I had a query that
 looked like this:
 
-```abl
+```openedge
 FOR EACH table
   WHERE table.field1 EQ "foo"
   AND   (table.field2 EQ "bar" OR table.field2 EQ "baz")
@@ -250,7 +248,7 @@ FOR EACH table
 that was strangely running slow.  I was using an index, and the XREF did show
 that it was using the expected index.  I changed the query to look like this:
 
-```abl
+```openedge
 FOR EACH table
   WHERE (table.field1 EQ "foo" AND table.field2 EQ "bar")
      OR (table.field1 EQ "foo" AND table.field2 EQ "baz")
@@ -305,13 +303,13 @@ or `i += 7` as a shortcut for `i = i + 7` or
 This can get <em>really annoying</em> when your standards dictate using the
 `ASSIGN` statement, e.g.
 
-```abl
+```openedge
 ASSIGN cMyString = cMyString + "foo bar baz".
 ```
 
 instead of
 
-```abl
+```openedge
 cMyString += "foo bar baz".
 ```
 
@@ -349,7 +347,7 @@ error message into `ERROR-STATUS` error queue (retrieved with
 into <code>GET-MESSAGE</code> (these are the worst - they push error messages to
 stderr and if you don't do this:
 
-```abl
+```openedge
 ASSIGN lSuppressError = methodThrowsError("Foo") NO-ERROR.
 ```
 
@@ -372,7 +370,7 @@ fixed and should have been a long time ago.
 
 Test case:
 
-```abl
+```openedge
 MESSAGE -10 MODULO 3.
 ```
 
@@ -384,7 +382,7 @@ inherit.  This isn't the end of the world, though, because the language does
 support <code>TEMP-TABLE</code>s, and a similar construct can be created like
 so:
 
-```abl
+```openedge
 DEFINE TEMP-TABLE ttThreeDimensionalArray NO-UNDO
   FIELD iX AS INTEGER
   FIELD iY AS INTEGER
@@ -415,7 +413,7 @@ represented a file name and a <code>LONGCHAR</code> that contained the file
 contents loaded into memory.  The annoying workaround I use is to wrap these
 datatypes in an Object:
 
-```abl
+```openedge
  /*------------------------------------------------------------------------
     File        : LongcharWrapper.cls
     Purpose     : Wraps a LONGCHAR variable in an Object
@@ -459,7 +457,7 @@ should be "error" actually returns "success".  For example, if I run the
 following OpenEdge ABL code (which clearly produces an infinite loop that runs
 out of stack memory):
 
-```abl
+```openedge
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 RUN p.
 
@@ -483,7 +481,7 @@ fi
 
 will output `success` to the shell, even though the output stream is filled with error messages:
 
-<p class="message">
+<p class="notice--primary">
 <code>WARNING: -nb exceeded. Automatically increasing from 90 to 122. (5407)</code><br />
 <code>WARNING: -nb exceeded. Automatically increasing from 122 to 154. (5407)</code><br />
 <code>WARNING: -nb exceeded. Automatically increasing from 154 to 186. (5407)</code><br />
@@ -496,7 +494,7 @@ output to <code>stderr</code>.  Everything goes to <code>stdout</code>.  I had
 initially assumed that any Progress error would go to <code>stderr</code>, so I
 tested this using the following code:
 
-```abl
+```openedge
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 UNDO, THROW NEW Progress.Lang.AppError("FooError", 1337).
 ```
@@ -544,7 +542,7 @@ for a paragraph of text or less.
 
 ### <del><strong>OOABL: Manual memory management (no garbage collection).</strong></del>
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 <strong>Update</strong>: This was implemented in OpenEdge 10.2A
 </p>
 
@@ -586,7 +584,7 @@ allocation methodologies.
 
 ### <del><strong>OOABL: No support for abstract methods or classes.</strong></del>
 
-<p class="message">
+<p class="notice--primary">
 <strong>Update</strong>: This was implemented in OpenEdge 10.2B
 </p>
 
@@ -600,7 +598,7 @@ make well-structured object-oriented code!
 
 ### OOABL: No interface inheritance support (sub/superinterfaces).
 
-<p class="message">
+<p class="notice--primary">
 <strong>Update</strong>: Progress claims this is planned for OpenEdge 11.
 </p>
 
@@ -618,7 +616,7 @@ how Java's `java.util.Collection` extends `java.lang.Iterable`.
 
 Here's a test case for this behavior:
 
-```abl
+```openedge
 INTERFACE bar: END INTERFACE.
 INTERFACE foo EXTENDS bar.
 ```
@@ -626,7 +624,7 @@ INTERFACE foo EXTENDS bar.
 Which currently (10.2B) returns a Progress error, stopping you dead in your
 tracks:
 
-<p class="message">
+<p class="notice--primary">
   <code>Inheritance is not supported for interfaces. (13046)</code>
 </p>
 
@@ -659,7 +657,7 @@ really needed a <code>TEMP-TABLE</code> that was scoped to each
 class global <code>TEMP-TABLE</code>!  I had to re-do the algorithm iteratively
 just because of this weakness.
 
-<p class="message">
+<p class="notice--primary">
   <strong>Update 2010-10-02</strong>: Brad Williams pointed out another
   workaround - use a dynamic <code>TEMP-TABLE</code>.
 
@@ -694,7 +692,7 @@ for a class.  For instance, if I had a class called Foo, with a private Baz
 object variable named <code>objBaz</code> and I wrote a getter like the
 following to provide a means to publicly access the Baz:
 
-```abl
+```openedge
 METHOD PUBLIC Foo getBaz():
   RETURN THIS-OBJECT:objBaz.
 END METHOD.
@@ -702,14 +700,14 @@ END METHOD.
 
 I will get a compiler error:
 
-<p class="message">
+<p class="notice--primary">
   <code>Cannot reference private member "objBaz" off of an object reference.</code>
 </p>
 
 The problem seems to be the <code>THIS-OBJECT</code> reference,
 and the (silly) solution is to remove it:
 
-```abl
+```openedge
 METHOD PUBLIC Foo getBaz():
   RETURN objBaz.
 END METHOD.
@@ -724,7 +722,7 @@ to explicitly use the class scope.
 The inability of `THIS-OBJECT` to work as expected opens the door to potential
 gotcha's when implementing setters:
 
-```abl
+```openedge
 CLASS BadSetter:
   DEFINE PRIVATE VARIABLE cMyChar AS CHAR NO-UNDO.
 
@@ -744,7 +742,7 @@ Another solution for the getter/setter-specific scenario is to use a
 `PROPERTY` instead of a private variable and plain public
 getter/setter methods.
 
-<div class="message" markdown="1">
+<div class="notice--primary" markdown="1">
   <strong>Update 2010-08-24</strong>: Another example where this could cause
   headaches is with copy constructors.  Consider this example:<br /><br />
 {% highlight abl %}
@@ -761,7 +759,7 @@ END CLASS.
 {% endhighlight %}
 </div>
 
-<div class="message" markdown="1">
+<div class="notice--primary" markdown="1">
   <strong>Update 2010-10-02</strong>: Brad Williams has provided an example
   using a <code>PROPERTY</code> that provides correct behavior:<br /><br />
 {% highlight abl %}

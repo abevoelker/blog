@@ -1,15 +1,11 @@
 ---
-layout: post
 title: "Final Ode to OpenEdge ABL Part 1: a Ruby Adapter is Born"
 date: 2012-07-09 12:00
-comments: true
-facebook:
-  image: mass_extinction_event.jpg
-excerpt_separator: <!--more-->
-permalink: final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/
+header:
+  og_image: final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/mass_extinction_event.jpg
 ---
 
-![Foreground: ABL developers at work. Background: arrival of Ruby adapter](/images/mass_extinction_event.jpg "Foreground: ABL developers at work. Background: arrival of Ruby adapter")
+{% asset "final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/mass_extinction_event.jpg" alt="Foreground: ABL developers at work. Background: arrival of Ruby adapter" %}
 
 It's weird how I have trouble letting go.  Nearly two years ago, I wrote
 [a post][1] where I theorized a cure for a programming language and database
@@ -510,7 +506,7 @@ representations).  Then, my final post will be some final musings on
 OpenEdge ABL and how to sandbox it; I think I will also give some
 parting advice to Progress Corp. on how they should open up ABL more.
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Update**: [Part 2][15] has now been posted.
 </p>
 

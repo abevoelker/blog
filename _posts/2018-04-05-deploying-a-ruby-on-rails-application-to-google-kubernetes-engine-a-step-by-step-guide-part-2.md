@@ -1,13 +1,17 @@
 ---
-layout: post
 title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 2: Up and running with Kubernetes"
 date: 2018-04-05 00:01
-comments: false
-og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
+permalink: "/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-<div class="alert alert-warning" markdown="1">
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+<div class="notice--warning" markdown="1">
 Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
 blog post series but **updated with the latest changes** in Kubernetes and
 Google Cloud and **greatly simplified** coursework based on feedback I got
@@ -17,7 +21,7 @@ format. Please check it out! ☺️ - Abe
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 <small>Welcome to part two of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can jump to a different part:</small><br />
 <small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
 <small>[Part 3: Cache static assets using Cloud CDN](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/)</small><br />
@@ -41,13 +45,13 @@ A Pod is similar to Docker's [linked containers](https://docs.docker.com/network
 
 You should never create bare Pods directly, because they are unmanaged (if they die, nobody notices). Instead you'll define Pod templates within other K8s abstractions that will create and manage them as part of their job.
 
-<div class="alert alert-danger" markdown="1">
+<div class="notice--danger" markdown="1">
 **Footgun alert:** in a Pod template, if you ever want to overwrite a Docker container's `CMD`, the Kubernetes field name to use is `args`. If you use `command` you will actually overwrite the `ENTRYPOINT`!
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Good lord I spent 1/2 an hour debugging why my Kubernetes container config wasn&#39;t working and it was because k8s &quot;command&quot; doesn&#39;t overwrite Docker&#39;s CMD but rather the ENTRYPOINT. To overwrite CMD use &quot;args&quot; -.- <a href="https://t.co/mcX4n4uHNM">pic.twitter.com/mcX4n4uHNM</a></p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/status/940454637127262208?ref_src=twsrc%5Etfw">December 12, 2017</a></blockquote>
 </div>
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 **Tip:** in Pod templates where the application should handle both IPv4 and IPv6 traffic, you should bind to [`localhost`](https://en.wikipedia.org/wiki/Localhost#Name_resolution) (which on most modern systems defines a loopback for both IPv4 and IPv6). This seems counter-intuitive because we think of `localhost` as being private, but remember Kubernetes is opening up container-local ports to the outside world for us.
 
 Many applications default to binding `0.0.0.0`, but remember that's an IPv4 address which will only handle IPv4 traffic; binding to `[::1]` (the IPv6 equivalent) would likewise only yield IPv6 traffic. Without this trick your application would have to be capable of binding to both of those interfaces (or you'd have to add a custom hostname to the hosts file that does so).
@@ -150,7 +154,7 @@ deploy/k8s/service-assets.yml
 deploy/k8s/service-web.yml
 ```
 
-<div class="alert alert-info">
+<div class="notice--info">
 <strong>Note</strong>: I've left all the manifests separated into their own individual files for ease of learning, but it is a best practice to <a href="https://kubernetes.io/docs/concepts/configuration/overview/#general-configuration-tips">combine related resources into the same YAML file</a>
 </div>
 
@@ -185,7 +189,7 @@ $ kubectl apply -f deploy/k8s/jobs/job-migrate.yml
 job "captioned-images-db-migrate" created
 ```
 
-<div class="alert alert-info" markdown="1">
+<div class="notice--info" markdown="1">
 **Note** that we used `kubectl apply` instead of `kubectl create`; we could've used `kubectl create` but `kubectl apply` is smart enough to create a new resource if it doesn't exist, or to modify an existing resource if the configuration we're applying doesn't match what currently exists.
 </div>
 
@@ -205,11 +209,11 @@ NAME                                READY     STATUS              RESTARTS   AGE
 captioned-images-db-migrate-qzkdt   0/2       ContainerCreating   0          15s
 ```
 
-<div class="alert alert-info" markdown="1">
+<div class="notice--info" markdown="1">
 **Note:** your pod names will be different than mine throughout the tutorial
 </div>
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 **Tip:** if you're watching for changes, instead of re-executing `kubectl get pods` over and over you can do `kubectl get pods -w` (or `--watch`) which will poll indefinitely and automatically print changes
 </div>
 
@@ -301,7 +305,7 @@ po/captioned-images-web-54f7df6f9-fpfdg   3/3       Running   0          1h
 po/captioned-images-web-54f7df6f9-hnxcj   3/3       Running   0          1h
 ```
 
-<div class="alert alert-info" markdown="1">
+<div class="notice--info" markdown="1">
 **Note:** in the above command, `cm` is short for `configmap`, `ing` is short for `ingress`, etc. - you can see all shortnames with `kubectl get --help`
 </div>
 
@@ -352,7 +356,7 @@ After a short wait while the Deployment updates, voilà:
   {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_13.png" alt="Screenshot of version 1.1 of the application" %}
 </div>
 
-<div class="alert alert-info" markdown="1">
+<div class="notice--info" markdown="1">
 **Note:** `kubectl set image` obviously won't update your local manifest file with whatever the current version of the Deployment looks like. To dump the current version of a resource as YAML, we can do:
 
 ```console
@@ -362,7 +366,7 @@ $ kubectl get deployment/captioned-images-web -o=yaml
 However be aware a lot of extra fields will come back that you probably won't have in your own hand-created manifest file, as this is a "complete" snapshot of the resource.
 </div>
 
-<div class="alert alert-warning" markdown="1">
+<div class="notice--warning" markdown="1">
 **Warning:** if your application change is only an update to a ConfigMap, be aware that redeploying a Deployment that depends on it (with no other changes to the Deployment) will result in no change to the Deployment. In short the Deployment won't detect that the ConfigMap changed.
 
 I usually add a junk environment variable to one of the Deployment's containers in this scenario, which will force a fresh redeploy that picks up the ConfigMap change.

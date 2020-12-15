@@ -1,10 +1,12 @@
 ---
-layout: post
 title: "Lessons learned from launching my first screencast series / training course, Kubernetes on Rails"
 date: 2019-01-04
 comments: false
-og_image: "lessons-learned-from-launching-my-first-screencast/kubernetes-on-rails-screenshot.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "lessons-learned-from-launching-my-first-screencast/kubernetes-on-rails-screenshot.png"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
 [{% asset "lessons-learned-from-launching-my-first-screencast/kubernetes-on-rails-screenshot.png" alt="Kubernetes on Rails website preview" %}]({{ page.url }})
@@ -18,8 +20,6 @@ Last month I recorded my first ever screencast series, [Kubernetes on Rails](htt
     to focus on the Web app bits. So that wouldn't even necessarily be more accurate. Oh well, whatever, naming is hard.
 
 It's now been two weeks since I launched it so I thought I'd share some notes on what I did and what I've learned from my experience so far.
-
-<!--more-->
 
 ## Backstory
 
@@ -66,7 +66,7 @@ By chance though I did see [a Hacker News comment](https://news.ycombinator.com/
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=tf_til&ad_type=product_link&tracking_id=abevoelker-20&marketplace=amazon&region=US&placement=B07CN2C93T&asins=B07CN2C93T&linkId=1507bc5dd70dc43296a48e8dc8ae17fc&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff"></iframe>
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 Nothing here - I'm happy with my cheapo microphone and boom arm, although if I grew aspirations to record more professional things I'd probably buy better gear.
 
@@ -86,7 +86,7 @@ Other fun house noises I now pick up on are the water pipes making noise for a f
 
 One last noise I became acutely aware of is the fans on my own PC, and a couple external hard drives I have on my desk. I ended up moving my desktop tower underneath my standing desk (below and off to the side of the mic) and turning off my external hard drives during recording.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 I don't think I'd do much differently here. Maybe buy some longer cables and move my desktop tower further away from my recording area, and block it off by draping some heavy blankets between. But that's getting a bit anal.
 
@@ -138,7 +138,7 @@ I had a hint that something was amiss as I edited each one of these episodes aft
 
 This was probably my biggest regret on recording the screencast - unintentially making the audio quality worse than it needed to be by not using the equipment I bought. But the quality wasn't so bad that I felt the need to re-record those episodes. So I re-recorded the intro episode and added a voiced apology about the audio difference in some episodes and requested feedback on how annoying it is (if I should re-record or not). I haven't exactly made a lot of sales yet, but so far, no complaints.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 I should've spent more time understanding and configuring PulseAudio to work with multiple users at once. I naively assumed that a Linux system, with its proud multi-user Unix heritage, would be able to multiplex audio between multiple users concurrently out of the box. Unfortunately the year of the Linux desktop has still not arrived.
 
@@ -158,7 +158,7 @@ The rightmost monitor I would have SimpleScreenRecorder open to make sure I was 
 
 I'm not a person who can speak extemporaneously and clearly for long stretches, so I quickly figured out that after I successfully spoke a few sentences or so, it would be helpful to pause for a second or two, and not immediately fill the space with "umm" or other filler words, because then I have a clean gap in the audio where I could pause recording, gather my thoughts for a moment, start recording again, and then cleanly splice the two recordings together to make something cohesive.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 Get enough sleep the night before. When my brain was tired for a couple episodes it seemed like I could only string two cohesive sentences together at a time without needing to pause the recording after mispeaking about something or blanking out. That stretched out the total recording time and made for a lot of editing work after the fact.
 
@@ -176,7 +176,7 @@ Also, it has well thought out features around saving which saved my bacon a coup
 
 The only quirk with Kdenlive I'd point out is be very sure that you choose the correct editing profile at the start of editing. One time I accidentally started with a 30fps profile instead of my typical 60fps, got most of the editing for an episode done, then when I tried to switch to 60fps it screwed up all my clips, shortening lengths to make the overall length of the video about half. This is [apparently a bug that was fixed](https://forum.kde.org/viewtopic.php?f=265&t=138331) at one point which regressed, so hopefully it gets fixed in the future.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 Nothing; pretty happy with Kdenlive. Although if I did more of this work I'd definitely need to buy more hard drives as video recording and editing requires a ton of storage space.
 
@@ -191,7 +191,7 @@ So I followed Wes Bos's lead and spun up my own website to host the screencasts 
 
 If I got serious traffic, Cloud Storage would become too expensive and I'd have to look into using Vimeo, [Cloudflare Stream](https://www.cloudflare.com/products/cloudflare-stream/), or something else like that for storing and serving the videos.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 I'm happy with the website's functionality (although it could probably use a designer's touch), but I may have taken the wrong approach by copying Wes here. He has a proven track record with his courses, 152K Twitter followers, and a mailing list with tens of thousands (perhaps over a hundred thousand?) subscribers.
 
@@ -217,7 +217,7 @@ I also posted to [Hacker News](https://news.ycombinator.com/) (as a Show HN) and
 
 My blog post series get decent search ranking for "rails kubernetes" type queries so I also put a little blurb at the top of those directing people to the newly-recorded screencast series.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 Unfortunately the /r/ruby post, where I expected to get the most clicks, got hung up in the spam filter because I was posting from a brand new account (using my real name to be more professional). I messaged the mods very shortly after I posted when I noticed this, but after almost 2 hours I got tired of waiting and decided to doxx myself by posting from an alt with a lot of imaginary internet points.
 
@@ -263,7 +263,7 @@ Reason being, while I'm super grateful for every customer I've gotten so far, I 
 
 Another thing I plan to do is when I release two bonus episodes I'm working on, I'll set a "you must spend this much to unlock the bonus episodes" minimum, similar to how Humble Bundle does it (existing customers will get the episodes for free regardless of what they paid). I think this kind of value-add is a very effective sales tactic.
 
-**What I'd do differently with hindsight**
+### What I'd do differently with hindsight
 
 With hindsight I realize "charge more!" isn't a magic incantation that nets me more money. Finding a way to experiment by adjusting pricing without ticking people off is great.
 
@@ -281,7 +281,7 @@ Now that I have a small trickle of sales coming in with the pricing change, it's
 
 All that said, I don't have any plans to do anything like this again any time soon! 😁
 
-<div class="alert alert-success" markdown="1">
+<div class="notice--success" markdown="1">
 If this post made you intrigued, why not head on over to
 [Kubernetes on Rails](https://kubernetesonrails.com/) and learn Kubernetes
 with me! If you get in now, you'll receive the two bonus episodes

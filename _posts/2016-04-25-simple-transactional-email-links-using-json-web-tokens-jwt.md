@@ -1,23 +1,22 @@
 ---
-layout: post
 title: "Simple transactional email links using JSON Web Tokens (JWT)"
 date: 2016-04-25 12:00:00 -0500
-comments: true
-facebook:
-  image: jwt.jpg
-excerpt_separator: <!--more-->
-permalink: simple-transactional-email-links-using-json-web-tokens-jwt/
+header:
+  og_image: simple-transactional-email-links-using-json-web-tokens-jwt/jwt.jpg
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![JWT logo](/images/jwt-wide.jpg "JWT logo")](https://jwt.io/)
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+{% asset "simple-transactional-email-links-using-json-web-tokens-jwt/jwt-wide.jpg" alt="JWT logo" %}
 
 Recently I ran into an issue with a Rails web application where I wanted to add
 one-click unsubscribe links to transactional emails I send out. This website
 tracks the inventory of retail product websites; users subscribe to individual
 products and get notified via email when the price or stock status changes so
 that they can quickly make purchasing decisions based on the information.
-
-<!--more-->
 
 Up until now, I've sent out these emails with a message in the footer
 stating "If you no longer wish to receive these notifications, visit the
@@ -238,7 +237,7 @@ periods:
 There is a handy debugger on the JWT site's main page that shows a nice
 color-coded example token and how the different pieces break out:
 
-[![JWT debugger](/images/jwt-debugger.png "JWT debugger")](https://jwt.io/)
+[{% asset "simple-transactional-email-links-using-json-web-tokens-jwt/jwt-debugger.png" alt="JWT debugger" %}](https://jwt.io/)
 
 One nice thing about JWTs, that you can see from the example, is that the tokens
 are so short that they can easily fit in URLs (assuming you don't create crazy

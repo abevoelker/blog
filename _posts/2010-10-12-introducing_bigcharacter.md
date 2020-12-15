@@ -1,9 +1,6 @@
 ---
-layout: post
 title: Longchar sucks. Introducing BigCharacter
 date: 2010-10-12
-comments: true
-excerpt_separator: <!--more-->
 permalink: introducing_bigcharacter/
 ---
 
@@ -13,7 +10,7 @@ Now that I've got your attention, let me say this: <code>LONGCHAR</code> doesn't
 
 Here's an example.  How long does it take for this code to complete on your system?
 
-``` abl
+```openedge
 DEF VAR lc AS LONGCHAR NO-UNDO.
 DEF VAR i  AS INT      NO-UNDO.
 
@@ -23,8 +20,6 @@ DO i=1 TO 1000000:
     STATUS DEFAULT STRING(i).
 END.
 ```
-
-<!--more-->
 
 On the 4-CPU / 8GiB RAM Unix server I ran it on, it took 3 1/2 hours!  It
 started rather quickly, but once it hit ~ 100K records it started to slow
@@ -61,7 +56,7 @@ still be considered a useful alternative for some cases.
 
 Here is the same test from above, instead performed using `BigCharacter`:
 
-``` abl
+```openedge
 DEF VAR objbc AS BigCharacter NO-UNDO.
 DEF VAR i     AS INT          NO-UNDO.
 

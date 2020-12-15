@@ -1,23 +1,20 @@
 ---
-layout: post
 title: "Cure for the Plague: A Theoretical Progress / OpenEdge ABL Migration Plan"
 date: 2010-11-17
-comments: true
-facebook:
-  image: triumpth_of_death.jpg
-excerpt_separator: <!--more-->
-permalink: cure_for_the_plague_openedge_migration/
+header:
+  og_image: cure_for_the_plague_openedge_migration/triumpth_of_death.jpg
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![The Triumpth of Death oil painting](/images/triumpth_of_death.jpg "Progress at work")](http://en.wikipedia.org/wiki/The_Triumph_of_Death)
+[{% asset "cure_for_the_plague_openedge_migration/triumpth_of_death.jpg" alt="Progress at work" %}](http://en.wikipedia.org/wiki/The_Triumph_of_Death)
 
 I think
 [my opinion](http://www.abevoelker.com/blog/2010/08/21/progress-openedge-abl-language-and-dbms-considered-harmful/)
 on Progress OpenEdge ABL (henceforth known as "the Plague") as a programming
 language / DBMS is well known, but here is a short summary in case you missed it:
 <br /><br />
-
-<!--more-->
 
 Progress made a bet a long time ago (back in the 1980s) that the future of
 programming languages were going to be languages with a huge amount of global
@@ -48,7 +45,7 @@ is able to create and bolt on to the language, in an attempt to re-create the
 popular thing from 4+ years ago.  Not to mention the exorbitant licensing
 costs for the pleasure of all of the above...
 
-[![A drawing of a medieval plague doctor](/images/plague_doctor.png "I always wanted to be a plague doctor!")](http://en.wikipedia.org/wiki/Plague_doctor)
+[{% asset "cure_for_the_plague_openedge_migration/plague_doctor.png" alt="A drawing of a medieval plague doctor" %}](http://en.wikipedia.org/wiki/Plague_doctor)
 
 Some people think that OpenEdge ABL is still worth saving, but not me.  The
 only remedy to this problem, in my opinion, is to migrate completely away from
@@ -175,7 +172,7 @@ done in smaller steps, allowing for better integration testing along the entire
 process.  If you are wondering how #2 is even possible, let me draw you a
 picture:
 
-![](/images/openedge_migration_data_access.png)
+{% asset "cure_for_the_plague_openedge_migration/openedge_migration_data_access.png" %}
 
 In case you didn't know, OpenEdge allows one to run a SQL-92 engine
 concurrently with the OpenEdge engine (see [SQL Development](http://documentation.progress.com/output/OpenEdge102b/pdfs/dmsdv/dmsdv.pdf)
@@ -298,7 +295,7 @@ his book,
 is defined by Fowler as: "***An object that wraps a row in a database table or
 view, encapsulates the database access, and adds domain logic on that data***."
 
-[![Active Record design pattern](/images/active_record.gif "Active Record design pattern")](http://martinfowler.com/eaaCatalog/activeRecord.html)
+[{% asset "cure_for_the_plague_openedge_migration/active_record.gif" alt="Active Record design pattern" %}](http://martinfowler.com/eaaCatalog/activeRecord.html)
 
 ActiveRecord is a relatively simple concept of ORM.  The idea is that a class
 maps directly to a database table, and the class is responsible for
@@ -322,7 +319,7 @@ Fowler as: "***A layer of Mappers (473) that moves data between objects and a
 database while keeping them independent of each other and the mapper
 itself.***"
 
-[![Data Mapper design pattern](/images/data_mapper.gif "Data Mapper design pattern")](http://martinfowler.com/eaaCatalog/dataMapper.html)
+[{% asset "cure_for_the_plague_openedge_migration/data_mapper.gif" alt="Data Mapper design pattern" %}](http://martinfowler.com/eaaCatalog/dataMapper.html)
 
 DataMapper is a more complex form of ORM than ActiveRecord.  From the Fowler
 illustration, it is clear that the separation of objects and their mappings
@@ -365,7 +362,7 @@ This is what I assume most OpenEdge developers will be starting with.  All
 programs are Progress/OpenEdge code.  All data are held in native OpenEdge
 databases.
 
-[![](/images/openedge_migration_step_0.png)](/images/openedge_migration_step_0.png)
+{% asset "cure_for_the_plague_openedge_migration/openedge_migration_step_0.png" %}
 
 ### Step 1
 
@@ -378,7 +375,7 @@ connecting to a native SQL database.  However, a DataMapper DataObject wrapper
 the JDBC driver to access the OpenEdge database
 ([see existing wrappers](http://github.com/datamapper/do)).
 
-[![](/images/openedge_migration_step_1.png)](/images/openedge_migration_step_1.png)
+{% asset "cure_for_the_plague_openedge_migration/openedge_migration_step_1.png" %}
 
 ### Step 2
 
@@ -393,7 +390,7 @@ migrated Ruby code does not require a JDBC driver anymore; it could be ran on
 the native C Ruby interpreter (MRI) for instance, assuming MRI DataObject
 wrappers are available for the new database.
 
-[![](/images/openedge_migration_step_2.png)](/images/openedge_migration_step_2.png)
+{% asset "cure_for_the_plague_openedge_migration/openedge_migration_step_2.png" %}
 
 ### Step 3
 
@@ -402,7 +399,7 @@ SQL database(s).  The database schema and their DataMapper mappings may still
 have to be cleaned up from legacy schema format to increase efficiency (e.g. 2
 or more tables when only 1 table is needed).
 
-[![](/images/openedge_migration_step_3.png)](/images/openedge_migration_step_3.png)
+{% asset "cure_for_the_plague_openedge_migration/openedge_migration_step_3.png" %}
 
 ## Proof of Concept
 
@@ -461,6 +458,6 @@ DataDirect OpenEdge JDBC drivers.  I will update this posting when that step
 has been completed!  It might take me a while, though, as I am new to Ruby.
 Wish me luck!
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Update**: The [Ruby adapter](/final-ode-to-openedge-abl-part-1-a-ruby-adapter-is-born/) has been completed. Enjoy!
 </p>

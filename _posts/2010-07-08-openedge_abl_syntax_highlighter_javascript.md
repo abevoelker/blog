@@ -1,9 +1,6 @@
 ---
-layout: post
 title: "Progress / OpenEdge / ABL Syntax Highlighting for HTML & Wordpress"
 date: 2010-07-08
-comments: true
-excerpt_separator: <!--more-->
 permalink: openedge_abl_syntax_highlighter_javascript/
 ---
 
@@ -12,8 +9,6 @@ permalink: openedge_abl_syntax_highlighter_javascript/
 Just finished polishing up and committing a Progress/OpenEdge/ABL syntax
 highlighting brush extending Alex Gorbachev's JavaScript
 [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) to [GitHub][]!
-
-<!--more-->
 
 I also took the liberty of integrating it with Wordpress by creating a plugin
 extending Viper007Bond's
@@ -26,7 +21,7 @@ Here is the (weak, I know) code highlighting example I included in the
 example.html file in my
 [GitHub commit][GitHub]:
 
-```abl
+```openedge
 {include.i}
 
 &SCOPED-DEFINE MY_NAME "Abe"

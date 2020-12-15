@@ -1,9 +1,6 @@
 ---
-layout: post
 title: "OpenEdge ABL Utility: Get Program Parameters (Main Block) from R-code"
 date: 2010-10-02
-comments: true
-excerpt_separator: <!--more-->
 permalink: openedge_abl_utility_get_parameters_from_r_code/
 ---
 
@@ -19,8 +16,6 @@ CHARACTER.` at the top of the program).  I mean, how cool would it be to do a
 simple check on `RUN` statements to see if they will fail at compile-time (by
 checking existing compile snapshots of the program referenced by the `RUN`;
 assuming of course that the `RUN` statement can be evaluated at compile-time)?
-
-<!--more-->
 
 I started by checking the OpenEdge handbook, expecting to see something useful.
 Nope, nothing like that in the `RCODE-INFO` handle section.  Nope,

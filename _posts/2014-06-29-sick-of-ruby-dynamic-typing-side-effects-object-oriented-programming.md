@@ -1,19 +1,20 @@
 ---
-layout: post
 title: "Sick of Ruby, dynamic typing, side effects, and basically object-oriented programming"
 date: 2014-06-29 15:30
-comments: true
-excerpt_separator: <!--more-->
-permalink: sick-of-ruby-dynamic-typing-side-effects-object-oriented-programming/
+header:
+  og_image: sick-of-ruby-dynamic-typing-side-effects-object-oriented-programming/haskell-kool-aid.png
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
+
+<h2 id="intro" style="display: none;">Introduction</h2>
 
 This has been a long time coming. I had meant to write this post around the New Year, before the wave of [death of Ruby][avdi-ruby-demise] stuff and before DHH's "[TDD is dead][dhh-tdd-dead]" ruckus:
 
 <blockquote class="twitter-tweet" lang="en"><p>I&#39;m officially fully jaded with Ruby. Amongst other things, sick of side effects and mutable state that force me to write so many unit tests</p>&mdash; Abe Voelker (@abevoelker) <a href="https://twitter.com/abevoelker/statuses/416592284298137601">December 27, 2013</a></blockquote>
 
 I think subconsciously more and more people are figuring out something is wrong or lacking with Ruby development, but they are lashing out at the wrong things.  Oh, your Ruby app is a steaming pile of shit?  It's because you weren't diligent enough writing tests or you weren't following TDD principles closely enough.  Or you aren't knowledgable enough with design patterns to break it up into the right patterns.  Or you aren't following the [Single Responsibility Principle][SRP], or [SOLID][SOLID], or [Law of Demeter][law-of-demeter], yadda yadda.  Here, read this book on patterns or testing or OO design and get back to me when you reach enlightenment.
-
-<!--more-->
 
 <blockquote class="twitter-tweet" lang="en"><p>I literally do not know what OO, or especially OO design, really mean. I wasted so many hours in my best years trying to find out. Damn it.</p>&mdash; Gary Bernhardt (@garybernhardt) <a href="https://twitter.com/garybernhardt/statuses/482297459683495937">June 26, 2014</a></blockquote>
 
@@ -73,7 +74,7 @@ To me, this code starts displaying aspects of functional programming languages.
 
 ## Drinking that Haskell Kool-Aid
 
-[![Haskell-flavored Kool-Aid](/images/haskell-kool-aid.png "I'm drinking it!")](/images/haskell-kool-aid.png)
+{% asset "sick-of-ruby-dynamic-typing-side-effects-object-oriented-programming/haskell-kool-aid.png" alt="Haskell-flavored Kool-Aid" %}
 
 I've decided to start learning Haskell (using [Chris Allen's guide][bitemyapp-guide]), a language that I feel solves a lot of the problems I have with Ruby.  I say I'm drinking the Kool-Aid because I've just barely scratched the surface of it, and although I really like what I see so far, I haven't used it a lot in practice yet and I don't know enough math / category theory to appreciate it on a theoretical level.  But I've read enough from smart people writing about it that I'm sold. :-)
 
@@ -90,7 +91,7 @@ Some things I like about Haskell:
 
 I think there is enough learning material out there, and motivated teachers like [Chris Allen (@bitemyapp)][chris-allen], that even an idiot / not-super-mathy person like myself can get into Haskell for serious work.  And Haskell has enough depth that the more time I invest with it and the math theory underpinning it (category theory), I will unlock new, mathematically-sound abstractions that I can use pretty directly (e.g. [lenses][lens], [arrows][arrow]).  Perhaps some day I'll even be like those math warlocks, and able to appreciate languages with even more powerful type systems, e.g. ones with [dependent types][dependent-types] like [Idris][idris], [Agda][agda], or [Coq][coq] (one can dream).  Basically, Haskell's not a language that I anticipate getting bored of very quickly.
 
-[![Adventure Time "mathematical!"](/images/mathematical.gif "But Abe, you're terrible at math")](/images/mathematical.gif)
+{% asset "sick-of-ruby-dynamic-typing-side-effects-object-oriented-programming/mathematical.gif" alt="Adventure Time "mathematical!"" %}
 
 ## There is no silver bullet, and Ruby is not a werewolf
 

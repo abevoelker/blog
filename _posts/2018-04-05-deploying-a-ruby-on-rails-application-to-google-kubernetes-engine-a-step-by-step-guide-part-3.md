@@ -1,13 +1,17 @@
 ---
-layout: post
 title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 3: Cache static assets using Cloud CDN"
 date: 2018-04-05 00:02
-comments: false
-og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/google-cloud-cdn.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/google-cloud-cdn.png"
+permalink: "/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-<div class="alert alert-warning" markdown="1">
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+<div class="notice--warning" markdown="1">
 Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
 blog post series but **updated with the latest changes** in Kubernetes and
 Google Cloud and **greatly simplified** coursework based on feedback I got
@@ -17,7 +21,7 @@ format. Please check it out! ☺️ - Abe
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/google-cloud-cdn.png" alt="Google Cloud CDN logo" %}]({{ page.url }})
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 <small>Welcome to part three of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can jump to a different part:</small><br />
 <small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
 <small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
@@ -57,7 +61,7 @@ $ kubectl get ing/captioned-images-ipv4-ingress -o=json | jq -r '.metadata .anno
 {"k8s-be-31468--4f88d9d22add978a":"HEALTHY","k8s-be-31477--4f88d9d22add978a":"HEALTHY","k8s-be-31534--4f88d9d22add978a":"HEALTHY"}
 ```
 
-<div class="alert alert-info" markdown="1">
+<div class="notice--info" markdown="1">
 **Note:** your backend service IDs will be different than mine
 </div>
 
@@ -125,7 +129,7 @@ And now we can use a [tool like this one](https://latency.apex.sh) using our app
 
 In my opinion, ideally GKE would support a special annotation on the Ingress manifest which would enable Cloud CDN for the backend service via Kubernetes. If you support that idea [please star my Google issue requesting this feature](https://issuetracker.google.com/issues/71536907).
 
-<div class="alert alert-warning" markdown="1">
+<div class="notice--warning" markdown="1">
 **Warning:** when enabling Cloud CDN on an app that dynamically compresses responses (like this one), it is [critical to properly set the `Vary` header](https://cloud.google.com/cdn/docs/support#compression-not-working). Otherwise you'll have clients get unexpectedly-compressed responses and vice-versa. Check the nginx configuration of this demo app if you want to see how I do it.
 </div>
 

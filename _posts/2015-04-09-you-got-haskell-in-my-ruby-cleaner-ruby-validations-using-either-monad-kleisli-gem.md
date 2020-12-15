@@ -1,25 +1,24 @@
 ---
-layout: post
 title: "You got Haskell in my Ruby! Cleaner Ruby validations using the Either monad and Kleisli gem"
 date: 2015-04-09 12:00
-comments: true
-facebook:
-  image: haskell-in-ruby.jpg
-excerpt_separator: <!--more-->
-permalink: you-got-haskell-in-my-ruby-cleaner-ruby-validations-using-either-monad-kleisli-gem/
+header:
+  og_image: you-got-haskell-in-my-ruby-cleaner-ruby-validations-using-either-monad-kleisli-gem/haskell-in-ruby.jpg
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![You got Haskell in my Ruby!](/images/haskell-in-ruby.jpg "You got Haskell in my Ruby!")](/images/haskell-in-ruby.jpg)
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+{% asset "you-got-haskell-in-my-ruby-cleaner-ruby-validations-using-either-monad-kleisli-gem/haskell-in-ruby.jpg" alt="You got Haskell in my Ruby!" %}
 
 Alternate title: "You could have invented Either!"
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
   **Update**: It came to my attention from some Reddit comments that the simple example I use in this article is probably not the best for showing off a good use case of the kleisli gem as the "naive" code can be simplified.  Therefore, I will be updating this post in the future with a more thorough example.  In the meantime, I'd encourage you to read the article ["Cleaner, safer Ruby API clients with Kleisli"][cleaner-safer-kleisli] by the kleisli gem author which has a more comprehensive use case!
 </p>
 
 I'm still a rank beginner at Haskell, but I guess it's already leaving some tracks in my brain as I find myself wanting algebraic data types and pattern matching when I'm writing Ruby.
-
-<!--more-->
 
 <blockquote class="twitter-tweet" lang="en"><p>Algebraic Data Types Considered Harmful: once you use them, every language lacking them drives you to madness. <a href="https://twitter.com/hashtag/LangSec?src=hash">#LangSec</a></p>&mdash; Nathan Wilcox (@least_nathan) <a href="https://twitter.com/least_nathan/status/581544451597709312">March 27, 2015</a></blockquote>
 
@@ -329,7 +328,7 @@ Which is a big improvement over the bizarre errors you'd get when you try to use
 
 This whole example really uses only the most basic concepts in Haskell. If any of this has piqued your interest, I highly recommend learning some Haskell! The best resource for that in my opinion is [Chris Allen (@bitemyapp)'s guide][learn-haskell] (it's the one I find the best as a beginner myself, anyway).
 
-[![Haskallywags logo](/images/haskallywags.jpeg "Haskallywags logo")](/images/haskallywags.jpeg)
+{% asset "you-got-haskell-in-my-ruby-cleaner-ruby-validations-using-either-monad-kleisli-gem/haskallywags.jpg" alt="Haskallywags logo" %}
 
 And if you're in the Madison, WI area, come check out the [Haskell meetup][haskallywags] hosted by [Bendyworks][bendyworks]!  We've just started working through the exercises referenced in [Chris Allen's guide][learn-haskell], so it's a great time to come if you're a beginner like me.
 

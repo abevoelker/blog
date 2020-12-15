@@ -1,16 +1,19 @@
 ---
-layout: post
 title: "Adding Elm to a Rails application"
 date: 2016-09-05 17:00:00 -0500
-comments: true
-facebook:
-  image: elm-rails-og-preview.png
-excerpt_separator: <!--more-->
+header:
+  og_image: adding-elm-to-a-rails-application/elm-rails-og-preview.png
+permalink: "/2016-09-05/adding-elm-to-a-rails-application/"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![Elm logo](/images/elm-plus-rails.png "Elm logo")]({{ page.url }})
+<h2 id="intro" style="display: none;">Introduction</h2>
 
-<p class="message" markdown="1">
+{% asset "adding-elm-to-a-rails-application/elm-plus-rails.png" alt="Elm logo" %}
+
+<p class="notice--primary" markdown="1">
   **Update**: This tutorial was written before Rails 5.1 was released with
   integrated Webpack support, which makes this whole process much simpler. If
   you're using Rails 5.1+, check out
@@ -23,8 +26,6 @@ while to figure out as I'm new to both so I figured I'd share what I did.
 
 A complete example app is available on GitHub ([abevoelker/rails-elm-example](https://github.com/abevoelker/rails-elm-example));
 this post will walk through each step used to create it.
-
-<!--more-->
 
 ## Prerequisites
 
@@ -69,7 +70,7 @@ Now when you start the Rails server with `rails s` and point your browser to
 [http://localhost:3000](http://localhost:3000), you should see the following
 greeting:
 
-![Rails hello world](/images/elm-rails-output0.png "Rails hello world")
+{% asset "adding-elm-to-a-rails-application/elm-rails-output0.png" alt="Rails hello world" %}
 
 ## Add webpack
 
@@ -168,7 +169,7 @@ browser to [http://localhost:5000](http://localhost:5000) (note foreman starts
 Rails on port 5000 rather than 3000), you should see the default webpack
 application "Hello world!" in the developer console:
 
-![Rails hello world with webpack](/images/elm-rails-output1.png "Rails hello world with webpack")
+{% asset "adding-elm-to-a-rails-application/elm-rails-output1.png" alt="Rails hello world with webpack" %}
 
 If you take a look at the HTML source being rendered, you'll see that the JS is
 actually being served from a different webserver than Rails (this is the
@@ -278,7 +279,7 @@ Elm.Main.embed( document.getElementById( 'main' ) );
 Now if you reload [http://localhost:5000](http://localhost:5000) you should
 see the following output:
 
-![Elm hello world](/images/elm-rails-output2.png "Elm hello world")
+{% asset "adding-elm-to-a-rails-application/elm-rails-output2.png" alt="Elm hello world" %}
 
 ## Wrap-up
 

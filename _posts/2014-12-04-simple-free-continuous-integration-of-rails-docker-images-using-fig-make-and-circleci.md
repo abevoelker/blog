@@ -1,19 +1,18 @@
 ---
-layout: post
 title: "Simple, free continuous integration (CI) of Rails Docker images using fig, make, and CircleCI"
 date: 2014-12-04 15:45
-comments: true
-facebook:
-  image: docker-fig-make-circleci.png
-excerpt_separator: <!--more-->
-permalink: simple-free-continuous-integration-of-rails-docker-images-using-fig-make-and-circleci/
+header:
+  og_image: simple-free-continuous-integration-of-rails-docker-images-using-fig-make-and-circleci/docker-fig-make-circleci.png
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![Docker, Fig, Make, and CircleCI logos](/images/docker-fig-make-circleci.png "Docker, Fig, Make, and CircleCI logos")](/images/docker-fig-make-circleci.png)
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+{% asset "simple-free-continuous-integration-of-rails-docker-images-using-fig-make-and-circleci/docker-fig-make-circleci.png" alt="Docker, Fig, Make, and CircleCI logos" %}
 
 This is my second post on Docker.  Previously I showed you how I [develop Rails apps locally using Docker and Vagrant][rails-development-docker] on my development machine.  I had planned to cover Rails production deployments using Docker next, but that post is not quite done as it got a lot longer than I originally intended and needs some editing.  So for now, I'm going to show how I do simple and free continuous integration (CI) using Docker, [fig][], [make][], and [CircleCI][circleci].
-
-<!--more-->
 
 This setup will use CircleCI to remotely do a `docker build`, test the built image, and if the tests pass, push the image to a remote Docker registry.
 
@@ -92,7 +91,7 @@ test: build
 
 ```
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 Note: [Makefile rules][makefile-rules] require real tab characters, spaces will not parse!
 </p>
 

@@ -1,15 +1,11 @@
 ---
-layout: post
 title: "Final Ode to OpenEdge ABL Part 3: Parting Advice"
 date: 2012-08-07 20:00
-comments: true
-facebook:
-  image: yao_ming_progress_openedge.jpg
-excerpt_separator: <!--more-->
-permalink: final-ode-to-openedge-abl-part-3-parting-advice/
+header:
+  og_image: final-ode-to-openedge-abl-part-3-parting-advice/yao_ming_progress_openedge.jpg
 ---
 
-![Yao Ming laughing at OpenEdge](/images/yao_ming_progress_openedge.jpg "OpenEdge? Fuck that shit lol")
+{% asset "final-ode-to-openedge-abl-part-3-parting-advice/yao_ming_progress_openedge.jpg" alt="Yao Ming laughing at OpenEdge" %}
 
 In [part 1][1] of this series I demonstrated how to write Ruby code against an
 OpenEdge database using the JDBC driver and DataMapper ORM, and in [part 2][2]

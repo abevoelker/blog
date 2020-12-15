@@ -1,24 +1,21 @@
 ---
-layout: post
 title: "Why I'm switching from AWS to Google Cloud (GCP) for new personal projects"
 date: 2018-01-18 11:00
-comments: true
-facebook:
-  image: why-im-switching-from-aws-to-gcp-for-new-personal-projects/header.png
-excerpt_separator: <!--more-->
-categories:
-draft: true
+header:
+  og_image: why-im-switching-from-aws-to-gcp-for-new-personal-projects/header.png
+toc: true
+toc_label: "Sections"
+toc_sticky: true
+permalink: "/2018-01-18/why-im-switching-from-aws-to-gcp-for-new-personal-projects/"
 ---
 
-[!["Friendship ended" meme with AWS/Jeff Bar rejected in favor of Google Cloud](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/header.png)]({{ page.url }})
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/header.png" alt='"Friendship ended" meme with AWS/Jeff Bar rejected in favor of Google Cloud' %}
 
-<div class="alert alert-info">
+<div class="notice--info">
 <strong>Note:</strong> This post started as an introductory section on a different post walking through deploying applications with Google Kubernetes Engine (GKE). However, it got too long so I made it into a standalone post. Look for the follow-up soon!
 </div>
 
 This post is about why I have taken a preference for Google Cloud (GCP) for developing web apps, as contrasted with my experiences using AWS. This is not meant to be an exhaustive comparison between the two, but rather what stands out to me as an application developer.
-
-<!--more-->
 
 ## Introduction
 
@@ -28,7 +25,7 @@ My only other cloud provider experience was about a year ago, when I briefly tri
 
 Fast forward to the present and I no longer work at an AWS-heavy job, [GCP finally supports Postgres on Cloud SQL](https://cloudplatform.googleblog.com/2017/03/Cloud-SQL-for-PostgreSQL-managed-PostgreSQL-for-your-mobile-and-geospatial-applications-in-Google-Cloud.html), and Kubernetes keeps getting better at managing Docker application deployments. Therefore I decided to give GCP an earnest try for a side project I've been working on, and I've been impressed to the point where I will be defaulting to GCP for future personal projects I start. Here are some reasons why.
 
-<div class="alert alert-warning">
+<div class="notice--warning">
 <strong>Warning:</strong> I don't keep up with re:Invent or the latest AWS news so some of my experiences or opinions about AWS may already be out-of-date (assuming they weren't ill-formed to start with). Also, beware the zeal of the recently converted; I'll try not to be too Kool-Aid-y but caveat emptor.
 </div>
 
@@ -36,7 +33,7 @@ Fast forward to the present and I no longer work at an AWS-heavy job, [GCP final
 
 ### Kubernetes
 
-[![Kubernetes logo](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image23.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image23.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image23.png" alt="Kubernetes logo" %}
 
 This is at the top of my list because it's what really drew me in to GCP to start with. We all love Docker for giving us a standard way to build and run images/containers of our applications, but Docker [didn't come with a good production story](https://thehftguy.com/2016/11/01/docker-in-production-an-history-of-failure/).<a href="#footnote-2"><sup>2</sup></a>
 
@@ -62,13 +59,13 @@ With GCP, you get a similar discount to AWS's reserved instances simply by runni
 
 In addition, Compute Engine (GCE) [gives recommendations](https://cloud.google.com/compute/docs/instances/apply-sizing-recommendations-for-instances) about shrinking underutilized instances to save money:
 
-[![Compute Engine screenshot showing recommendations to resize instances to save money](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image12.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image12.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image12.png" alt="Compute Engine screenshot showing recommendations to resize instances to save money" %}
 
 AWS offers a similar function via their Trusted Advisor, but it's not free - cost optimization checks require a paid Business or Enterprise support contract to unlock:
 
-[![AWS Cost Optimization screenshot showing cost recommendations behind an upgrade paywall](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image10.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image10.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image10.png" alt="AWS Cost Optimization screenshot showing cost recommendations behind an upgrade paywall" %}
 
-[![AWS Trusted Advisor screenshot showing free features versus paid support plan features](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image13.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image13.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image13.png" alt="AWS Trusted Advisor screenshot showing free features versus paid support plan features" %}
 
 ### Load balancers
 
@@ -78,7 +75,7 @@ AWS always made me cringe because their elastic/application load balancers (ELB 
 
 GCP's load balancing is supposedly much, much better at handling traffic spikes than ELB/ALBs. Google has a tutorial blog post (caveat emptor) back from 2013 [showing their load balancer easily handling 1M requests/sec](https://cloudplatform.googleblog.com/2013/11/compute-engine-load-balancing-hits-1-million-requests-per-second.html) with reproducible instructions. In 2016 Google released a [whitepaper on their implementation](https://research.google.com/pubs/pub44824.html), which they call Maglev.
 
-<div class="alert alert-info">
+<div class="notice--info">
 I seem to recall reading that the difference in capability is due to ELB/ALBs being load balancers that are powered by VM instances that are provisioned and horizontally scaled by AWS just for you, whereas GCP's is a massive load balancer that powers a multitude of sites which you're getting a slice of (your site is basically a config entry). So GCP's LB can absorb bursts in traffic better than an ELB/ALB, which needs time to turn up new instances.
 </div>
 
@@ -90,11 +87,11 @@ So on AWS, if you want a managed solution (i.e. you don't want to deploy/adminis
 
 In addition, not every AWS service has good logging visibility. For example, [to see ALB/ELB logs](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html) you have to first enable enhanced logging, then the logs get dumped in compressed format to an S3 bucket (which you pay storage costs for) which you then have to decompress, parse and query yourself. Here's a [good blog post](https://cloudonaut.io/aws-monitoring-primer/) on AWS monitoring that has a nice infographic which highlights various AWS log sources you'll have to forward to whatever is aggregating/centralizing your logging:
 
-[![Infographic showing many AWS products that emit logs in different places](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image6.png)](https://cloudonaut.io/aws-monitoring-primer/)
+[{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image6.png" alt="Infographic showing many AWS products that emit logs in different places" %}](https://cloudonaut.io/aws-monitoring-primer/)
 
 GCP's [Stackdriver Logging](https://cloud.google.com/logging/), meanwhile, comes with not only excellent application log aggregation and querying built-in, but also logs of the various GCP-managed services, such as GKE cluster logs, load balancers, and [even Cloud CDN](https://cloud.google.com/cdn/docs/logging) logs. Here is the dropdown I see in Google Console of the available log types:
 
-[![Dropdown screenshot showing many different Stackdriver logs sources](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image4.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image4.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image4.png" alt="Dropdown screenshot showing many different Stackdriver logs sources" %}
 
 GKE Cluster logs for example can give you useful insights into what K8s is doing:
 
@@ -102,7 +99,7 @@ GKE Cluster logs for example can give you useful insights into what K8s is doing
 
 Here's what the Logging interface looks like, with one log line expanded showing logging metadata:
 
-[![Screenshot of Stackdriver Logging console](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image1.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image1.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image1.png" alt="Screenshot of Stackdriver Logging console" %}
 
 Stackdriver Logging comes with a [pretty decent free tier](https://cloud.google.com/stackdriver/pricing) at 50GB/month of storage and 7 days of retention (good enough for my projects). You can pay more for 30 days retention and more storage, but at $8 per instance it could get spendy.
 
@@ -110,15 +107,15 @@ Stackdriver Logging comes with a [pretty decent free tier](https://cloud.google.
 
 In addition to logging, [Stackdriver also does error reporting](https://cloud.google.com/error-reporting/). Support varies by language,<a href="#footnote-5"><sup>5</sup></a> but for Ruby there is a gem which will catch runtime errors and forward them to the error reporting service. You then receive emails when a new error occurs. Here's an example:
 
-[![Screenshot of an example Stackdriver Error Reporting email notification](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image11.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image11.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image11.png" alt="Screenshot of an example Stackdriver Error Reporting email notification" %}
 
 Then in the Console you can acknowledge, mute, mark errors as resolved, etc.
 
-[![Screenshot of Stackdriver Error Reporting dashboard](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image9.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image9.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image9.png" alt="Screenshot of Stackdriver Error Reporting dashboard" %}
 
 Clicking on an error gives you a graph of occurrences, a list of recent occurrences, links to jump to Stackdriver logs, etc.:
 
-[![Screenshot of individual error view in Stackdriver Error Reporting console](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image15.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image15.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image15.png" alt="Screenshot of individual error view in Stackdriver Error Reporting console" %}
 
 So far, this has been working well enough for me that I don't have to pay for an error reporting SaaS like Sentry, Rollbar, or BugSnag like I typically would. And right now it's all free while the product is still in beta.
 
@@ -132,7 +129,7 @@ There's a trite meme about the cloud simply being "someone else's computer." Whi
 
 Let's start with a flashback to the Snowden leaks. Remember this [leaked slide on NSA's MUSCULAR program](https://www.washingtonpost.com/world/national-security/nsa-infiltrates-links-to-yahoo-google-data-centers-worldwide-snowden-documents-say/2013/10/30/e51d661e-4166-11e3-8b74-d89d714ca4dd_story.html)?
 
-[![Leaked NSA MUSCULAR program slide showing how NSA hacked Google](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image8.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image8.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image8.png" alt="Leaked NSA MUSCULAR program slide showing how NSA hacked Google" %}
 
 While NSA was :^), [Google's (unofficial) reaction](https://www.techdirt.com/articles/20131106/00235225143/pissed-off-google-security-guys-issue-fu-to-nsa-announce-data-center-traffic-now-encrypted.shtml) seemed to be more like ┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻
 
@@ -156,7 +153,7 @@ GCP's equivalent to S3 is called Cloud Storage. This is a minor thing, but Cloud
 
 However, there is one thing that needs work with Cloud Storage, which is using a custom domain name while serving your content over HTTPS (*cough* like this blog *cough*). Currently, [Cloud Storage doesn't easily support that](https://cloud.google.com/storage/docs/static-website#https); it requires you to pay for a load balancer ($) or use a third-party CDN:
 
-[![Screenshot of Google Cloud Storage documentation showing they don't support custom domain names with HTTPS very well](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image19.png)](https://cloud.google.com/storage/docs/static-website#https)
+[{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image19.png" alt="Screenshot of Google Cloud Storage documentation showing they don't support custom domain names with HTTPS very well" %}](https://cloud.google.com/storage/docs/static-website#https)
 
 Meanwhile in AWS, you can easily create a TLS-enabled CloudFront distribution to serve content from S3 buckets. So my blog will stay on AWS S3+CloudFront until GCP gets a better story for this use case.
 
@@ -164,7 +161,7 @@ Meanwhile in AWS, you can easily create a TLS-enabled CloudFront distribution to
 
 This is also a minor thing, but I really like the [project organizational feature](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy#projects) that GCP provides. Projects are one part of a whole [resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy) that GCP defines, which includes other pieces like folders and organizations, but since I'm a lone developer I find projects most useful.
 
-[![GCP resource hierarchy diagram](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image22.png)](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy)
+[{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image22.png" alt="GCP resource hierarchy diagram" %}](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy)
 
 Here's why: with AWS, if you want to say run multiple environments of a web app under the same AWS account, you have to name your resources carefully so that they don't collide (e.g. foo-staging, foo-production, etc.). Billing also gets complicated - you have to [add tags to every resource](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/custom-tags.html) so that you can properly track things in the billing view. Finally, it can be dangerous - you have to be very careful when destroying resources, setting up VPCs + ACLs or Security Groups, etc. lest you fat-finger something and destroy or blackhole a prod resource. Or if some errant test process hits an AWS service limit and a production service ends up getting throttled.
 
@@ -178,11 +175,11 @@ Both GCP and AWS have pretty good documentation in my experience. I appreciate t
 
 One thing I like about GCP's documentation is that each service has a "support" section that has links to open support resources like specific StackOverflow tags or Google Groups message boards to post in. Here's [Cloud SQL's support section](https://cloud.google.com/sql/docs/support) for example:
 
-[![Screenshot of Google Cloud SQL Support page showing references to free support resources](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image7.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image7.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image7.png" alt="Screenshot of Google Cloud SQL Support page showing references to free support resources" %}
 
 I like that GCP acknowledges that not everyone is going to pay $150+/mo for premium support and links to free/open resources. Check out this big infographic of free support resources on [their main support page](https://cloud.google.com/support/):
 
-[![Screenshot of main GCP support page showing table linking to various free support resources](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image14.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image14.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image14.png" alt="Screenshot of main GCP support page showing table linking to various free support resources" %}
 
 Speaking of support, I don't have any experience using paid support with either provider. For personal projects I don't have the money for it, and at my day job someone else handled official support tickets.
 
@@ -208,17 +205,17 @@ These JSON documents can get a bit complicated to assemble by hand, so AWS has a
 
 GCP's approach is a bit different. Instead of having you select a bunch of fine-grained permissions à la carte, they bundle related permissions into predefined groups called "roles." For example, here's the table of [Cloud SQL roles](https://cloud.google.com/iam/docs/understanding-roles#sql_name_short_roles):
 
-[![Screenshot of Cloud SQL Roles documentation showing role names, description, and resource type targets](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image5.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image5.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image5.png" alt="Screenshot of Cloud SQL Roles documentation showing role names, description, and resource type targets" %}
 
 One thing that really tripped me up at first is that a lot of services - including Cloud SQL in the above screenshot - can only target **an entire project or organization** rather than specific resources (e.g. one database instance).
 
 Some resources do have that granularity, however - for example, [here's Cloud Storage](https://cloud.google.com/iam/docs/understanding-roles#gcs_name_short_roles), which lets you target individual bucket resources:
 
-[![Screenshot of Cloud Storage Roles documentation showing role names, description, and resource type targets](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image16.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image16.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image16.png" alt="Screenshot of Cloud Storage Roles documentation showing role names, description, and resource type targets" %}
 
 Behind the scenes, these roles are hiding a bunch of fine-grained IAM permissions; for example, here's a truncated list of what the [GCE's instanceAdmin role](https://cloud.google.com/compute/docs/access/iam#instance_admin_role) bundles up:
 
-[![Screenshot of Instance Admin role documentation showing role name, description, and list of fine-grained permissions](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image2.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image2.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image2.png" alt="Screenshot of Instance Admin role documentation showing role name, description, and list of fine-grained permissions" %}
 
 In practice so far this has been a lot easier to manage for me, versus before with AWS having to dynamically generate various JSON blobs from templates in my deployment process. So far I have not needed access to fine-grained IAM permissions, but GCP does currently have that as a [Beta feature called IAM Custom Roles](https://cloud.google.com/iam/docs/understanding-custom-roles).
 
@@ -255,13 +252,13 @@ This is something that I could probably resolve with a paid support plan - which
 
 I mentioned I liked the various Stackdriver services, but an annoying thing about integrating them is that the only debugging tool you have is the relevant API dashboard page that shows error and success counts:
 
-[![Screenshot of Stackdriver Trace API dashboard showing traffic and error charts](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image21.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image21.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image21.png" alt="Screenshot of Stackdriver Trace API dashboard showing traffic and error charts" %}
 
 If you set it up wrong (like I did at first<a href="#footnote-8"><sup>8</sup></a>), your error counts will be through the roof, and you have to try to suss out why purely from the HTTP code and credentials chart filters - there's no logs to look at.
 
 For example, I still have a ~1% error ratio on a couple Stackdriver services, and I'm not even sure what's causing those errors:
 
-[![Screenshot of API dashboard page showing Stackdriver error ratios](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image20.png)](/images/why-im-switching-from-aws-to-gcp-for-new-personal-projects/image20.png)
+{% asset "why-im-switching-from-aws-to-gcp-for-new-personal-projects/image20.png" alt="Screenshot of API dashboard page showing Stackdriver error ratios" %}
 
 (The 100% error rate for Stackdriver Debugger I'm pretty sure is because I don't have a permission set correctly on my GKE cluster, but again with poor visibility into the problem, I'm left guess-and-checking)
 

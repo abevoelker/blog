@@ -1,15 +1,11 @@
 ---
-layout: post
 title: "Final Ode to OpenEdge ABL Part 2: Ruby Helps You REST Easy"
 date: 2012-07-17 21:05
-comments: true
 facebook:
-  image: openedge_clown_bed.jpg
-excerpt_separator: <!--more-->
-permalink: final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/
+  og_image: final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/openedge_clown_bed.jpg
 ---
 
-![Poor results when trying to REST with OpenEdge](/images/openedge_clown_bed.jpg)
+{% asset "final-ode-to-openedge-abl-part-2-ruby-helps-you-rest-easy/openedge_clown_bed.jpg" alt="Poor results when trying to REST with OpenEdge" %}
 
 In [part 1][1] of this series, we learned how to get Ruby to talk to an OpenEdge
 database by using [an adapter][22] for the [DataMapper][2] ORM framework.
@@ -17,8 +13,6 @@ database by using [an adapter][22] for the [DataMapper][2] ORM framework.
 In this post, I would like to demonstrate both the power and beauty of Ruby by
 rapidly prototyping a RESTful Web service (using JSON representation responses)
 for `sports2000` **customers** using our new OpenEdge database adapter.
-
-<!--more-->
 
 [REST][18] is a pretty big topic and
 if you are unfamiliar with it you should probably invest some effort into
@@ -487,7 +481,7 @@ do a simple database migration using DataMapper's ability to connect to
 lingo).  If you've been following along and that interests you let me know in
 the comments.
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Update**: [Part 3][29] has now been posted.
 </p>
 

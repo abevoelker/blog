@@ -22,6 +22,17 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/abevoelker"
 
+og_image: "bio-photo.jpg"
+twitter:
+  username: "abevoelker"
+social:
+  name: Abe Voelker
+  type: Person
+  links:
+    - "https://twitter.com/abevoelker"
+    - "https://github.com/abevoelker"
+    - "https://www.facebook.com/abe.voelker"
+
 defaults:
   - scope:
       path: ""
@@ -33,101 +44,27 @@ defaults:
       show_date: true
       comments: false
       share: true
-      related: true
+      related: false
 
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "UA-16891019-1"
+    anonymize_ip: false # default
 
-# Google services
-google_verification:
-# Use either direct GA implementation or set up GTM account
-# - using both will skew your data (leave blank to not use at all)
-google_analytics: UA-16891019-1
-google_tag_manager:
-# Bing services
-bing_verification:
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "abevoelker"
 
-# Optional features
-animated:             false
-show_related_posts:   false
-show_post_footers:    false
-show_social_icons:    false
-ajaxify_contact_form: false
-enable_mathjax: false
-extended_fonts: false
-enable_anchorjs: true
-
-# Disqus post comments
-# (leave blank to disable Disqus)
-disqus_shortname: abevoelker
-
-# Facebook Comments plugin
-# (leave blank to disable Facebook Comments, otherwise set it to true)
-facebook_comments: true
-facebook_appid: 141498135901508
-facebook_comments_number: 10
-
-# Social icons
-github_username: abevoelker
-bitbucket_username:
-stackoverflow_id:
-twitter_username: abevoelker
-skype_username:
-steam_nickname:
-google_plus_id: 100837991553182207519
-linkedin_username:
-angellist_username:
-medium_id:
-bitcoin_url:
-paypal_url:
-flattr_button:
-
-# Post sharing icons
-show_sharing_icons: false
-# Change to 'true' to enable individual icons
-share_facebook: false
-share_twitter: false
-share_googleplus: false
-share_linkedin: false
-share_digg: false
-share_tumblr: false
-share_reddit: false
-share_stumbleupon: false
-share_hackernews: false
-
-text:
-  pagination:
-    newer: 'Newer'
-    older: 'Older'
-  share_buttons:
-    text:         'Share this post!'
-    facebook:     'Share on Facebook'
-    twitter:      'Share on Twitter'
-    googleplus:   'Share on Google+'
-    linkedin:     'Share on LinkedIn'
-    digg:         'Share on Digg'
-    tumblr:       'Share on Tumblr'
-    reddit:       'Share on Reddit'
-    stumbleupon:  'Share on StumbleUpon'
-    hackernews:   'Share on Hacker News'
-  post:
-    updated:        'Updated'
-    minute_read:    'minute read'
-    related_posts:  'Related Posts'
-  index:
-    coming_soon: 'Coming soon...'
-  contact:
-    email:    'Email Address'
-    content:  'What would you like to say?'
-    subject:  'New submission!'
-    submit:   'Say Hello'
-    ajax:
-      sending:  'sending..'
-      sent:     'Message sent!'
-      error:    'Error!'
-  thanks: 'Thanks for contacting us. We will reply as soon as possible.'
-  og_locale: 'en_US'
+after_footer_scripts:
+  - "//platform.twitter.com/widgets.js"
 
 # Build settings
 markdown:     kramdown
+kramdown:
+  # disable smart quotes
+  smart_quotes: ["apos", "apos", "quot", "quot"]
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
 permalink:    '/:title'

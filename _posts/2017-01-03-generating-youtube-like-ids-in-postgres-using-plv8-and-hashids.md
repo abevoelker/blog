@@ -1,16 +1,13 @@
 ---
-layout: post
 title: "Generating YouTube-like IDs in Postgres using PL/V8 and Hashids"
 date: 2017-01-03 00:00
-comments: true
-facebook:
-  image: hashid-url.png
-excerpt_separator: <!--more-->
+header:
+  og_image: generating-youtube-like-ids-in-postgres-using-plv8-and-hashids/hashid-url.png
 ---
 
-[![Hashid](/images/hashid-url.png "Hashid URL")]({{ page.url }})
+{% asset "generating-youtube-like-ids-in-postgres-using-plv8-and-hashids/hashid-url.png" alt="Kubernetes on Rails website preview" %}
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
   **Update**: There is a brand-new [Postgres Hashids extension](http://hashids.org/postgresql/)
   that you should use if possible instead of this PL/V8 solution! However, this
   solution may still be valuable if you are using AWS RDS, which doesn't
@@ -29,8 +26,6 @@ integer primary key as the resource ID. To prevent people from writing a super
 simple script that could scrape my whole product catalog, it would be nice if we
 could make the URLs not trivially guessable while still remaining
 publicly-accessable for people who know them.
-
-<!--more-->
 
 One approach that [some people advocate](https://www.clever-cloud.com/blog/engineering/2015/05/20/why-auto-increment-is-a-terrible-idea/)
 is simply using UUIDs, but I think URLs like [https://example.com/products/3bc95fb9-f0c1-4af8-989e-6ea8467879d3](https://example.com/products/3bc95fb9-f0c1-4af8-989e-6ea8467879d3)

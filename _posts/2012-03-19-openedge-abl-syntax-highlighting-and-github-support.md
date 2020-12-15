@@ -1,23 +1,17 @@
 ---
-layout: post
 title: "OpenEdge ABL syntax highlighting and GitHub support"
 date: 2012-03-19 18:57
-comments: true
-facebook:
-  image: octocat.png
-excerpt_separator: <!--more-->
-permalink: openedge-abl-syntax-highlighting-and-github-support/
+header:
+  og_image: openedge-abl-syntax-highlighting-and-github-support/octocat.png
 ---
 
-[![GitHub Octocat logo](/images/octocat.png "GitHub Octocat logo")](https://github.com/languages/OpenEdge ABL)
+[{% asset "openedge-abl-syntax-highlighting-and-github-support/octocat.png" alt="GitHub Octocat logo" %}](https://github.com/languages/OpenEdge ABL)
 
 As I had written in my last blog post, in order to upgrade my blog
 from Wordpress to a static site like Octopress, I decided that while performing
 the migration I would improve the syntax highlighting of OpenEdge ABL code
 snippets.  Obviously I'm [no fan][0] of the language, but it's baggage that I'm
 burdened to carry so I thought I might as well carry it with me in style.
-
-<!--more-->
 
 Being an esoteric and proprietary language, ABL doesn't have much mainstream
 support for things like syntax highlighting.  When my blog was using Wordpress,

@@ -1,19 +1,18 @@
 ---
-layout: post
 title: "Rails Development Using Docker and Vagrant"
 date: 2014-06-13 16:00
-comments: true
-facebook:
-  image: docker.png
-excerpt_separator: <!--more-->
-permalink: rails-development-using-docker-and-vagrant/
+header:
+  og_image: rails-development-using-docker-and-vagrant/docker.png
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-[![Docker containerizing some typical Rails-stack software](/images/docker.png "Docker containerizing some typical Rails-stack software")](/images/docker.png)
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+{% asset "rails-development-using-docker-and-vagrant/docker.png" alt="Docker containerizing some typical Rails-stack software" %}
 
 If you're like me, you've probably been hearing a lot about [Docker][docker] over the past year but haven't really gotten past the ["hello world" tutorial][docker-tutorial] because you haven't found a good way to integrate it into your development workflow or staging/production deployment process.  I've spent the last several weeks learning Docker and porting a Rails project's development environment from Ansible provisioning to Docker, so I thought I'd share my experiences so far.
-
-<!--more-->
 
 ## Why Docker?
 
@@ -25,21 +24,21 @@ Docker solves a lot of these problems.  It simplifies development by making it f
 
 Docker is especially appealing to me in the context of Rails deployments, since you have to do other things like compile assets for the asset pipeline or upgrade the Ruby interpreter version - things that are annoying to try and write in Capistrano or Ansible.
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Note**: You may have heard of the ["vendor everything"][vendor-everything] approach to bundling gems for deployment, which advocates checking gem binaries into your source control.  The benefit to that approach is that you no longer have to worry about RubyGems.org (or other gem sources) being down when you do deploys.  The downside is that you add bloat to your source control by storing big fat binary files in it.  Docker gives you the same benefit without corroding your source control.  Win!
 </p>
 
 ## Creating Docker images: the Dockerfile
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Terminology note**: I was going to start by including my own simplified definitions of what Docker [images][docker-image] and [containers][docker-container] are, but the Docker website does a great job with these terms so check the links intead.  But the main difference is that a container is an instantiated, running image, which can be be frozen back into an image (which will save all the filesystem modifications that have happened while it was running).
 </p>
 
 When creating your own Docker images, you will define the build instructions via a Dockerfile.  A Dockerfile is a list of statements, executed imperatively, that follow [a special DSL syntax][dockerfile-syntax].  Each statement in the Dockerfile generates a new image that is a child of the previous statement's image.  You know what that creates?  A [directed acyclic graph (DAG)][dag] of images, not at all unlike a [graph of git commits][git-dag]:
 
-[![Graph of docker images on my machine](/images/docker-dag.png "Graph of docker images on my machine")](/images/docker-dag.png)
+{% asset "rails-development-using-docker-and-vagrant/docker-dag.png" alt="Graph of docker images on my machine" %}
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Note**: Each blue image node in the graph above has a tag, very similar to a branch or tag in a git commit graph. This graph was generated with `docker images --viz | dot -Tpng -o docker.png`, if you want to look at the graph of Docker images on your machine. You can also see the graph in your console directly with `docker images --tree`
 </p>
 
@@ -113,7 +112,7 @@ RUN chown -R web:web /var/www &&\
 
 [`RUN`][dockerfile-run] executes commands in a new container.  You will note that I am immediately `chown`ing the files to my `web` user, because `ADD` gives the file root ownership (you will see this pattern a lot in Dockerfiles).
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **ADD gotcha**: One thing that had tripped me up with `ADD` is that you cannot add files that exist above the Dockerfile's directory.  So you cannot do `ADD ../some_file`.  There is a note on the [`ADD` reference page][dockerfile-add] if you want the technical details as to why.
 </p>
 
@@ -165,7 +164,7 @@ When running an image, you can override its baked-in `CMD` with your own command
 
 My example `CMD` statement starts `foreman`, which is adequate for development.  It would probably be better to move each service in the foreman Procfile to their own [supervisord][supervisord] configs, and have this `CMD` statement start up supervisord instead of foreman. Such an approach is common for running multiple processes in a Docker container and is production-safe.
 
-<div class="message" markdown="1">
+<div class="notice--primary" markdown="1">
 **Note**: I mentioned that it is common to use supervisord to start up multiple processes in a Docker container.  It is very important to note that Docker is *not like a VM* - the Docker container will only run the exact process that you tell it to run (that process in turn can spawn other processes).  But there is no init process, no cron daemon, no SSH daemon, etc.  It took me a little bit to understand this.
 
 There is [an image out there by Phusion][phusion-base-image] that aims to replicate a basic running Linux system, but it seems to be frowned upon by the Docker devs I've seen in #docker as it goes against the intent of Docker and it can have wonky issues (for example, upstart scripts may behave weirdly due to not getting the correct signals they need to start).
@@ -175,7 +174,7 @@ It is also important to note that the process you start with your Docker contain
 
 ## An example Vagrantfile using the Docker provider
 
-![Vagrant logo](/images/vagrant-logo.png "Vagrant logo"){:height="300px" width="250px"}
+{% asset "rails-development-using-docker-and-vagrant/vagrant-logo.png" alt="Vagrant logo" style="height: 300px;" %}
 
 Vagrant 1.6 added support for Docker providers and provisioners.  I've seen some people say that this will make it easier for people to learn Docker, but I disagree.  [Vagrant's Docker provider DSL][vagrant-docker-config] is a pretty thin façade over the Docker CLI, so you need to have a good handle on how Docker works before using it - otherwise you're just dealing with another layer of indirection which will make things more confusing!
 
@@ -288,7 +287,7 @@ Remember when I said Vagrant was a thin façade over the Docker CLI?  If you did
 docker run -d -name gun_crawler_web_postgres -p 5432:5432 -t abevoelker/postgres
 ```
 
-<p class="message" markdown="1">
+<p class="notice--primary" markdown="1">
 **Note**: To list all containers running on your host machine, use `docker ps`.  To list *all* containers (included stopped ones), use `docker ps -a`.
 </p>
 
@@ -482,7 +481,7 @@ If there is interest, I could make a demo Rails application with a Dockerfile an
 
 ## Next step: deployment
 
-[![](/images/nowwhat.gif)](/images/nowwhat.gif)
+{% asset "rails-development-using-docker-and-vagrant/nowwhat.gif" alt='Finding Nemo "Now what?" ending scene' %}
 
 So far, I've only updated my development environment to use Docker.  I have yet to deploy to a remote staging/production environment.  I have some ideas, but have yet to try them out.
 

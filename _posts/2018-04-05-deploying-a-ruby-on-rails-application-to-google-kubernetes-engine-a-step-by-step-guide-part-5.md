@@ -1,13 +1,15 @@
 ---
-layout: post
 title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 5: Conclusion, further topics and Rails extras"
 date: 2018-04-05 00:04
-comments: false
-og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/congratulations.gif"
-excerpt_separator: <!--more-->
+header:
+  og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/congratulations.gif"
+permalink: "/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-5/"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-<div class="alert alert-warning" markdown="1">
+<div class="notice--warning" markdown="1">
 Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
 blog post series but **updated with the latest changes** in Kubernetes and
 Google Cloud and **greatly simplified** coursework based on feedback I got
@@ -17,7 +19,7 @@ format. Please check it out! ☺️ - Abe
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/congratulations.gif" alt="Neon Genesis-style congratulations" %}]({{ page.url }})
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 <small>Welcome to the last post of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can visit the previous parts:</small><br />
 <small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
 <small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
@@ -40,8 +42,6 @@ I'll close with a great thought by Kelsey Hightower, in that Kubernetes isn't th
 HUGE thanks to my reviewers, Daniel Brice ([@fried_brice](https://twitter.com/fried_brice)) and Sunny R. Juneja ([@sunnyrjuneja](https://twitter.com/sunnyrjuneja)) for reviewing very rough drafts of this series of blog post and providing feedback. 😍 They stepped on a lot of rakes so that you didn't have to - please give them a follow! 😀
 
 Any mistakes in these posts remain of course solely my own.
-
-<!--more-->
 
 ## Topics for further exploration
 

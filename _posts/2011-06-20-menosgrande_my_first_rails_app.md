@@ -1,17 +1,13 @@
 ---
-layout: post
 title: "menosgrande - My First Ruby on Rails App!"
 date: 2011-06-20
-comments: true
-facebook:
-  image: menosgrande.png
-excerpt_separator: <!--more-->
-permalink: menosgrande_my_first_rails_app/
+header:
+  og_image: menosgrande_my_first_rails_app/menosgrande.png
 ---
 
 [Unicode]: http://unicode.org/standard/WhatIsUnicode.html
 
-[![](/images/menosgrande.png)](http://menosgrande.org)
+[{% asset "menosgrande_my_first_rails_app/menosgrande.png" alt="Screenshot of the website" %}](http://menosgrande.org)
 
 I'm proud to announce the release of my first Ruby on Rails app -
 [menosgrande](http://menosgrande.org)!
@@ -19,8 +15,6 @@ I'm proud to announce the release of my first Ruby on Rails app -
 It's not a very complicated application; it's just a URL shortener.  However,
 I've tried to make it the most efficient URL shortener in existence by doing
 a few things uniquely that I don't see any other URL shorteners doing:
-
-<!--more-->
 
 * **[Unicode][] paths** (i.e. [IRI](http://tools.ietf.org/html/rfc3987)s).
   While other URL shortening services use the digits [a-zA-Z0-9] only as keys,

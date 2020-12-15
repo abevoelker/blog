@@ -1,13 +1,17 @@
 ---
-layout: post
 title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 1: Introduction and creating cloud resources"
 date: 2018-04-05 00:00
-comments: false
-og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
+permalink: "/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/"
 ---
 
-<div class="alert alert-warning" markdown="1">
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+<div class="notice--warning" markdown="1">
 Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
 blog post series but **updated with the latest changes** in Kubernetes and
 Google Cloud and **greatly simplified** coursework based on feedback I got
@@ -17,7 +21,7 @@ format. Please check it out! ☺️ - Abe
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/gke drawing.png" alt="Drawing of Kubernetes application design" %}]({{ page.url }})
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 <small>Welcome to part one of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you'd like to jump ahead, you can visit the following parts:</small><br />
 <small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
 <small>[Part 3: Cache static assets using Cloud CDN](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-3/)</small><br />
@@ -26,8 +30,6 @@ format. Please check it out! ☺️ - Abe
 </div>
 
 Following up on [my last post](https://blog.abevoelker.com/2018-01-18/why-im-switching-from-aws-to-gcp-for-new-personal-projects/) on why I'm switching personal projects from AWS to Google Cloud (GCP), this series of posts will walk through deploying an example Ruby on Rails application to GCP's Kubernetes Engine (GKE). You should be able to follow this tutorial without experience with Ruby or Rails (please let me know if I fail at this).
-
-<!--more-->
 
 We will deploy [a simple app](https://github.com/abevoelker/gke-demo) that allows anyone to upload images with captions:
 
@@ -39,7 +41,7 @@ Uploaded images will be stored in Cloud Storage and the captions will be stored 
 
 We'll also cover serving [Brotli-compressed](https://en.wikipedia.org/wiki/Brotli) static assets from an nginx sidecar container with Cloud CDN caching enabled on a [cookieless domain](https://gtmetrix.com/serve-static-content-from-a-cookieless-domain.html), performing remote Docker builds using [Container Builder](https://cloud.google.com/container-builder/) and [Container Registry](https://cloud.google.com/container-registry/), using `jemalloc` to [improve memory usage/performance](https://www.levups.com/en/blog/2017/optimize_ruby_memory_usage_jemalloc_heroku_scalingo.html), IPv6 support, and popping a remote `rails console` for debugging.
 
-<div class="alert alert-warning" markdown="1">
+<div class="notice--warning" markdown="1">
 **Warning**: Running this demo will create resources on GCP and may incur a small cost while running. Remember to delete the project when you are finished so that you don't get charged unnecessarily:
 
 ```console
@@ -70,7 +72,7 @@ First let's clone the [demo Rails app](https://github.com/abevoelker/gke-demo) f
 $ git clone https://github.com/abevoelker/gke-demo.git
 ```
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 If you're a Ruby/Rails developer, I put notes [in the final post of the series](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-5/#extras-for-rails-developers) about how and why I made some choices when writing/packaging this app that may interest you.
 </div>
 
@@ -148,7 +150,7 @@ First we need to enable the Compute API:
 $ gcloud services enable compute.googleapis.com
 ```
 
-<div class="alert alert-info" markdown="1">
+<div class="notice--info" markdown="1">
 **Note:** We'll be enabling a lot of little APIs as we work through this tutorial. It can be annoying running into these kinds of errors when certain APIs aren't enabled:
 
 {% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/image_2.png" alt="Screenshot of service not enabled gcloud CLI error" %}
@@ -169,7 +171,7 @@ captioned-images-ipv4-address          35.201.64.7         RESERVED
 captioned-images-ipv6-address          2600:1901:0:439d::  RESERVED
 ```
 
-<div class="alert alert-warning" markdown="1">
+<div class="notice--warning" markdown="1">
 **Warning**: if you've signed up for a free trial GCP account, you may get an error here:
 
 ```

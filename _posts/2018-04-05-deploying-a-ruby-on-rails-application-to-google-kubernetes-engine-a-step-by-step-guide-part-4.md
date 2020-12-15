@@ -1,13 +1,18 @@
 ---
-layout: post
 title: "Deploying a Ruby on Rails application to Google Kubernetes Engine: a step-by-step guide - Part 4: Enable HTTPS using Let's Encrypt and cert-manager"
 date: 2018-04-05 00:03
 comments: false
-og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/k8s-lets-encrypt.png"
-excerpt_separator: <!--more-->
+header:
+  og_image: "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/k8s-lets-encrypt.png"
+permalink: "/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-4/"
+toc: true
+toc_label: "Sections"
+toc_sticky: true
 ---
 
-<div class="alert alert-warning" markdown="1">
+<h2 id="intro" style="display: none;">Introduction</h2>
+
+<div class="notice--warning" markdown="1">
 Update: I've now created a **premium training course**, [Kubernetes on Rails](https://kubernetesonrails.com/), which takes some inspiration from this
 blog post series but **updated with the latest changes** in Kubernetes and
 Google Cloud and **greatly simplified** coursework based on feedback I got
@@ -17,7 +22,7 @@ format. Please check it out! ☺️ - Abe
 
 [{% asset "deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide/k8s-lets-encrypt.svg" alt="Let's Encrypt logo" width="320px" height="320px" %}]({{ page.url }})
 
-<div class="alert alert-secondary" markdown="1">
+<div class="notice--primary" markdown="1">
 <small>Welcome to part four of this five-part series on deploying a Rails application to Google Kubernetes Engine. If you've arrived here out-of-order, you can jump to a different part:</small><br />
 <small>[Part 1: Introduction and creating cloud resources](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-1/)</small><br />
 <small>[Part 2: Up and running with Kubernetes](/2018-04-05/deploying-a-ruby-on-rails-application-to-google-kubernetes-engine-a-step-by-step-guide-part-2/)</small><br />
@@ -32,8 +37,6 @@ Unfortunately TLS/SSL certificates is one area that GCP/GKE is at a major defici
 And I'm not the only one:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Really impressed by Google Cloud Platform so far. It&#39;s like AWS minus the obfuscated Amazonspeak, and with a better console.<br><br>The only service I miss is ACM — zero-hassle HTTPS is *such* a killer feature. A Kubernetes/Let&#39;s Encrypt Rube Goldberg machine just isn&#39;t the same.</p>&mdash; Brandur (@brandur) <a href="https://twitter.com/brandur/status/973357848863244289?ref_src=twsrc%5Etfw">March 13, 2018</a></blockquote>
-
-<!--more-->
 
 Instead we will be using [Let's Encrypt](https://en.wikipedia.org/wiki/Let's_Encrypt) to provision free certificates using [cert-manager](https://github.com/jetstack/cert-manager), which is a Kubernetes add-on that we'll install into our cluster that automatically performs the magic handshakes with Let's Encrypt to verify we own the domains we need certificates for and handles certificate renewals.
 
