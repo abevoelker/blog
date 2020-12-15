@@ -5,6 +5,7 @@ header:
   og_image: "on-the-death-of-my-familys-dairy-farm/cover-image.jpg"
 additional_css:
   - "on-the-death-of-my-familys-dairy-farm.scss"
+permalink: "/2019-03-06/on-the-death-of-my-familys-dairy-farm/"
 ---
 
 <div class="row-full">
@@ -639,25 +640,26 @@ For some real-world examples, in Wisconsin in 2017 a [baby died from blue baby s
 
 In Kewaunee County in northeast Wisconsin, [more than one-third (!) of 320 wells tested](https://madison.com/ct/news/local/environment/bacteria-in-state-s-drinking-water-is-public-health-crisis/article_dd9b5d97-084b-5337-a664-37b9a6b36d30.html) were found to be unsafe to use due to unsafe levels of coliform bacteria or nitrates. In 2004 in that region, a six-month-old became violently ill after taking a bath in water poisoned by manure runoff. A state representative called the situation there a ["public health crisis."](http://legis.wisconsin.gov/senate/democrats/news/2015-press-releases/groundwater-protection-bill/)
 
-<figure>
-  <div class="youtube-embed">
-  {% include youtube url="https://www.youtube.com/embed/ug31xUsCHcw" %}
-  </div>
-  <div class="youtube-embed-print">
-    {% asset 'on-the-death-of-my-familys-dairy-farm/youtube-preview-manure-shower.jpg'
-      srcset:width=640
-      srcset:width=960
-      srcset:width=1440
-      sizes="(max-width: 320px) 640px,
-            (max-width: 480px) 960px,
-            1440px"
-      width="100%"
-    %}
-  </div>
-  <figcaption>
+
+<div class="youtube-embed">
+{% include youtube url="https://www.youtube.com/embed/ug31xUsCHcw" width="636" height="358" %}
+</div>
+<div class="youtube-embed-print">
+  {% asset 'on-the-death-of-my-familys-dairy-farm/youtube-preview-manure-shower.jpg'
+    srcset:width=640
+    srcset:width=960
+    srcset:width=1440
+    sizes="(max-width: 320px) 640px,
+          (max-width: 480px) 960px,
+          1440px"
+    width="100%"
+  %}
+</div>
+<div class="foo-center">
+  <p>
     <em>A shower in rural Kewaunee County runs brown, contaminated by manure after a rainfall. Courtesy Erika and Rob Balza.</em>
-  </figcaption>
-</figure>
+  </p>
+</div>
 
 In 2014 in Juneau County, a man was [forced to sell](https://madison.com/wsj/news/local/environment/manure-spraying-under-scrutiny/article_66a5b80b-b8c8-5daf-92ec-3d24585f35ea.html) the home he had lived in for 20 years after a CAFO began repurposing water irrigation systems to spray manure, and the liquid soaked into the walls of his home ("It was an ammonia smell. It hurt so bad even to breathe," he said).
 
