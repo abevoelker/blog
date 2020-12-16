@@ -45,6 +45,8 @@ defaults:
       comments: false
       share: true
       related: false
+      # Disable excerpts
+      excerpt: ""
 
 analytics:
   provider: "google-gtag"
@@ -78,6 +80,7 @@ plugins:
   - jekyll-gist
   - jekyll-toc
   - jekyll-include-cache
+  - jekyll-feed
 # https://github.com/jekyll/jekyll/issues/2938
 exclude: ["vendor", "Gemfile*", "deploy.sh", "_private"]
 include: [".well-known"]
