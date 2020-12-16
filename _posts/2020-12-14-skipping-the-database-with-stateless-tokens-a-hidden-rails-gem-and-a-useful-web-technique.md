@@ -156,11 +156,14 @@ signed_data = verifier.generate({user_id: 123})
 
 Comparing the two outputs, they are both of similar length - 64 chars and 62 chars, respectively. For comparison, the text representation of a version 4 UUID is 36 chars.
 
-However, if you put the data through a [Base64 decoder](https://www.base64decode.org/), for the encrypted data (ciphertext) created with `MessageEncryptor` you will get total jibberish binary:
+However, if you put the data through a [Base64 decoder](https://www.base64decode.org/), for the encrypted data (ciphertext) created with `MessageEncryptor` you will get total jibberish binary:[^binary-note]
 
-```
-8O;/+uVRoIv2eM
-```
+{% asset "stateless-signed-tokens/binary-output.png" class="align-center" %}
+
+[^binary-note]:
+    Fun fact, the control characters in this output completely broke my blog's Atom feed syndication! It turns out XML 1.0 simply cannot process control characters. Not "please escape control characters," it [makes them outright illegal][xml-illegal]! And since Atom is built on XML 1.0, there is no way to safely escape them.
+
+    So I literally had to take a picture of the output, despite it being valid UTF-8 which displays in the browser perfectly fine.
 
 Whereas the signed data created with `MessageVerifier` is visible:
 
@@ -360,3 +363,4 @@ I'm not a security person and I could be wrong about things I wrote in this post
 [media capture attributes]: http://anssiko.github.io/html-media-capture/
 [ShareDrop]: https://www.sharedrop.io/
 [devise-passwordless]: https://github.com/abevoelker/devise-passwordless
+[xml-illegal]: https://stackoverflow.com/questions/404107/why-are-control-characters-illegal-in-xml-1-0
