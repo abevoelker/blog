@@ -329,14 +329,14 @@ While not a scientific poll, it's an interesting sample. If you look at the herd
 
 From what I can tell, the farming landscape changed dramatically in the 1970s when [President Nixon promoted agribusiness lobbyist Earl "Rusty" Butz](https://grist.org/article/the-butz-stops-here/) to USDA secretary. Butz had [a reputation going back to at least the 1950s](https://www.nytimes.com/1976/06/13/archives/why-they-love-earl-butz-prosperous-farmers-see-him-as-the-greatest.html) for lobbying for dramatic modernizations to farming at the expense of small farms. ["Adapt or die; resist and perish... Agriculture is now big business" he would say](https://books.google.com/books?id=zJs4AAAAIAAJ&pg=PA136&dq=%22Adapt+or+die,+resist+and+perish%22&hl=en&sa=X&ved=0ahUKEwi6lPm4t53gAhVE5YMKHft2AdkQ6AEIKDAA#v=onepage&q=%22Adapt%20or%20die%2C%20resist%20and%20perish%22&f=false). By the 1970s, before his USDA nomination, he was a director of three large agribusiness corporations.
 
-<div >
+<div>
 <figure>
   {% asset 'on-the-death-of-my-familys-dairy-farm/earl-butz-usda-portrait-2.jpg'
-    width="320px"
+    style="width: 320px;"
     class="center"
   %}
   <figcaption>
-    <em>Portrait of former USDA secretary Earl Butz. Public domain image <a href="https://www.usda.gov/our-agency/about-usda/history/former-secretaries">courtesy USDA</a>.</em>
+    <span class="text-center"><em>Portrait of former USDA secretary Earl Butz. Public domain image <a href="https://www.usda.gov/our-agency/about-usda/history/former-secretaries">courtesy USDA</a>.</em></span>
   </figcaption>
 </figure>
 </div>
