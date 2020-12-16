@@ -69,7 +69,7 @@ kramdown:
   smart_quotes: ["apos", "apos", "quot", "quot"]
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
-permalink:    '/:title'
+permalink:    '/:title/'
 timezone: "America/Chicago"
 sass:
   compressed: true
