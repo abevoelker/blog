@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Skipping the database with stateless tokens: a hidden Rails gem and a useful Web technique"
-date: 2020-12-14
+date: 2020-12-16
 comments: false
 toc: true
 toc_label: "Sections"
