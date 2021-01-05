@@ -20,8 +20,10 @@ GEM
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
-    fastimage (2.1.5)
+    fastimage (2.2.0)
     ffi (1.13.1)
+    font-awesome-sass (5.15.1)
+      sassc (>= 1.11)
     forwardable-extended (2.6.0)
     http_parser.rb (0.6.0)
     i18n (0.9.5)
@@ -52,13 +54,17 @@ GEM
       sprockets (>= 3.3, < 4.1.beta)
     jekyll-feed (0.15.1)
       jekyll (>= 3.7, < 5.0)
+    jekyll-font-awesome-sass (0.1.1)
+      font-awesome-sass (>= 4)
+      jekyll (>= 2.5, < 4.0)
     jekyll-gist (1.5.0)
       octokit (~> 4.2)
     jekyll-include-cache (0.2.1)
       jekyll (>= 3.7, < 5.0)
     jekyll-paginate (1.1.0)
-    jekyll-sanity (1.2.0)
-      jekyll (~> 3.1)
+    jekyll-sanity (1.6.0)
+      jekyll (>= 3.1, < 5.0)
+      pathutil (~> 0.16)
     jekyll-sass-converter (1.5.2)
       sass (~> 3.4)
     jekyll-seo-tag (2.4.0)
@@ -104,7 +110,7 @@ GEM
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (4.0.6)
-    rack (2.0.6)
+    rack (2.2.3)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -117,6 +123,8 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
@@ -126,7 +134,7 @@ GEM
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
-    tzinfo (1.2.8)
+    tzinfo (1.2.9)
       thread_safe (~> 0.1)
     unicode-display_width (1.4.1)
 
@@ -137,6 +145,7 @@ DEPENDENCIES
   jekyll
   jekyll-assets
   jekyll-feed
+  jekyll-font-awesome-sass
   jekyll-gist
   jekyll-toc
   kramdown
@@ -145,10 +154,11 @@ DEPENDENCIES
   minima (~> 2.0)
   minimal-mistakes-jekyll
   rouge
+  sprockets (~> 3.7)
   terminal-table (~> 1.4)
 
 RUBY VERSION
-   ruby 2.5.3p105
+   ruby 2.6.2p47
 
 BUNDLED WITH
    1.17.3

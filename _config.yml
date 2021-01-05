@@ -33,7 +33,13 @@ social:
     - "https://github.com/abevoelker"
     - "https://www.facebook.com/abe.voelker"
 
+collections:
+  book_reviews:
+    output: true
+    permalink: /book-reviews/:title/
+
 defaults:
+  # _posts
   - scope:
       path: ""
       type: posts
@@ -41,6 +47,20 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
+      show_date: true
+      comments: false
+      share: true
+      related: false
+      # Disable excerpts
+      excerpt: ""
+  # _book_reviews
+  - scope:
+      path: ""
+      type: book_reviews
+    values:
+      layout: book_review
+      author_profile: true
+      read_time: false
       show_date: true
       comments: false
       share: true
@@ -66,7 +86,7 @@ after_footer_scripts:
 markdown:     kramdown
 kramdown:
   # disable smart quotes
-  smart_quotes: ["apos", "apos", "quot", "quot"]
+  #smart_quotes: ["apos", "apos", "quot", "quot"]
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
 permalink:    '/:title/'
@@ -81,9 +101,12 @@ plugins:
   - jekyll-toc
   - jekyll-include-cache
   - jekyll-feed
+  - jekyll-font-awesome-sass
 # https://github.com/jekyll/jekyll/issues/2938
-exclude: ["vendor", "Gemfile*", "deploy.sh", "_private"]
-include: [".well-known"]
+exclude: ["vendor", "Gemfile*", "*.sh", "_private"]
+include: 
+  - ".well-known"
+  - "_pages"
 assets:
   sources:
     - _assets/css
@@ -96,3 +119,5 @@ assets:
     - _assets/img
     - _assets/js
     - _assets/other
+  precompile:
+    - assets/css/main.scss

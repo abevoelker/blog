@@ -25,6 +25,7 @@ group :jekyll_plugins do
   gem "jekyll-toc"
   gem "jekyll-feed"
   gem "jekyll-gist"
+  gem "jekyll-font-awesome-sass"
 end
 
 gem "kramdown"
@@ -32,3 +33,6 @@ gem "kramdown-parser-gfm"
 gem "rouge"
 gem "terminal-table", "~> 1.4"
 gem "mini_magick"
+# Fix for jekyll-assets issue
+# https://github.com/envygeeks/jekyll-assets/issues/622
+gem "sprockets", "~> 3.7"

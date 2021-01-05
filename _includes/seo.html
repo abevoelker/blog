@@ -142,6 +142,7 @@
       "logo": {{ site_og_image | jsonify }}{% endif %}
     {% else %}
       "@type": "Person",
+      "@id": "/#author",
       "name": {{ site.social.name | default: site.name | jsonify }},
       "url": {{ '/' | absolute_url |jsonify }}{% if site.social.links %},
       "sameAs": {{ site.social.links | jsonify }}{% endif %}

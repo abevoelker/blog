@@ -1,0 +1,29 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+$intro-transition: none;
+@import "minimal-mistakes";
+
+.book-review-data {
+  //font-size: $type-size-6;
+  color: $muted-text-color;
+
+  .page__meta-date {
+    margin-right: 1em;
+  }
+
+  p {
+    margin-top: 0px;
+  }
+}
+
+blockquote.book-print-style {
+  font-family: 'Spectral', serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+//@import 'font-awesome';
