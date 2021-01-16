@@ -26,4 +26,14 @@ blockquote.book-print-style {
   font-weight: 500;
 }
 
+.book-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  row-gap: 0.5em;
+
+  .rating, .read-date {
+    color: $muted-text-color;
+  }
+}
+
 //@import 'font-awesome';

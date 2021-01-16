@@ -1,0 +1,31 @@
+{% if post.header.teaser %}
+  {% capture teaser %}{{ post.header.teaser }}{% endcapture %}
+{% else %}
+  {% assign teaser = site.teaser %}
+{% endif %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
+{% endif %}
+
+<div class="">
+  {% if post.link %}
+    <a href="{{ post.link }}">{{ title }}</a> <a href="{{ post.url | relative_url }}" rel="permalink"><i class="fas fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
+  {% else %}
+    <a href="{{ post.url | relative_url }}" rel="permalink">{{ title }}</a>
+  {% endif %}
+</div>
+
+<div class="rating">
+  <span class="{% if post.stars >= 1 %}fas{% else %}far{% endif %} fa-star"></span>
+  <span class="{% if post.stars >= 2 %}fas{% else %}far{% endif %} fa-star"></span>
+  <span class="{% if post.stars >= 3 %}fas{% else %}far{% endif %} fa-star"></span>
+  <span class="{% if post.stars >= 4 %}fas{% else %}far{% endif %} fa-star"></span>
+  <span class="{% if post.stars >= 5 %}fas{% else %}far{% endif %} fa-star"></span>
+</div>
+
+<div class="read-date">
+  {{ post.read_date | date: "%b %Y" }}
+</div>
