@@ -1,0 +1,22 @@
+---
+layout: archive
+---
+
+{{ content }}
+
+<h3 class="archive__subtitle">My Writing</h3>
+
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
+
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+<div class="homepage-grid">
+  {% for post in posts %}
+    {% include post-preview-single.html type=entries_layout %}
+  {% endfor %}
+</div>
+
+{% include paginator.html %}

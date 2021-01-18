@@ -43,4 +43,21 @@ blockquote.book-print-style {
   }
 }
 
+.homepage-grid {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  row-gap: 0.5em;
+
+  @media only screen and (max-width: 700px) {
+    grid-template-columns: 3fr 3fr;
+    .title {
+      grid-column: span 6;
+    }
+  }
+
+  .published-date {
+    color: $muted-text-color;
+  }
+}
+
 //@import 'font-awesome';
