@@ -1,6 +1,6 @@
 ---
 collection: book_reviews
-title: "King of Dogs"
+title: "King of Dogs by Andrew Edwards"
 date: 2021-02-14
 book:
   title: "King of Dogs"
