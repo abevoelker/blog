@@ -1,4 +1,4 @@
-{% assign entries = site[include.collection] | sort: 'read_date' | reverse %}
+{% assign entries = site[include.collection] | where: "draft", false | sort: 'read_date' | reverse %}
 
 {% if include.sort_by == 'title' %}
   {% if include.sort_order == 'reverse' %}
