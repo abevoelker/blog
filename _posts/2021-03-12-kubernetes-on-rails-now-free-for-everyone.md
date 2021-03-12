@@ -4,6 +4,8 @@ date: 2021-03-12 00:00
 comments: false
 additional_css:
   - "kubernetes-on-rails-now-free-for-everyone.scss"
+header:
+  og_image: "kubernetes-on-rails-now-free-for-everyone/kubernetes-on-rails-screenshot.png"
 toc: true
 toc_label: "Sections"
 toc_sticky: true
