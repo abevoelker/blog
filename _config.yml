@@ -49,7 +49,7 @@ defaults:
       read_time: true
       show_date: true
       comments: false
-      share: true
+      share: false
       related: false
       # Disable excerpts
       excerpt: ""
